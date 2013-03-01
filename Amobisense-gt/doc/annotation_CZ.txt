@@ -1,0 +1,31 @@
+Aplikace Amobisense (pro Android)
+
+ANOTACE:
+Cilem nahrhovane aplikace je umoznit sber a zobrazeni dat o kontextu zarizeni (napriklad pocet dostupnych Wifi siti, data z akcelerometru, ...)
+s kratkym intervalem mezi jednotlivymi merenimi. Aplikace je primarne mirena na self-trackery.
+
+MOTIVACE:
+Aplikace na modernich mobilnich zarizenich mohou casto menit svoje chovani podle tzv. kontextu zarizeni. To muze v praxi znamenat, ze
+se aplikace chova jinak v noci a ve dne (nizsi podsviceni displeje) nebo napriklad to, ze meni vyzvaneni podle miry hluku v okoli pristroje.
+
+Dostupne sensing-platforms pro operacni system Android [interdroid-swan, funf] nejsou vhodne pro sber dat s velkou samplovaci frekvenci (radove sekundy az desitky sekund). Podobna kratkodoba data jsou vsak cenna pro kratkodobe odhady budoouciho kontextu zarizeni. Jako vhodny priklad muzeme uvest odhad dostupnosti Wi-Fi site za deset sekund, tedy udaj, ktery mohou aplikace vyuzit napriklad k ukladani rozpracovanych dat na sitova uloziste.
+
+Zapoctak by mel byt prvni fazi zajistujici sber a zobrazeni dat, dlouhodoby zamer je rozsirit aplikaci a udelat s ni servis pro ostani apliakce umoznujici
+rozhodovani na zaklade kontextu a predpovedi budouciho kontextu.
+
+POPIS APLIKACE:
+
+Na mobilnich zarizenich jdou typicky sbirat dva typy dat, pracovne je nazyvam
+* Notifikovana data (Operacni system notifikuje aplikaci o zmene - napriklad zmena Cell-Id, zmena urovne baterie...)
+* Periodicky odecitana data (apliakce se o sber dat musi starat sama - napriklad vyuziti procesoru, mnozstvi dat prenesenych po siti za jednotku casu...)
+
+Aplikace se bude skladat z nasleducjicih principielnich casti
+* hlavni aktivity (nastaveni aplikace, obecne vstupni bod)
+* servis, v jehoz kontextu pobezi rada vlaken zodpovednych za sber data
+* vlakna, ktere bude obhospodarovat vsechna notifikovana data
+* souboru aktivit umoznujici zobrazeni krateke historie dat uzivateli (udelejme aplikaci mpo
+* dalsi casti (vlakna na upload dat ze zarizeni, jednoduchy server pro prijimani dat a podobne)
+
+DETAILY TECHNICKEHO RESENI:
+
+Aplikace bude rozsirenim aplikace Power-Tutor, ta je pod GPL a umoznuje sama o sobe sber nekterych periodickych dat.

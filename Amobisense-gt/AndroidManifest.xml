@@ -1,0 +1,223 @@
+<?xml version="1.1" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cz.cuni.mff.d3s.Amobisense" android:versionCode="13" android:versionName="1.4">
+  <uses-sdk android:minSdkVersion="3" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.INTERNET"/>
+  
+  <application android:icon="@drawable/icon" android:label="@string/app_name">
+   	  
+      <activity android:name=".ui.MainActivity"
+              android:label="@string/app_name"
+              android:screenOrientation="portrait" > 
+      <intent-filter>
+          
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    
+    <activity android:name="edu.umich.PowerTutor.ui.Help" >
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.help" />  
+      </intent-filter>
+    </activity>
+    
+    <activity android:name="edu.umich.PowerTutor.ui.PowerViewer" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.ui.PowerTop"
+              android:label="Power Top" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.powertop" />  
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.ui.PowerPie" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.powerpie" />  
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.ui.MiscView" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.powermisc" />  
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.ui.PowerTabs"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.powertabs" />  
+      </intent-filter>
+    </activity>
+    
+    <activity android:name=".ui.ContextInfoTabs"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.contexttabs" />  
+      </intent-filter>
+    </activity>
+    
+    <activity android:name="cz.cuni.mff.d3s.Amobisense.ui.SeenWifiInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.wifi" />  
+      </intent-filter>
+    </activity> 
+    
+    <activity android:name=".ui.BatteryLevelDetailInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity> 
+    
+    
+    <activity android:name=".ui.AccelerometerDetailInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.accelerometer" />  
+      </intent-filter>
+    </activity> 
+    
+    
+    <activity android:name="cz.cuni.mff.d3s.Amobisense.ui.OverviewActivity"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.overview" />  
+      </intent-filter>
+    </activity>  
+       
+    <activity android:name=".ui.WiFiDetailInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
+
+    <activity android:name=".ui.CPUUsageDetailInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>    
+    
+    <activity android:name=".ui.InternetConnectivityDetailInfoActivityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.connection" />  
+      </intent-filter>
+    </activity>   
+    
+    
+    <activity android:name="cz.cuni.mff.d3s.Amobisense.ui.MiscView" >
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+       <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.misc" />  
+      </intent-filter>
+    </activity>    
+    
+        
+    <activity android:name=".ui.EditPreferences"
+              android:label="Options">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".ui.EditPersonalInfo"
+              android:label="Your Personal Information">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.widget.Configure"
+              android:label="Configure Widget" >
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+      </intent-filter>
+    </activity>
+    <activity android:name="edu.umich.PowerTutor.widget.DataSourceConfigure"
+              android:label="Configure Data Source">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
+    <receiver android:name="edu.umich.PowerTutor.ui.StartupReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <category android:name="android.intent.category.HOME" />
+      </intent-filter>
+    </receiver>
+    <service android:name="edu.umich.PowerTutor.service.MainBackgroundService"></service>
+    <receiver android:name="edu.umich.PowerTutor.widget.PowerWidget" >
+      <intent-filter>
+          <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data android:name="android.appwidget.provider"
+                 android:resource="@xml/widget_info" />
+      </receiver>
+  </application>
+
+
+
+
+ 
+</manifest> 

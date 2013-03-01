@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AMobiSense</string>
+    <string name="running_on_startup">Amobisense will now run after your phone starts up.</string>
+    <string name="not_running_on_startup">Amobisense will no longer run on when your phone starts up.</string>
+    <string name="stop_sending_text">This application sends data on power utilization, running applications and context to the our team. We gather nothing allowing us to associate the data with you or your phone; a cryptographically secure hash function is used to protect your identity.  Pressing \'Stop\' will prevent these data from being sent.</string>
+    <string name="start_sending_text">This application sends data on power utilization, running applications and context to the our team. We gather nothing allowing us to associate the data with you or your phone; a cryptographically secure hash function is used to protect your identity.  Pressing \'Start\' will start sending the data from now on.</string>
+    <string name="unknown_phone">Your phone type is not recognized by Amobisense. You may continue to use it, however we may not be able to get all of the data for your phone and the power calculations may not be accurate.</string>
+    <string name="term">
+    <p>In this version of AMobiSense, context sensing platform based on PowerTutor (<a href="http://powertutor.org">http://powertutor.org</a>). 
+        It can be used by context sensing applications, self-trackers or other interested people. 
+    </p>
+    <p>    
+    PowerTutor is the Power Profiler service is run on startup\n</p>\n
+    <p>We gather\n
+	- CPU use\n
+	- Amount of WiFi/3G traffic (not its content)\n
+	- Screen brightness\n
+	- GPS activity (but not location)\n
+    - Audio use (on/off, volume)\n
+	- Total power consumption\n
+	- Application resource utilization\n
+	- Phone mode, e.g., airplane mode or call status\n
+	- WiFis around you\n
+	- Accelerometer data\n
+</p>
+    <p>\nWe do <b>NOT</b> gather your personal data used in applications
+or phone call logs. None of these data will be associate with you or your phone.
+We use a cryptographically secure hash function to protect your identity.\n
+</p>\n
+
+<p>AMobiSense will send to our team traces, if you allow to do it.\n</p> \n
+
+<p>AMobiSense will send back traces only when WiFi connection is available and prefer situations, when phone will be plugged to power supply. \n </p> \n
+      
+<p>By default, trace upload is enabled. If you would like to disable it (or to change upload destination server) you can do so in the menu of the main screen.\n</p> 
+<p>Pleas, consider to help us by by allowing trace uploads. </p>
+</string>
+    <string name ="help_head"> <big><b>AMobiSense</b></big> - A real-time system resource, application and device context monitor and more.</string>
+    
+    <string name ="help_text">\n
+        
+    You see a version of AMobiSense, context sensing platform based on PowerTutor power monitor. 
+    It can be used by context sensing applications, self-trackers or other interested people.     
+    <ul>
+    <li><b>Main control panel</b>\n
+     - Start/stop profiling services. \n
+     - Select <b>Application</b> or <b>System</b> mode to check out power consumption statistics.\n
+     - Menu features:\n
+        \t* Start/stop sending power traces to the our team.\n
+        \t* Enable/Disable the profiling service to run on startup.\n
+        \t* Save the current power trace to the sdcard.\n
+        \t* Save the context log to the sdcard.\n
+        \t* Upload logs to remote server.\n
+    </li>\n
+    <li><b>Context Views</b>\n
+        - Shows various device context information. \n
+    </li>
+    <li><b>App View</b>\n
+     - Displays power usage information for all of the apps running on the
+           phone.\n
+     - Press an app row to go to the <i>Graph View</i> for that app\'s power
+           usage.\n
+     - Press a hardware component name in the top tabs to include/exclude it from power
+            calculations.\n
+     - Data interpretation:\n
+        \t* Percentage value: The percentage of energy/average power consumed by the 
+            app in system.\n
+        \t* Time value: Time that the app has been actively monitored by this platform.\n
+     - Menu features:\n
+        \t* Change the sort key to one of current power, average power, or total energy usage.\n
+        \t* Change the time span to include the last minute, hour, day, or all time.\n
+    </li>\n
+    <li><b>Graph View</b>\n
+     - Displays app/system power consumption decomposed by hardware component.\n
+     - Use the tabs at the top to move between <i>Chart View</i> and <i>Pie
+       View</i>.\n
+    </li>\n
+    <li><b>Chart View</b>\n
+     - Displays the power usage of different components on the phone in recent
+           history.\n
+     - Scroll to view different component power graphs.\n
+     - Menu features:\n
+        \t* Select \"<i>Set History Size</i>\" to adjust the number of data points
+           displayed.\n 
+        \t* Select \"<i>Magnify Recent Data</i>\" to show more recent data points
+           more spread out.\n
+        \t* Select \"<i>Pause</i>\" to freeze the display as is, select resume to
+           continue.\n
+    </li>\n
+    <li><b>Pie View</b>\n
+     - Displays the power usage percentages of the different components.\n
+     - Menu features:\n
+        \t* Change the time span to include the last minute, hour, day, or all time.\n
+    </li>\n
+    </ul>
+    
+    </string>
+
+
+<string name="url_1">For detailed information, please go to: </string>
+<string name="url_2"> <a href="http://d3s.mff.cuni.cz/~pop/amobisense/">http://d3s.mff.cuni.cz/~pop/amobisense/</a> and <a href="http://powertutor.org">http://powertutor.org</a> .\n</string>
+
+<string name="prefs_run_on_startup">Run on startup</string>
+<string name="prefs_run_on_startup_summary">Have the profiling service start when your phone starts</string>
+
+<string name="prefs_send_logs">Send logs</string>
+<string name="prefs_send_logs_summary">Send back power traces to the our team</string>
+
+<string name="personalinfo_age">Your Age</string>
+<string name="personalinfo_age_summary">Your age will help us better understand data..</string>
+<string name="errmsg_not_valid_age">This is not a valid value for age</string>
+
+<string name="personalinfo_gender">Your Gender</string>
+<string name="personalinfo_gender_summary">Your gender will help us better understand data..</string>
+
+<string name="personalinfo_job">Your Position</string>
+<string name="personalinfo_job_summary">You current occupation (e.g. student, IT specialist, teacher..)</string>
+
+<string name="preferences_upload_url">URL to upload data</string>
+<string name="preferences_upload_url_summary">Your can change server, where to upload data</string>
+
+
+<string name="application_name">AMobiSense</string>
+</resources>

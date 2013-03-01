@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/topLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background = "@drawable/background"
+  >
+
+  <TextView
+      android:id="@+id/s0"
+      android:layout_width="fill_parent"
+      android:layout_height="48dp"
+      android:gravity="center"
+      android:text="AMobiSense"
+      android:textColor="#FFFFFF"
+      android:textSize="16pt" />
+
+     <Button
+         android:id="@+id/servicestartbutton"
+         android:layout_width="fill_parent"
+         android:layout_below="@+id/s0"
+         android:layout_height="wrap_content"
+         android:minHeight="30pt"
+         android:textSize="8pt" />
+     	
+      <TextView
+          android:id="@+id/welcometext"
+          android:layout_below="@+id/servicestartbutton"
+          android:layout_width="fill_parent"
+          android:layout_height="346dp"
+          android:layout_marginBottom="10dp"
+          android:gravity="top"
+          android:text="Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, "
+          android:textColor="#FFFFFF"
+          android:textSize="9pt" />  
+     
+</RelativeLayout>
+

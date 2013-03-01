@@ -1,0 +1,553 @@
+/*
+Copyright (C) 2011 The University of Michigan
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Please send inquiries to powertutor@umich.edu
+ */
+
+package cz.cuni.mff.d3s.Amobisense.ui;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.InflaterInputStream;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import cz.cuni.mff.d3s.Amobisense.R;
+import edu.umich.PowerTutor.phone.PhoneSelector;
+import edu.umich.PowerTutor.service.DataCollector;
+import edu.umich.PowerTutor.service.ICounterService;
+import edu.umich.PowerTutor.service.MainBackgroundService;
+import edu.umich.PowerTutor.ui.Help;
+import edu.umich.PowerTutor.ui.PowerTabs;
+import edu.umich.PowerTutor.ui.PowerTop;
+
+/** The main view activity for PowerTutor */
+public class MainActivity extends Activity {
+	@SuppressWarnings("unused")
+	private static final String TAG = "MainActivity";
+
+	public static final String CURRENT_VERSION = "1.2"; // Don't change this...
+
+	public static final String SERVER_IP = "spidermonkey.eecs.umich.edu";
+	public static final int SERVER_PORT = 5204;
+
+	private SharedPreferences prefs;
+	private Intent serviceIntent;
+	private ICounterService counterService;
+	private CounterServiceConnection conn;
+
+	private Button serviceStartButton;
+//	private Button appViewerButton;
+//	private Button sysEnergyViewerButton;
+//	private Button sysInformationButton;
+//	private Button helpButton;
+	public static final int MESSAGE_SUCCESS = 1;
+	public static int MESSAGE_FAIL = 0;
+	
+	private TextView welcomeText;
+
+	private static MainActivity instance = null;
+
+	// private LogWebUploader logUploader = null;
+
+	public static MainActivity getInstance() {
+		return instance;
+	}
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		instance = this;
+		super.onCreate(savedInstanceState);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		serviceIntent = new Intent(this, MainBackgroundService.class);
+		conn = new CounterServiceConnection();
+
+		setContentView(R.layout.main);
+		ArrayAdapter<?> adapterxaxis = ArrayAdapter.createFromResource(this, R.array.xaxis, android.R.layout.simple_spinner_item);
+		adapterxaxis.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		serviceStartButton = (Button) findViewById(R.id.servicestartbutton);
+		welcomeText = (TextView) findViewById(R.id.welcometext);
+		//welcomeText.setPadding(10, 0, 10, 0);
+		
+		//appViewerButton = (Button) findViewById(R.id.appviewerbutton);
+		//sysEnergyViewerButton = (Button) findViewById(R.id.sysenergyviewerbutton);
+		//sysInformationButton = (Button) findViewById(R.id.sysviewerbutton);
+		//helpButton = (Button) findViewById(R.id.helpbutton);
+
+		serviceStartButton.setOnClickListener(serviceStartButtonListener);
+		//sysEnergyViewerButton.setOnClickListener(sysEnergyViewerButtonListener);
+		//appViewerButton.setOnClickListener(appViewerButtonListener);
+		//sysInformationButton.setOnClickListener(sysInformationButtonListener);
+		//helpButton.setOnClickListener(helpButtonListener);
+
+		
+		if (counterService != null) {
+			serviceStartButton.setText("Stop Data Collecting");
+			//appViewerButton.setEnabled(true);
+			//sysInformationButton.setEnabled(true);
+			//sysEnergyViewerButton.setEnabled(true);
+			setRunningText();
+			
+		} else {
+			serviceStartButton.setText("Start Data Collecting");
+			//appViewerButton.setEnabled(false);
+			//sysEnergyViewerButton.setEnabled(false);
+			//sysInformationButton.setEnabled(false);
+			setStoppedText();
+		}
+	}
+	
+	private void setRunningText() {
+		welcomeText.setText(Html.fromHtml(
+				"<p><b>- Power Viewer</b><br>" +
+				"   -<a href='amobisense.powertop://'>Applicaton power use</a> <br> " +
+				"   -<a href='amobisense.powertabs://'>Hardware power use history</a><br> " +
+				"   -<a href='amobisense.powerpie://pie'>Hardware energy share</a></p><br>" +
+				"<b>Context Viewer</b><br>" +
+				"   -<a href='amobisense.context.overview://'>Overview graphs</a><br>" +
+				"   -<a href='amobisense.context.misc://'>All details</a><br>" +
+				"   or directly..." +
+				"   <a href='amobisense.context.wifi://'>Wifi details,</a><br> <a href='amobisense.context.connection://'>Net connection details,</a> <a href='amobisense.context.accelerometer://'>Accelerometer values</a><br><br>" +
+				"<br>" + 
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your personal information and several parameters in menu." +
+				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
+				"" +
+				""));
+		
+       setLinkToActivity("help & about", Help.class);
+       setLinkToActivity("nápověd", Help.class);
+	}
+	
+	private void setStoppedText() {
+		welcomeText.setText(Html.fromHtml(	
+				
+				"You could see:<br><b>- Power Viewer</b> shows applicaton power use, device subsystems power use" +
+				" history and device susbsystems energy share<br>" +
+				"<b>- Context Viewer</b> shows various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
+				"<p>You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your personal information and several parameters in menu.</p>" +
+				"<p>For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a></p>" +
+				""));
+		// fix focus..
+		 setLinkToActivity("help & about", Help.class);
+	}
+
+	private void putDefaultValuesToPrefs() {
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor editor = prefs.edit();
+		editor.putString("upload_url", "http://perun.ms.mff.cuni.cz:8000/upload");
+		editor.putLong("run_nr", 1);
+		editor.commit();
+	}
+
+	private void incrementRunNumber() {
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		long run_nr = prefs.getLong("run_nr", 1) + 1; 
+		Editor editor = prefs.edit();
+		editor.putLong("run_nr", run_nr);
+		editor.commit();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		instance = this;
+		getApplicationContext().bindService(serviceIntent, conn, 0);
+		if (prefs.getBoolean("firstRun", true)) {
+			if (PhoneSelector.getPhoneType() == PhoneSelector.PHONE_UNKNOWN) {
+				showDialog(DIALOG_UNKNOWN_PHONE);
+
+			} else {
+				showDialog(DIALOG_TOS);
+			}
+			putDefaultValuesToPrefs(); 
+		} else {
+			incrementRunNumber();
+		}
+		Intent startingIntent = getIntent();
+		if (startingIntent.getBooleanExtra("isFromIcon", false)) {
+			// Intent copyIntent = (Intent)getIntent().clone();
+			// copyIntent.putExtra("isFromIcon", false);
+			// setIntent(copyIntent);
+			// Intent intent = new Intent(this, PowerTabs.class);
+			// startActivity(intent);
+		}
+		
+		welcomeText = (TextView) findViewById(R.id.welcometext);
+		//welcomeText.setPadding(10, 0, 10, 0);
+		
+		
+
+       // setLinkToActivity("device subsystems power use", PowerTabs.class);
+       // setLinkToActivity("susbsystems energy share", PowerTabs.class);
+       // setLinkToActivity("power share", PowerTabs.class);
+       // setLinkToActivity("applicaton power use", PowerTop.class);
+       // setLinkToActivity("context information", ContextInfoTabs.class);
+	}
+
+	
+	
+	 public void setLinkToActivity(String text, @SuppressWarnings("rawtypes") final Class activityClass) {
+		 
+		 	clickify(welcomeText, text, new ClickSpan.OnClickListener() {
+	            @Override
+	            public void onClick() {
+	                //Toast.makeText(MainActivity.this, "Whale was clicked!", Toast.LENGTH_SHORT).show();
+	            	startActivity(new Intent(MainActivity.this, activityClass));
+	            }
+	        });
+	 }
+	
+	 public static void clickify(TextView view, final String clickableText,  final ClickSpan.OnClickListener listener) {
+	        CharSequence text = view.getText();
+	        String string = text.toString();
+	        ClickSpan span = new ClickSpan(listener);
+
+	        int start = string.indexOf(clickableText);
+	        int end = start + clickableText.length();
+	        if (start == -1) return;
+
+	        if (text instanceof Spannable) {
+	            ((Spannable)text).setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	        } else {
+	            SpannableString s = SpannableString.valueOf(text);
+	            s.setSpan(span, start, end, Spanned.SPAN_MARK_MARK);
+	            view.setText(s);
+	        }
+
+	        MovementMethod m = view.getMovementMethod();
+	        if ((m == null) || !(m instanceof LinkMovementMethod)) {
+	            view.setMovementMethod(LinkMovementMethod.getInstance());
+	        }
+	}
+	
+
+
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		getApplicationContext().unbindService(conn);
+	}
+
+	private static final int MENU_PREFERENCES = 0;
+	private static final int MENU_SAVE_POWER_LOG = 1;
+	private static final int MENU_SAVE_CONTEXT_LOG = 2;
+	private static final int MENU_SHOW_CURRENT_SETTINGS = 3;
+	// private static final int MENU_UPLOAD_CURRENT_CONTEXT_LOG = 4;
+	private static final int DIALOG_START_SENDING = 0;
+	private static final int DIALOG_STOP_SENDING = 1;
+	private static final int DIALOG_TOS = 2;
+	private static final int DIALOG_RUNNING_ON_STARTUP = 3;
+	private static final int DIALOG_NOT_RUNNING_ON_STARTUP = 4;
+	private static final int DIALOG_UNKNOWN_PHONE = 5;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, MENU_PREFERENCES, 0, "Edit Options");
+		// menu.add(0, MENU_UPLOAD_CURRENT_CONTEXT_LOG, 0,
+		// "Upload Context Log");
+		menu.add(0, MENU_SAVE_POWER_LOG, 0, "Save power log");
+		menu.add(0, MENU_SHOW_CURRENT_SETTINGS, 0, "Edit Personal Info");
+		menu.add(0, MENU_SAVE_CONTEXT_LOG, 0, "Save context log");
+
+		return true;
+	}
+
+	private void savePowerLog() {
+		new Thread() {
+			Message statusMsg = new Message();
+
+			public void start() {
+				File writeFile = new File(Environment.getExternalStorageDirectory(), "PowerTrace"
+						+ System.currentTimeMillis() + ".log");
+				try {
+					InflaterInputStream logIn = new InflaterInputStream(openFileInput("PowerTrace.log"));
+					BufferedOutputStream logOut = new BufferedOutputStream(new FileOutputStream(writeFile));
+
+					byte[] buffer = new byte[20480];
+					for (int ln = logIn.read(buffer); ln != -1; ln = logIn.read(buffer)) {
+						logOut.write(buffer, 0, ln);
+					}
+
+					logIn.close();
+					logOut.close();
+					statusMsg.arg1 = MainActivity.MESSAGE_SUCCESS;
+					MainActivity.makeToastHandler.sendMessage(statusMsg);
+					return;
+				} catch (java.io.EOFException e) {
+					statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+					MainActivity.makeToastHandler.sendMessage(statusMsg);
+					return;
+				} catch (IOException e) {
+				}
+				statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+				MainActivity.makeToastHandler.sendMessage(statusMsg);
+			}
+		}.start();
+	}
+
+	private void saveContextLog() {
+
+		new Thread() {
+
+			Message statusMsg = new Message();
+
+			public void run() {
+				File writeFile = new File(Environment.getExternalStorageDirectory(), "DeviceContextLog"
+						+ System.currentTimeMillis() + ".log");
+
+				try {
+
+					InputStream logIn = openFileInput(DataCollector.getInstance().getCurrentContextLogFileName());
+					BufferedOutputStream logOut = new BufferedOutputStream(new FileOutputStream(writeFile));
+
+					byte[] buffer = new byte[20480];
+
+					for (int ln = logIn.read(buffer); ln != -1; ln = logIn.read(buffer)) {
+						logOut.write(buffer, 0, ln);
+
+					}
+
+					logIn.close();
+					logOut.close();
+					statusMsg.arg1 = MainActivity.MESSAGE_SUCCESS;
+					MainActivity.makeToastHandler.sendMessage(statusMsg);
+					return;
+				} catch (java.io.EOFException e) {
+					statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+					MainActivity.makeToastHandler.sendMessage(statusMsg);
+					return;
+				} catch (IOException e) {
+				}
+				statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+				MainActivity.makeToastHandler.sendMessage(statusMsg);
+			}
+		}.start();
+
+	}
+
+	public static Handler makeToastHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			if (instance != null) {
+				if (msg.arg1 == MESSAGE_FAIL) {
+					Toast.makeText(instance, "Some Errror Ocurs, see log", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(instance, "OK Completed..", Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	};
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_PREFERENCES:
+			startActivity(new Intent(this, EditPreferences.class));
+			return true;
+		case MENU_SHOW_CURRENT_SETTINGS:
+			startActivity(new Intent(this, EditPersonalInfo.class));
+			return true;
+		case MENU_SAVE_POWER_LOG:
+			savePowerLog();
+			return true;
+		case MENU_SAVE_CONTEXT_LOG:
+			saveContextLog();
+			return true;
+			// case MENU_UPLOAD_CURRENT_CONTEXT_LOG:
+			// if (logUploader == null) {logUploader = new
+			// LogWebUploader(this);}
+			// if (DataCollector.getInstance() != null) {
+			// logUploader.enqueueForUpload(getFileStreamPath(DataCollector.getInstance().getCurrentContextLogFileName()).getAbsolutePath(),
+			// "ContextLog", false, false);
+			// }
+			// return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/** This function includes all the dialog constructor */
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		switch (id) {
+		case DIALOG_TOS:
+			builder.setMessage(R.string.term).setCancelable(false)
+					.setPositiveButton("Agree", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							prefs.edit().putBoolean("firstRun", false).putBoolean("runOnStartup", true)
+									.putBoolean("sendPermission", true).commit();
+							dialog.dismiss();
+						}
+					}).setNegativeButton("Do not agree", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							prefs.edit().putBoolean("firstRun", true).commit();
+							finish();
+						}
+					});
+			return builder.create();
+		case DIALOG_STOP_SENDING:
+			builder.setMessage(R.string.stop_sending_text).setCancelable(true)
+					.setPositiveButton("Stop", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							prefs.edit().putBoolean("sendPermission", false).commit();
+							dialog.dismiss();
+						}
+					}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+			return builder.create();
+		case DIALOG_START_SENDING:
+			builder.setMessage(R.string.start_sending_text).setCancelable(true)
+					.setPositiveButton("Start", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							prefs.edit().putBoolean("sendPermission", true).commit();
+							dialog.dismiss();
+						}
+					}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+			return builder.create();
+		case DIALOG_RUNNING_ON_STARTUP:
+			builder.setMessage(R.string.running_on_startup).setCancelable(true).setNeutralButton("Ok", null);
+			return builder.create();
+		case DIALOG_NOT_RUNNING_ON_STARTUP:
+			builder.setMessage(R.string.not_running_on_startup).setCancelable(true).setNeutralButton("Ok", null);
+			return builder.create();
+		case DIALOG_UNKNOWN_PHONE:
+			builder.setMessage(R.string.unknown_phone).setCancelable(false)
+					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+							showDialog(DIALOG_TOS);
+						}
+					});
+			return builder.create();
+
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unused")
+	private Button.OnClickListener appViewerButtonListener = new Button.OnClickListener() {
+		public void onClick(View v) {
+			Intent intent = new Intent(v.getContext(), PowerTop.class);
+			startActivityForResult(intent, 0);
+		}
+	};
+
+	@SuppressWarnings("unused")
+	private Button.OnClickListener sysEnergyViewerButtonListener = new Button.OnClickListener() {
+		public void onClick(View v) {
+			Intent intent = new Intent(v.getContext(), PowerTabs.class);
+			startActivityForResult(intent, 0);
+		}
+	};
+
+	@SuppressWarnings("unused")
+	private Button.OnClickListener sysInformationButtonListener = new Button.OnClickListener() {
+		public void onClick(View v) {
+			Intent intent = new Intent(v.getContext(), ContextInfoTabs.class);
+			startActivityForResult(intent, 0);
+		}
+	};
+
+	private Button.OnClickListener serviceStartButtonListener = new Button.OnClickListener() {
+		public void onClick(View v) {
+			serviceStartButton.setEnabled(false);
+			if (counterService != null) {
+				stopService(serviceIntent);
+			} else {
+				if (conn == null) {
+					Toast.makeText(MainActivity.this, "Profiler failed to start", Toast.LENGTH_SHORT).show();
+				} else {
+					startService(serviceIntent);
+				}
+			}
+		}
+	};
+
+	private class CounterServiceConnection implements ServiceConnection {
+		public void onServiceConnected(ComponentName className, IBinder boundService) {
+			counterService = ICounterService.Stub.asInterface((IBinder) boundService);
+			serviceStartButton.setText("Stop Data Collecting");
+			serviceStartButton.setEnabled(true);
+			setRunningText();
+			
+			//appViewerButton.setEnabled(true);
+			//sysInformationButton.setEnabled(true);
+			//sysEnergyViewerButton.setEnabled(true);
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			counterService = null;
+			getApplicationContext().unbindService(conn);
+			getApplicationContext().bindService(serviceIntent, conn, 0);
+
+			Toast.makeText(MainActivity.this, "Stopped", Toast.LENGTH_SHORT).show();
+			serviceStartButton.setText("Start Data Collecting");
+			serviceStartButton.setEnabled(true);
+			setStoppedText();
+			
+			//appViewerButton.setEnabled(false);
+			//sysEnergyViewerButton.setEnabled(false);
+			//sysInformationButton.setEnabled(false);
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private Button.OnClickListener helpButtonListener = new Button.OnClickListener() {
+		public void onClick(View v) {
+			Intent myIntent = new Intent(v.getContext(), Help.class);
+			startActivityForResult(myIntent, 0);
+		}
+	};
+}

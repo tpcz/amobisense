@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+                android:key="personalinfo_age"
+                android:title="@string/personalinfo_age"
+                android:persistent="true"
+                android:summary="@string/personalinfo_age_summary"
+                android:dialogTitle="@string/personalinfo_age"
+    />
+
+    <ListPreference 
+		        android:key="personalinfo_gender" 
+		        android:persistent="true"
+		        android:entries="@array/gender_keys" 
+		        android:entryValues="@array/gender_values" 
+		        android:title="@string/personalinfo_gender"
+		        android:summary="@string/personalinfo_gender_summary"
+		        android:dialogTitle="@string/personalinfo_gender"
+    />  
+    
+    <EditTextPreference
+        		android:persistent="true"
+                android:key="personalinfo_job"
+                android:title="@string/personalinfo_job"
+                android:summary="@string/personalinfo_job_summary"
+                android:dialogTitle="@string/personalinfo_job" 
+    />
+    
+</PreferenceScreen>
