@@ -1,8 +1,21 @@
-PowerTutor Project
+Amobisense project 
 
-Model based power mobile power estimator by application
+Context and power monitor.
 
-Contact: powertutor@umich.edu
+This application gathers various information about power consumption and device context and
+uploads them to remote server (if user allows this).
+
+This app also produces data for Context Trace View project. 
+
+Work in progress, Tomas Pop, Charles University in Prague.
+tomas.pop[aaa]d3s.mff.cuni.cz
+
+Project is under GNU General Public License
+
+===================================================================
+Amobisense project heavily depends on PowerTutor Project, which was the basis of the project.
+
+PowerTutor - Model based power mobile power estimator by application
 
 Website: http://powertutor.org
 
