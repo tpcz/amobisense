@@ -143,23 +143,24 @@ public class MainActivity extends Activity {
 	
 	private void setRunningText() {
 		welcomeText.setText(Html.fromHtml(
-				"<p><b>- Power Viewer</b><br>" +
-				"   -<a href='amobisense.powertop://'>Applicaton power use</a> <br> " +
-				"   -<a href='amobisense.powertabs://'>Hardware power use history</a><br> " +
-				"   -<a href='amobisense.powerpie://pie'>Hardware energy share</a></p><br>" +
-				"<b>Context Viewer</b><br>" +
-				"   -<a href='amobisense.context.overview://'>Overview graphs</a><br>" +
-				"   -<a href='amobisense.context.misc://'>All details</a><br>" +
-				"   or directly..." +
-				"   <a href='amobisense.context.wifi://'>Wifi details,</a><br> <a href='amobisense.context.connection://'>Net connection details,</a> <a href='amobisense.context.accelerometer://'>Accelerometer values</a><br><br>" +
+				"<b>Power Use Information</b><br>" +
+				"- <a href='amobisense.powertop://'>Per Applicaton</a> <br> " +
+				"- <a href='amobisense.powertabs://'>Per Hardware</a><br> " +
+				"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
+				
+				"<b>Context Information</b><br>" +
+				"- <a href='amobisense.context.overview://'>Graphs</a> showing overview<br>" +
+				"- <a href='amobisense.context.misc://'>Detail</a> infomation, e.g.," +
+				"" +
+				"<a href='amobisense.context.wifi://'>wifi's,</a><a href='amobisense.context.connection://'>net connection,</a> <a href='amobisense.context.accelerometer://'>accelerometer</a><br><br>" +
 				"<br>" + 
-				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your personal information and several parameters in menu." +
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your <a href='amobisense.prefs.personal://'>personal information</a> " +
+				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. forget to send traces to our team) " +
+				"or use menu to store current traces. " +
 				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
 				"" +
 				""));
-		
-       setLinkToActivity("help & about", Help.class);
-       setLinkToActivity("nápověd", Help.class);
+		welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 	
 	private void setStoppedText() {
@@ -168,11 +169,14 @@ public class MainActivity extends Activity {
 				"You could see:<br><b>- Power Viewer</b> shows applicaton power use, device subsystems power use" +
 				" history and device susbsystems energy share<br>" +
 				"<b>- Context Viewer</b> shows various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
-				"<p>You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your personal information and several parameters in menu.</p>" +
-				"<p>For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a></p>" +
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your <a href='amobisense.prefs.personal://'>personal information</a> " +
+				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. forget to send traces to our team) " +
+				"or use menu to store current traces. " +
+				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
+				"" +
 				""));
-		// fix focus..
-		 setLinkToActivity("help & about", Help.class);
+		
+	   welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	private void putDefaultValuesToPrefs() {

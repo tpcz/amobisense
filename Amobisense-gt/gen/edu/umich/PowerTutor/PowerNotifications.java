@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/pop/workspaces/android2/AMobiSense/src/edu/umich/PowerTutor/PowerNotifications.aidl
+ * Original file: /home/pop/git/amobisense/Amobisense-gt/src/edu/umich/PowerTutor/PowerNotifications.aidl
  */
 package edu.umich.PowerTutor;
 public interface PowerNotifications extends android.os.IInterface

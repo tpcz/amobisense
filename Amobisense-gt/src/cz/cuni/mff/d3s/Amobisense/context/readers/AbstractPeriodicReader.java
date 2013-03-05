@@ -81,6 +81,6 @@ public abstract class AbstractPeriodicReader extends AbstractReader implements I
 	
 	@Override
 	public String getReaderType() {
-		return AbstractEventReader.TYPE_PERIODIC;
+		return AbstractBroadcastEventReader.TYPE_PERIODIC;
 	}
 }

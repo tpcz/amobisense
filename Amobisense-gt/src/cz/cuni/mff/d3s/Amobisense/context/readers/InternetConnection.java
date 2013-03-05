@@ -36,7 +36,7 @@ import edu.umich.PowerTutor.phone.PhoneConstants;
  * @author pop
  * 
  */
-public class InternetConnection extends AbstractEventReader {
+public class InternetConnection extends AbstractBroadcastEventReader {
 	@SuppressWarnings("unused")
 	private final String TAG = "Internet Connection";
 
@@ -137,7 +137,7 @@ public class InternetConnection extends AbstractEventReader {
 
 	@Override
 	public String getReaderType() {
-		return AbstractEventReader.TYPE_PERIODIC;
+		return AbstractBroadcastEventReader.TYPE_PERIODIC;
 	}
 
 	@Override

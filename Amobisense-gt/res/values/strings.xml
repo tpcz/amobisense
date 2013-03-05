@@ -39,61 +39,60 @@ We use a cryptographically secure hash function to protect your identity.\n
     <string name ="help_head"> <big><b>AMobiSense</b></big> - A real-time system resource, application and device context monitor and more.</string>
     
     <string name ="help_text">\n
-        
-    You see a version of AMobiSense, context sensing platform based on PowerTutor power monitor. 
-    It can be used by context sensing applications, self-trackers or other interested people.     
-    <ul>
-    <li><b>Main control panel</b>\n
-     - Start/stop profiling services. \n
-     - Select <b>Application</b> or <b>System</b> mode to check out power consumption statistics.\n
-     - Menu features:\n
-        \t* Start/stop sending power traces to the our team.\n
-        \t* Enable/Disable the profiling service to run on startup.\n
-        \t* Save the current power trace to the sdcard.\n
-        \t* Save the context log to the sdcard.\n
-        \t* Upload logs to remote server.\n
-    </li>\n
-    <li><b>Context Views</b>\n
-        - Shows various device context information. \n
-    </li>
-    <li><b>App View</b>\n
-     - Displays power usage information for all of the apps running on the
-           phone.\n
-     - Press an app row to go to the <i>Graph View</i> for that app\'s power
-           usage.\n
-     - Press a hardware component name in the top tabs to include/exclude it from power
-            calculations.\n
-     - Data interpretation:\n
-        \t* Percentage value: The percentage of energy/average power consumed by the 
-            app in system.\n
-        \t* Time value: Time that the app has been actively monitored by this platform.\n
-     - Menu features:\n
-        \t* Change the sort key to one of current power, average power, or total energy usage.\n
-        \t* Change the time span to include the last minute, hour, day, or all time.\n
-    </li>\n
-    <li><b>Graph View</b>\n
-     - Displays app/system power consumption decomposed by hardware component.\n
-     - Use the tabs at the top to move between <i>Chart View</i> and <i>Pie
-       View</i>.\n
-    </li>\n
-    <li><b>Chart View</b>\n
-     - Displays the power usage of different components on the phone in recent
-           history.\n
-     - Scroll to view different component power graphs.\n
-     - Menu features:\n
-        \t* Select \"<i>Set History Size</i>\" to adjust the number of data points
-           displayed.\n 
-        \t* Select \"<i>Magnify Recent Data</i>\" to show more recent data points
-           more spread out.\n
-        \t* Select \"<i>Pause</i>\" to freeze the display as is, select resume to
-           continue.\n
-    </li>\n
-    <li><b>Pie View</b>\n
-     - Displays the power usage percentages of the different components.\n
-     - Menu features:\n
-        \t* Change the time span to include the last minute, hour, day, or all time.\n
-    </li>\n
-    </ul>
+<p>     
+You see a version of AMobiSense, context sensing platform based on
+PowerTutor power monitor. It can be used by context sensing
+applications, self-trackers or other interested people. The main parts are:
+</p>
+\n \n
+<ul>
+	<li><b>Main control panel</b>\n
+	    - Start/stop profiling services. \n 
+		- Menu features:\n 
+			\t* Start/stop uploading traces to us.\n 
+			\t* Enable the data gathering to run on startup.\n 
+			\t* Save the current power trace to the sdcard.\n 
+			\t* Save the context log to the sdcard.\n
+	</li> \n
+	<li><b>Context Views</b>\n 
+	    - Shows various device context information, such as \n
+	    	\t* Wifi\'s around \n 
+	    	\t* Values on accelerometer \n 
+	    	\t* CPU use \n 
+	    	\t* Cell Towers around you \n 
+	</li> \n
+	
+	<li><b>Power View</b> \n
+	<ol>
+		<li><b>App View</b>\n - Displays power usage information for all
+		of the apps running on the phone.\n - Press an app row to go to the <i>Graph
+		View</i> for that app\'s power usage.\n - Press a hardware component name
+		in the top tabs to include/exclude it from power calculations.\n -
+		Data interpretation:\n \t* Percentage value: The percentage of
+		energy/average power consumed by the app in system.\n \t* Time value:
+		Time that the app has been actively monitored by this platform.\n -
+		Menu features:\n \t* Change the sort key to one of current power,
+		average power, or total energy usage.\n \t* Change the time span to
+		include the last minute, hour, day, or all time.\n</li>
+		
+		<li><b>Graph View</b>\n - Displays app/system power consumption
+		decomposed by hardware component.\n - Use the tabs at the top to move
+		between <i>Chart View</i> and <i>Pie View</i>.\n</li>
+		
+		<li><b>Chart View</b>\n - Displays the power usage of different
+		components on the phone in recent history.\n - Scroll to view
+		different component power graphs.\n - Menu features:\n \t* Select \"<i>Set
+		History Size</i>\" to adjust the number of data points displayed.\n \t*
+		Select \"<i>Magnify Recent Data</i>\" to show more recent data points
+		more spread out.\n \t* Select \"<i>Pause</i>\" to freeze the display
+		as is, select resume to continue.\n</li>
+		
+		<li><b>Pie View</b>\n - Displays the power usage percentages of
+		the different components.\n - Menu features:\n \t* Change the time
+		span to include the last minute, hour, day, or all time.\n</li>
+	</ol>
+	</li>
+</ul>
     
     </string>
 

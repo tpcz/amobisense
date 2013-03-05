@@ -72,7 +72,7 @@ public class ContextData implements Comparable<ContextData> {
 	
 	public void setValue (String value) {
 		svalue.setLength(0);
-		svalue.append(svalue);
+		svalue.append(value);
 		lvalue = 0;
 		dvalue = 0;
 		dataType = ContextType.STRING;

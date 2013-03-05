@@ -34,7 +34,7 @@ import edu.umich.PowerTutor.phone.PhoneConstants;
  * @author pop
  *
  */
-public class BatteryLevel extends AbstractEventReader {
+public class BatteryLevel extends AbstractBroadcastEventReader {
 	@SuppressWarnings("unused")
 	private final String TAG = "BatteryContext";
 	
@@ -78,7 +78,7 @@ public class BatteryLevel extends AbstractEventReader {
 
 	@Override
 	public String getReaderType() {
-		return AbstractEventReader.TYPE_BROADCAST;
+		return AbstractBroadcastEventReader.TYPE_BROADCAST;
 	}
 
 	@Override

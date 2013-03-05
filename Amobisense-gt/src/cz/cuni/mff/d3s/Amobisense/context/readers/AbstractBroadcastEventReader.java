@@ -23,47 +23,50 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.telephony.CellLocation;
-import android.telephony.PhoneStateListener;
-import android.telephony.ServiceState;
-import android.telephony.TelephonyManager;
 import edu.umich.PowerTutor.phone.PhoneConstants;
 import edu.umich.PowerTutor.service.DataCollector;
 
 /**
- * Abstract class for context state holders based on events 
- * (such as phone state listeners or broadcast listeners).
+ * Abstract class for context state holders based on broadcast receivers.
  * 
  * @author pop
  * 
  */
-public abstract class AbstractEventReader extends AbstractReader implements IDataReader {
+public abstract class AbstractBroadcastEventReader extends AbstractEventReader implements IDataReader {
 		
+	//protected Intent intent = null;
+	protected BroadcastReceiver receiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context c, Intent i) {
+			// TODO Auto-generated method stub
+			AbstractBroadcastEventReader.this.onReceive(c, i);
+		}
+	};
 	protected boolean stopHistory = false;
 	
 	/** should be changed in subclasses! */
-	public static final String TAG = "EventReader";
+	public static final String TAG = "BroadcastReader";
 	
-	public AbstractEventReader(Context c, PhoneConstants phoneValues, String mainDataId) {
-		super(c, phoneValues, mainDataId);
+	/** Is called once from constructor */
+	public void init() {
+		
+		
+	}
+	
+	protected abstract void onReceive(Context c, Intent i);
+	
+	public Intent registerReceiver(IntentFilter filter) {
+		return this.c.registerReceiver(this.receiver, filter);
 	}
 	
 	
-	protected void rememberHistory() {
-		stopHistory = false;
-
-		Runnable collector = new Runnable() {
-			public void run() {
-				
-				if (handler != null && !stopHistory) {
-					handler.postDelayed(this, DataCollector.HISTORY_UPDATE_INTERVAL);
-				}
-				updateHistory();
-			}
-		};
-
-		if (!stopHistory) {
-			handler.post(collector);
-		}
-	}	
+	public void unregisterReceiver(){
+		this.c.unregisterReceiver(this.receiver);
+	}
+	
+	
+	public AbstractBroadcastEventReader(Context c, PhoneConstants phoneValues, String mainDataId) {
+		super(c, phoneValues, mainDataId);
+		init();
+	}
 }

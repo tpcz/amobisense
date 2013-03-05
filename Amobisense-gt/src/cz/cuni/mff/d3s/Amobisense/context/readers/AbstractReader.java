@@ -21,6 +21,7 @@ public abstract class AbstractReader implements IDataReader{
 	
 	public static final String TYPE_PERIODIC = "PERIODIC";
 	public static final String TYPE_BROADCAST = "BROADCAST";
+	public static final String TYPE_PHONESTATE = "PHONESTATE";
 	
 	public static final boolean WRITE_ONLY_ON_CHANGE = true;
 	public static final boolean WRITE_EACH_ITTERATION = true;
@@ -118,7 +119,10 @@ public abstract class AbstractReader implements IDataReader{
 
 	protected void updateHistory() {
 		for (String key : currdata.keySet()) {
-			
+			// don't store history for string data, no graphs can be drawn
+			if (currdata.get(key).dataType == ContextType.STRING) {
+				continue;
+			}
 			synchronized (currdata) {
 				
 				synchronized (history) {

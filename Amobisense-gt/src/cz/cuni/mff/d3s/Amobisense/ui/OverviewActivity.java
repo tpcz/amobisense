@@ -42,7 +42,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 			}
 		};
 		
-		int graphHeight = 80;
+		int graphHeight = 100;
 		int graphWith = 0; // auto value (fill)
 		
 		config = new MultiPartInfoActivityConfiguration("OverviewTab", null  , null, dataAvailabilityChecker);
@@ -104,7 +104,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "Load [%]");
 		graphConfiguration.setYAxeLimits(0, 40);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
-		config.add(graphConfiguration);
+		//config.add(graphConfiguration);
 		
 		// User
 		IGraphDoubleDataCollector sysUsrCollector = new IGraphDoubleDataCollector () {
@@ -115,7 +115,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		
 		graphConfiguration = config.new GraphConfigurationItem("Load (User)", sysUsrCollector);
 		graphConfiguration.setAxeLabels("time [s]", "Load [%]");
-		graphConfiguration.setYAxeLimits(0, 40);
+		graphConfiguration.setYAxeLimits(0, 60);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		config.add(graphConfiguration);
 		
@@ -132,7 +132,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setYAxeLimits(0, 110);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		
-		config.add(graphConfiguration);
+		//config.add(graphConfiguration);
 		
 		
 		

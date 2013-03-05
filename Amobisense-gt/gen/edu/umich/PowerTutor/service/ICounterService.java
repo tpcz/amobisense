@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /home/pop/workspaces/android2/AMobiSense/src/edu/umich/PowerTutor/service/ICounterService.aidl
+ * Original file: /home/pop/git/amobisense/Amobisense-gt/src/edu/umich/PowerTutor/service/ICounterService.aidl
  */
 package edu.umich.PowerTutor.service;
 public interface ICounterService extends android.os.IInterface

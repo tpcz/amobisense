@@ -29,6 +29,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryTemperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.CPUUse;
+import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import edu.umich.PowerTutor.dataReaders.Audio;
@@ -230,5 +231,10 @@ public class PhoneSelector {
 		}
 
 		contextReaders.add(new InternetConnection(context, constants));
+		
+		GSMCells gsmc = new GSMCells(context, constants);
+		if (gsmc.isSupported()) {
+			contextReaders.add(gsmc);
+		}
 	}
 }

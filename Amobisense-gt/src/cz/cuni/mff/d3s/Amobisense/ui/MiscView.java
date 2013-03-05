@@ -48,6 +48,7 @@ import android.widget.Toast;
 import cz.cuni.mff.d3s.Amobisense.R;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
+import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import edu.umich.PowerTutor.dataReaders.CPU;
@@ -87,6 +88,7 @@ public class MiscView extends Activity {
 	  allItems.add(new InternetConnectionItem());
 	  allItems.add(new CPUUSageItem());
 	  allItems.add(new TempItem());
+	  allItems.add(new GSMCellItem());
 	  allItems.add(new BatteryLevelItem());
   }
 
@@ -366,6 +368,30 @@ public class MiscView extends Activity {
 	      }
 	    }
   }
+  
+  
+  
+  private class GSMCellItem extends InfoItem {
+	    public boolean available() {
+	      return (null != GSMCells.getInstance());
+	    }
+
+	    public void setupView() {
+	      if(textView == null) return;
+	      String wifiinfo = GSMCells.getInstance().getCurrentMainData().toString();
+	      
+	      textView.setText(wifiinfo);
+	      textView.setGravity(Gravity.CENTER);
+	      
+	      title.setText("GSM Info");
+	      if (GSMCells.getInstance().getScanResults() != null) {
+	    	  //onClickActivityClazz  = SeenWifiInfoActivityMP.class;
+	    	  summary.setText("Mobile net info");
+	      } else {
+	    	  summary.setText("Can not access this data:-(");
+	      }
+	    }
+}
   
   
   private class CPUUSageItem extends InfoItem {

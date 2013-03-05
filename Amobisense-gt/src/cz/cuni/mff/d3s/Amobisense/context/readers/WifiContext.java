@@ -38,7 +38,7 @@ import edu.umich.PowerTutor.phone.PhoneConstants;
  * @author pop
  * 
  */
-public class WifiContext extends AbstractEventReader {
+public class WifiContext extends AbstractBroadcastEventReader {
 	@SuppressWarnings("unused")
 	private final String TAG = "WifiContext";
 	private StringBuilder signalNameConstructor = new StringBuilder();
@@ -68,7 +68,7 @@ public class WifiContext extends AbstractEventReader {
 		// perform initial scan perform scan..
 		performScan(c);
 		
-		// start history
+		// start history (this must be done here, after first scan, not in supperclass!)
 		rememberHistory();
 	}
 
@@ -151,7 +151,7 @@ public class WifiContext extends AbstractEventReader {
 
 	@Override
 	public String getReaderType() {
-		return AbstractEventReader.TYPE_BROADCAST;
+		return AbstractBroadcastEventReader.TYPE_BROADCAST;
 	}
 
 	@Override
