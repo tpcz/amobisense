@@ -9,4 +9,4 @@
   <item android:maxLevel="6" android:drawable="@drawable/level_7" />
   <item android:maxLevel="7" android:drawable="@drawable/level_8" />
   <item android:maxLevel="8" android:drawable="@drawable/level_9" />
-   </level-list>
+</level-list>

@@ -159,9 +159,9 @@ public class MainActivity extends Activity {
 				"<br>" +
 				"<br>" + 
 				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
-				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data." +
-				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team) " +
-				"or use menu to store current traces. " +
+				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data or " +
+				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team)." +
+				"Menu in this activity allows you to store current traces to SD card." +
 				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
 				""));
 		welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -174,9 +174,9 @@ public class MainActivity extends Activity {
 				" history and device susbsystems energy share<br>" +
 				"<b>- Context Viewer</b> showing various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
 				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
-				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data." +
-				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team) " +
-				"or use menu to store current traces. " +
+				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data or " +
+				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team)." +
+				"Menu in this activity allows you to store current traces to SD card." +
 				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
 				""));
 		

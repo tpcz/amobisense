@@ -19,7 +19,9 @@
 		        android:dialogTitle="@string/personalinfo_gender"
     />  
     
-    <EditTextPreference
+    <ListPreference
+          		android:entries="@array/job_keys" 
+		        android:entryValues="@array/job_values" 
         		android:persistent="true"
                 android:key="personalinfo_job"
                 android:title="@string/personalinfo_job"
@@ -27,4 +29,13 @@
                 android:dialogTitle="@string/personalinfo_job" 
     />
     
+    <ListPreference
+          		android:entries="@array/education_keys" 
+		        android:entryValues="@array/education_values" 
+        		android:persistent="true"
+                android:key="personalinfo_education"
+                android:title="@string/personalinfo_education"
+                android:summary="@string/personalinfo_education_summary"
+                android:dialogTitle="@string/personalinfo_education" 
+    /> 
 </PreferenceScreen>

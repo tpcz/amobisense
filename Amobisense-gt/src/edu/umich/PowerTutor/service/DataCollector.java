@@ -470,6 +470,7 @@ public class DataCollector implements Runnable {
 			
 			out.write("age " + prefs.getString("personalinfo_age", "0") +  "\n");
 			out.write("gender " + prefs.getString("personalinfo_gender", "-") +  "\n");
+			out.write("education " + prefs.getString("personalinfo_education", "-") +  "\n");
 			out.write("job-position " + prefs.getString("personalinfo_job", "-") +  "\n\n");
 			
 		} catch (IOException e) {

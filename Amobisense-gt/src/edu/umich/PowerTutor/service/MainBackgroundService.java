@@ -148,7 +148,7 @@ public class MainBackgroundService extends Service{
   
   /** This function is to construct the real-time updating notification*/
   public void showNotification(){
-    int icon = R.drawable.level;   
+    int icon = R.drawable.icon;   
         
     // icon from resources
     CharSequence tickerText = getApplicationContext().getString(R.string.app_name);// ticker-text
@@ -166,9 +166,8 @@ public class MainBackgroundService extends Service{
      * configurations above.
      */
     notification = new Notification(icon, tickerText, when);
-    notification.iconLevel = 2;
-    notification.setLatestEventInfo(context, contentTitle,
-                                    contentText, contentIntent);
+    //notification.iconLevel = 2;
+    notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
     /* We need to set the service to run in the foreground so that system
      * won't try to destroy the power logging service except in the most
@@ -200,7 +199,7 @@ public class MainBackgroundService extends Service{
    * 8% cpu utilization penalty.
    */
   public void updateNotification(int level, double totalPower) {
-    notification.icon = R.drawable.level;   
+    notification.icon = R.drawable.icon;   
     notification.iconLevel = level;
 
     // If we know how much charge the battery has left we'll override the
@@ -211,22 +210,21 @@ public class MainBackgroundService extends Service{
       double charge = bst.getCharge();
       double volt = bst.getVoltage();
       if(charge > 0 && volt > 0) {
-        notification.icon = R.drawable.time;
+        notification.icon = R.drawable.icon;
 
         double minutes = charge * volt / (totalPower / 1000) / 60;
         if(minutes < 55) {
-          notification.iconLevel = 1 +
-              (int)Math.max(0, Math.round(minutes / 10.0) - 1);
+         // notification.iconLevel = 1 +
+          //    (int)Math.max(0, Math.round(minutes / 10.0) - 1);
         } else {
-          notification.iconLevel = (int)Math.min(13,
-              6 + Math.max(0, Math.round(minutes / 60.0) - 1));
+        //  notification.iconLevel = (int)Math.min(13,
+         //     6 + Math.max(0, Math.round(minutes / 60.0) - 1));
         }
       }
     }
 
     CharSequence contentTitle = getApplicationContext().getString(R.string.app_name);
-    CharSequence contentText = "Total Power: " + (int)Math.round(totalPower) +
-                               " mW";
+    CharSequence contentText = "Total Power: " + (int)Math.round(totalPower) + " mW, context available";
 
     /* When the user selects the notification the tab view for global power
      * usage will appear.

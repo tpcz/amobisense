@@ -37,5 +37,43 @@
     <item>male</item>
     <item>female</item>
   </string-array>
-
+  
+  
+  <string-array name="job_keys">
+    <item>Student</item>
+    <item>Academia (not student)</item>
+    <item>IT</item>
+    <item>Health Care</item>
+    <item>Commerce</item>
+    <item>Administrative</item>
+    <item>Other</item>
+  </string-array>
+  
+  <string-array name="job_values">
+    <item>Student</item>
+    <item>Academia (not student)</item>
+    <item>IT</item>
+    <item>Health Care</item>
+    <item>Commerce</item>
+    <item>Administrative</item>
+    <item>Other</item>
+  </string-array>
+  
+  <string-array name="education_keys">
+    <item>Primary</item>
+    <item>High School</item>
+    <item>University Bc.</item>
+    <item>University Mgr.</item>
+    <item>University PhD.</item>
+    <item>University Other.</item>
+  </string-array>
+  
+  <string-array name="education_values">
+    <item>Primary</item>
+    <item>High School</item>
+    <item>University Bc.</item>
+    <item>University Mgr.</item>
+    <item>University PhD.</item>
+    <item>University Other.</item>
+  </string-array>  
 </resources>

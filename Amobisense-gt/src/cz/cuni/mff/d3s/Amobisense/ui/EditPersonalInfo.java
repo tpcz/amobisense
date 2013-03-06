@@ -50,7 +50,6 @@ public class EditPersonalInfo extends PreferenceActivity {
                 builder.show();
                 rtnval = false;
             }
-            
             return rtnval;
         }
     });

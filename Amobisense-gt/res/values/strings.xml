@@ -116,6 +116,9 @@ applications, self-trackers or other interested people. The main parts are:
 <string name="personalinfo_job">Your Position</string>
 <string name="personalinfo_job_summary">You current occupation (e.g. student, IT specialist, teacher..)</string>
 
+<string name="personalinfo_education">Your Education</string>
+<string name="personalinfo_education_summary">You current education (E.g. High School or University degree)</string>
+
 <string name="preferences_upload_url">URL to upload data</string>
 <string name="preferences_upload_url_summary">Your can change server, where to upload data</string>
 
