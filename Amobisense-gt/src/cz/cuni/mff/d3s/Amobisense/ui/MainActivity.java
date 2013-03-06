@@ -152,13 +152,17 @@ public class MainActivity extends Activity {
 				"- <a href='amobisense.context.overview://'>Graphs</a> showing overview<br>" +
 				"- <a href='amobisense.context.misc://'>Detail</a> infomation, e.g.," +
 				"" +
-				"<a href='amobisense.context.wifi://'>wifi's,</a><a href='amobisense.context.connection://'>net connection,</a> <a href='amobisense.context.accelerometer://'>accelerometer</a><br><br>" +
+				"<a href='amobisense.context.wifi://'>wifi's,</a>" +
+				"<a href='amobisense.context.connection://'>net connection</a>, " +
+				"<a href='amobisense.context.accelerometer://'>accelerometer</a> or " +
+				"<a href='amobisense.context.gsm://'>gsm cell information</a>" +
+				"<br>" +
 				"<br>" + 
-				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your <a href='amobisense.prefs.personal://'>personal information</a> " +
-				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. forget to send traces to our team) " +
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
+				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data." +
+				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team) " +
 				"or use menu to store current traces. " +
 				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
-				"" +
 				""));
 		welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
 	}
@@ -166,14 +170,14 @@ public class MainActivity extends Activity {
 	private void setStoppedText() {
 		welcomeText.setText(Html.fromHtml(	
 				
-				"You could see:<br><b>- Power Viewer</b> shows applicaton power use, device subsystems power use" +
+				"Start me to see:<br><b>- Power Viewer</b> showing applicaton power use, device subsystems power use" +
 				" history and device susbsystems energy share<br>" +
-				"<b>- Context Viewer</b> shows various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
-				"You can have a look in <a href='amobisense.help://'> help & about</a> section. You can also specify your <a href='amobisense.prefs.personal://'>personal information</a> " +
-				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. forget to send traces to our team) " +
+				"<b>- Context Viewer</b> showing various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
+				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data." +
+				"and several <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team) " +
 				"or use menu to store current traces. " +
 				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
-				"" +
 				""));
 		
 	   welcomeText.setMovementMethod(LinkMovementMethod.getInstance());

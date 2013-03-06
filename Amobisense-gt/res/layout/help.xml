@@ -18,33 +18,33 @@
       >
       <TextView  
           android:id="@+id/s0"
-          android:layout_width="250px" 
+          android:layout_width="250dp" 
           android:layout_height="wrap_content" 
           android:text="@string/help_head"
-          android:layout_marginLeft = "5px"
+          android:layout_marginLeft = "5dp"
         />
       <TextView  
-          android:id="@+id/s0"
+          android:id="@+id/s01"
           android:layout_width="wrap_content" 
           android:layout_height="wrap_content" 
           android:background ="@drawable/icon"
         />
     </LinearLayout>
     <TextView  
-        android:id="@+id/s0"
-        android:layout_width="300px" 
-        android:layout_height="5px" 
+        android:id="@+id/s02"
+        android:layout_width="300dp" 
+        android:layout_height="5dp" 
         android:background ="@drawable/line"
-        android:layout_marginLeft = "3px"  
+        android:layout_marginLeft = "3dp"  
       />   
     <TextView  
-        android:id="@+id/s0"
+        android:id="@+id/s03"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:text="@string/help_text"
         android:textSize="13sp"
-        android:layout_marginLeft = "5px" 
-	android:layout_marginRight = "5px" 
+        android:layout_marginLeft = "5dp" 
+	android:layout_marginRight = "5dp" 
       />
     <TextView  
         android:id="@+id/s1"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content" 
         android:text="@string/url_1"
        
-        android:layout_marginLeft = "5px"  
+        android:layout_marginLeft = "5dp"  
       />
     <TextView  
         android:id="@+id/S2"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content" 
         android:text="@string/url_2"
         
-        android:layout_marginLeft = "5px"  
+        android:layout_marginLeft = "5dp"  
       />
   </LinearLayout>
 </ScrollView>

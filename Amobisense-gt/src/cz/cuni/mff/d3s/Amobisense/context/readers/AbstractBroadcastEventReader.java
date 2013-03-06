@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import edu.umich.PowerTutor.phone.PhoneConstants;
-import edu.umich.PowerTutor.service.DataCollector;
 
 /**
  * Abstract class for context state holders based on broadcast receivers.

@@ -7,7 +7,7 @@ import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphLo
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IStringDataCollector;
 
 
-public class InternetConnectivityDetailInfoActivityMP extends MultiPartInfoActivity<NoClass> {
+public class InternetConnectivityDetailInfoMP extends MultiPartInfoActivity<NoClass> {
 
 	@Override
 	protected void setupConfiguration() {

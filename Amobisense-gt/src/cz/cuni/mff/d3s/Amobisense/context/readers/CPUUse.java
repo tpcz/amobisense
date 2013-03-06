@@ -4,7 +4,6 @@ package cz.cuni.mff.d3s.Amobisense.context.readers;
 import android.content.Context;
 import edu.umich.PowerTutor.dataReaders.CPU;
 import edu.umich.PowerTutor.phone.PhoneConstants;
-import edu.umich.PowerTutor.util.BatteryStats;
 
 public class CPUUse extends AbstractPeriodicReader{
 

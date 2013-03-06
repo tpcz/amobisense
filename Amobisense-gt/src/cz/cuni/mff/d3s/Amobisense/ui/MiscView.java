@@ -378,21 +378,20 @@ public class MiscView extends Activity {
 
 	    public void setupView() {
 	      if(textView == null) return;
-	      String wifiinfo = GSMCells.getInstance().getCurrentMainData().toString();
+	      String wifiinfo = GSMCells.getInstance().getMiscItemString();
 	      
 	      textView.setText(wifiinfo);
 	      textView.setGravity(Gravity.CENTER);
 	      
-	      title.setText("GSM Info");
+	      title.setText("GSM Net Info");
 	      if (GSMCells.getInstance().getScanResults() != null) {
-	    	  //onClickActivityClazz  = SeenWifiInfoActivityMP.class;
+	    	  onClickActivityClazz  = GSMCellsMP.class;
 	    	  summary.setText("Mobile net info");
 	      } else {
 	    	  summary.setText("Can not access this data:-(");
 	      }
 	    }
 }
-  
   
   private class CPUUSageItem extends InfoItem {
 	  
@@ -437,7 +436,7 @@ public class MiscView extends Activity {
 	      
 	      textView.setText(info);
 	      textView.setGravity(Gravity.CENTER);
-	      onClickActivityClazz  = InternetConnectivityDetailInfoActivityMP.class;
+	      onClickActivityClazz  = InternetConnectivityDetailInfoMP.class;
 
 	      title.setText("Connection");
 	      summary.setText("Are you now online?");

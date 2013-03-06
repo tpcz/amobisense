@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import cz.cuni.mff.d3s.Amobisense.context.ContextData;
 import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.ui.BatteryLevelDetailInfoActivityMP;
 import cz.cuni.mff.d3s.Amobisense.ui.MiscView;

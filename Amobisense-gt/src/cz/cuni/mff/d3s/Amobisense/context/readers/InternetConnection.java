@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import cz.cuni.mff.d3s.Amobisense.context.ContextData;
 import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.ui.BatteryLevelDetailInfoActivityMP;
 import cz.cuni.mff.d3s.Amobisense.ui.MiscView;

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 	
 	protected MultiPartInfoActivityConfiguration config;
 	
+	protected boolean summaryAsHTML;
+	
 	//private ArrayList<GraphHandle> graphHandles = new ArrayList<GraphHandle>();
 	
 	// should be overidden in subclasses
@@ -66,7 +69,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 	    handler = new Handler();
 	    
 	    //getApplicationContext().bindService(serviceIntent, conn, 0);
-	    
+	    setupActivityViewFromXML();
 	    setupConfiguration();
 	    setupActivityView();
 	    graphCounter = 1;
@@ -75,7 +78,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 	 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.wifi_detail_info);
+		setContentView(R.layout.multipart_info_notitle);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 	}
@@ -102,7 +105,11 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		 if (showTitleAndtext) {
 			 TextView t = (TextView) findViewById(R.id.summary);
 			 if (dataAvailable()){
-				 t.setText(config.summaryTextCollector.getString());		 
+				 if (!summaryAsHTML) {
+					 t.setText(config.summaryTextCollector.getString());
+				 } else {
+					 t.setText(Html.fromHtml(config.summaryTextCollector.getString()));
+				 }
 			 } else{
 				 t.setText("Data not available");
 			 }
@@ -230,17 +237,19 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 			} 
 	 }
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void setupActivityView() {
+	 
+	public void setupActivityViewFromXML() {
 		 if (showTitleAndtext) {
 			 // basis in xml..
 			 setContentView(R.layout.multipart_info_titled);
-			 lastLayoutId = R.id.summary;
-		  
-			 // set title
-			 TextView t = (TextView) findViewById(R.id.title);
-			 t.setText(config.title);
-			 
+		 } else {
+			 setContentView(R.layout.multipart_info_notitle);
+		 } 
+	}
+	 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void setupActivityView() {
+		 if (showTitleAndtext) {
 			 textCollector = new Runnable() {
 			      public void run() {
 			        setupView();
@@ -249,11 +258,15 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 			        }
 			      }
 			 };
-		 } else {
-			 setContentView(R.layout.multipart_info_notitle);
-			 lastLayoutId = 0;
+			 
+			 // set title
+			 TextView t = (TextView) findViewById(R.id.title);
+			 t.setText(config.title);
+			 
+			 lastLayoutId = R.id.summary;
+		 }else {
+			 lastLayoutId = 0; 
 		 }
-		 
 		
 		 // rest (graphs and lists) will be added dynamically
 		 chartLayout = new LinearLayout(this);

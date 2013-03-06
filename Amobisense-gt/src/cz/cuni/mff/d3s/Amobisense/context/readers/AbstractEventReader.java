@@ -19,14 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package cz.cuni.mff.d3s.Amobisense.context.readers;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.telephony.CellLocation;
-import android.telephony.PhoneStateListener;
-import android.telephony.ServiceState;
-import android.telephony.TelephonyManager;
 import edu.umich.PowerTutor.phone.PhoneConstants;
 import edu.umich.PowerTutor.service.DataCollector;
 
