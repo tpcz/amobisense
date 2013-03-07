@@ -373,7 +373,7 @@ public class MiscView extends Activity {
   
   private class GSMCellItem extends InfoItem {
 	    public boolean available() {
-	      return (null != GSMCells.getInstance());
+	      return (GSMCells.getInstance().isSupported());
 	    }
 
 	    public void setupView() {
@@ -437,7 +437,6 @@ public class MiscView extends Activity {
 	      textView.setText(info);
 	      textView.setGravity(Gravity.CENTER);
 	      onClickActivityClazz  = InternetConnectivityDetailInfoMP.class;
-
 	      title.setText("Connection");
 	      summary.setText("Are you now online?");
 	    }

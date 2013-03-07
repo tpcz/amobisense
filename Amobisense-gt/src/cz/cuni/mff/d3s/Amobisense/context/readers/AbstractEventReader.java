@@ -43,13 +43,18 @@ public abstract class AbstractEventReader extends AbstractReader implements IDat
 	
 	
 	protected void rememberHistory() {
+		rememberHistory(1);
+	}
+	
+	
+	protected void rememberHistory(final int intervalSecond) {
 		stopHistory = false;
 
 		Runnable collector = new Runnable() {
 			public void run() {
 				
 				if (handler != null && !stopHistory) {
-					handler.postDelayed(this, DataCollector.HISTORY_UPDATE_INTERVAL);
+					handler.postDelayed(this, intervalSecond * 1000);
 				}
 				updateHistory();
 			}

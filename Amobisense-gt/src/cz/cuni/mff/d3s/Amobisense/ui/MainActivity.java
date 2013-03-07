@@ -126,14 +126,14 @@ public class MainActivity extends Activity {
 
 		
 		if (counterService != null) {
-			serviceStartButton.setText("Stop Data Collecting");
+			serviceStartButton.setText("Stop AMobiSense");
 			//appViewerButton.setEnabled(true);
 			//sysInformationButton.setEnabled(true);
 			//sysEnergyViewerButton.setEnabled(true);
 			setRunningText();
 			
 		} else {
-			serviceStartButton.setText("Start Data Collecting");
+			serviceStartButton.setText("Start AMobiSense!");
 			//appViewerButton.setEnabled(false);
 			//sysEnergyViewerButton.setEnabled(false);
 			//sysInformationButton.setEnabled(false);
@@ -149,20 +149,20 @@ public class MainActivity extends Activity {
 				"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
 				
 				"<b>Context Information</b><br>" +
-				"- <a href='amobisense.context.overview://'>Graphs</a> showing overview<br>" +
-				"- <a href='amobisense.context.misc://'>Detail</a> infomation, e.g.," +
-				"" +
-				"<a href='amobisense.context.wifi://'>wifi's,</a>" +
-				"<a href='amobisense.context.connection://'>net connection</a>, " +
-				"<a href='amobisense.context.accelerometer://'>accelerometer</a> or " +
-				"<a href='amobisense.context.gsm://'>gsm cell information</a>" +
+				"- <a href='amobisense.context.overview://'>Context overview graphs</a><br>" +
+				"- <a href='amobisense.context.misc://'>Detail information</a>" +
+				//", e.g.," +
+				//"<a href='amobisense.context.wifi://'>wifi's,</a> " +
+				//"<a href='amobisense.context.connection://'>net connection</a>, " +
+				//"<a href='amobisense.context.accelerometer://'>accelerometer</a> or " +
+				//"<a href='amobisense.context.gsm://'>gsm cell information</a> " +
 				"<br>" +
 				"<br>" + 
-				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section for further details, and you can specify " +
 				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data or " +
-				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team)." +
-				"Menu in this activity allows you to store current traces to SD card." +
-				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
+				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team). " +
+				"Menu in this activity allows you to store current traces to SD card. " +
+				"For more information see <a href='https://github.com/tpcz/amobisense/wiki'>Amobisense web</a>" +
 				""));
 		welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
 	}
@@ -172,12 +172,14 @@ public class MainActivity extends Activity {
 				
 				"Start me to see:<br><b>- Power Viewer</b> showing applicaton power use, device subsystems power use" +
 				" history and device susbsystems energy share<br>" +
-				"<b>- Context Viewer</b> showing various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others." +
-				"You can have a look in <a href='amobisense.help://'> help & about</a> section, and you can specify " +
+				"<b>- Context Viewer</b> showing various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others. " +
+				"<br>" +
+				"<br>" + 
+				"You can have a look in <a href='amobisense.help://'> help & about</a> section for further details, and you can specify " +
 				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data or " +
-				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team)." +
-				"Menu in this activity allows you to store current traces to SD card." +
-				"For more information see <a href='http://d3s.mff.cuni.cz/~pop/amobisense/'>Amobisense web</a>" +
+				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team). " +
+				"Menu in this activity allows you to store current traces to SD card. " +
+				"For more information see <a href='https://github.com/tpcz/amobisense/wiki'>Amobisense web</a>" +
 				""));
 		
 	   welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -205,12 +207,9 @@ public class MainActivity extends Activity {
 		instance = this;
 		getApplicationContext().bindService(serviceIntent, conn, 0);
 		if (prefs.getBoolean("firstRun", true)) {
-			if (PhoneSelector.getPhoneType() == PhoneSelector.PHONE_UNKNOWN) {
-				showDialog(DIALOG_UNKNOWN_PHONE);
-
-			} else {
-				showDialog(DIALOG_TOS);
-			}
+			
+			showDialog(DIALOG_TOS);
+			
 			putDefaultValuesToPrefs(); 
 		} else {
 			incrementRunNumber();
@@ -430,7 +429,9 @@ public class MainActivity extends Activity {
 							prefs.edit().putBoolean("firstRun", false).putBoolean("runOnStartup", true)
 									.putBoolean("sendPermission", true).commit();
 							dialog.dismiss();
-						}
+							if (PhoneSelector.getPhoneType() == PhoneSelector.PHONE_UNKNOWN) {
+								showDialog(DIALOG_UNKNOWN_PHONE);
+							}						}
 					}).setNegativeButton("Do not agree", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							prefs.edit().putBoolean("firstRun", true).commit();
@@ -475,7 +476,7 @@ public class MainActivity extends Activity {
 					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.dismiss();
-							showDialog(DIALOG_TOS);
+							//showDialog(DIALOG_TOS);
 						}
 					});
 			return builder.create();
@@ -526,9 +527,10 @@ public class MainActivity extends Activity {
 	private class CounterServiceConnection implements ServiceConnection {
 		public void onServiceConnected(ComponentName className, IBinder boundService) {
 			counterService = ICounterService.Stub.asInterface((IBinder) boundService);
-			serviceStartButton.setText("Stop Data Collecting");
+			serviceStartButton.setText("Stop AMobiSense!");
 			serviceStartButton.setEnabled(true);
 			setRunningText();
+			startService(serviceIntent);
 			
 			//appViewerButton.setEnabled(true);
 			//sysInformationButton.setEnabled(true);
@@ -541,7 +543,7 @@ public class MainActivity extends Activity {
 			getApplicationContext().bindService(serviceIntent, conn, 0);
 
 			Toast.makeText(MainActivity.this, "Stopped", Toast.LENGTH_SHORT).show();
-			serviceStartButton.setText("Start Data Collecting");
+			serviceStartButton.setText("Start AMobiSense!");
 			serviceStartButton.setEnabled(true);
 			setStoppedText();
 			

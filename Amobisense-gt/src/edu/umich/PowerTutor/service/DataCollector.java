@@ -76,38 +76,37 @@ public class DataCollector implements Runnable {
 	 */
 	private static final String DEFLATE_DICTIONARY = "onoffidleoff-hookringinglowairplane-modebatteryedgeGPRS3Gunknown"
 			+ "in-serviceemergency-onlyout-of-servicepower-offdisconnectedconnecting"
-			+ "associateconnectedsuspendedphone-callservicenetworkbegin.0123456789"
-			+ "GPSAudioWifi3GLCDCPU-power ";
+			+ "associateconnectedsuspendedphone-callservicenetworkbegin.0123456789" + "GPSAudioWifi3GLCDCPU-power ";
 
 	public static final int ALL_COMPONENTS = -1;
 	public static final int ITERATION_INTERVAL_SCALE = 1000; // 1 second
 	public static final int ITERATION_INTERVAL = 1 * ITERATION_INTERVAL_SCALE; // 1
 	public static final int HISTORY_UPDATE_INTERVAL = ITERATION_INTERVAL;
-	
-																				// second
-	//public static final int CONTEXT_LOG_WRITE_NRITERATION = 10 / (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE); // 10
-																													// second
-	
-	public static final int CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC = 30 / (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE);
-	
+
+	// second
+	// public static final int CONTEXT_LOG_WRITE_NRITERATION = 10 /
+	// (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE); // 10
+	// second
+
+	public static final int CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC = 60 * 15 / (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE);
+
 	public static final int POWER_LOG_UPLOAD_TRY_NRITERATION_SEC = CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC;
-	
+
 	public static final int CONTEXT_LOG = 1;
 	public static final int POWER_LOG = 2;
 	public static final int ALL_LOGS = POWER_LOG | CONTEXT_LOG;
 
 	public static final boolean DELETE_WHEN_UPLOADED = true;
 	public static final boolean DONT_DELETE_WHEN_UPLOADED = false;
-	
+
 	public static final boolean CONTEXT_LOG_WRITE_STRATEGY = AbstractReader.WRITE_ONLY_ON_CHANGE;
-	
 
 	private MainBackgroundService context;
 	private SharedPreferences prefs;
 
 	private Vector<PowerComponent> powerComponents;
 	private Vector<AbstractReader> contextReaders;
-	//private Map<String, ContextStateWatch> contextReadersMap;
+	// private Map<String, ContextStateWatch> contextReadersMap;
 	private Vector<PowerFunction> powerFunctions;
 	private Vector<HistoryBuffer> powerHistories;
 	private Vector<HistoryHolder> contextHistories;
@@ -142,7 +141,7 @@ public class DataCollector implements Runnable {
 	public static long contextLogAlreadyUploadedNr = 0;
 
 	public String powerLogFileName = "PowerTrace.log";
-	
+
 	public static int powerLogFileNameRotationCounter;
 	public static long powerLogAlreadyUploadedNr = 0;
 
@@ -160,10 +159,9 @@ public class DataCollector implements Runnable {
 		uidAppIds = new HashMap<Integer, String>();
 		instance = this;
 		phoneConstants = PhoneSelector.getConstants(context);
- 
+
 		/* add all periodically scanning components */
-		PhoneSelector.generateComponents(context, powerComponents,
-				powerFunctions);
+		PhoneSelector.generateComponents(context, powerComponents, powerFunctions);
 
 		powerHistories = new Vector<HistoryBuffer>();
 		for (int i = 0; i < powerComponents.size(); i++) {
@@ -175,7 +173,6 @@ public class DataCollector implements Runnable {
 
 		// just register it here - more data values will be produced
 		// and historyholders will register themselfs!
-		
 
 		/* each context reader can produce more data vectors */
 		// for(int i = 0; i < contextReaders.size(); i++) {
@@ -214,8 +211,6 @@ public class DataCollector implements Runnable {
 	/** Main Loop, keeps updating the power profile */
 	public void run() {
 
-		
-
 		beginTime = SystemClock.elapsedRealtime();
 		oledId = getOLEDiD();
 
@@ -247,7 +242,7 @@ public class DataCollector implements Runnable {
 
 			/* gets Values for all components and context readers */
 			getCurrentValues(iter);
-			
+
 			/* update UI */
 			if (iter % 15 == 14) {
 				updateIcon(iter, phoneConstants);
@@ -257,9 +252,10 @@ public class DataCollector implements Runnable {
 			}
 
 			/* Write logs */
-			
-			/* there is no need to synchronized, values are updated only from this thread 
-			 * and files are protected by extra lock! 
+
+			/*
+			 * there is no need to synchronized, values are updated only from
+			 * this thread and files are protected by extra lock!
 			 */
 			writePowerLog(iter, dataTemp, totalPower);
 			writeContextLog(iter);
@@ -287,11 +283,15 @@ public class DataCollector implements Runnable {
 			return powerLogFileName + "-" + powerLogFileNameRotationCounter;
 		}
 	}
-	
-	/** Open the log file if possible and close the old one in order to allow for upload. */
+
+	/**
+	 * Open the log file if possible and close the old one in order to allow for
+	 * upload.
+	 */
 	private void rotateLogs(boolean init, int which) {
-		//TODO if init is true, try to look for. Or to do this in mayBe upload log??
-				// existing files and upload them potentialy
+		// TODO if init is true, try to look for. Or to do this in mayBe upload
+		// log??
+		// existing files and upload them potentialy
 
 		if (0 != (which & POWER_LOG)) {
 			try {
@@ -299,7 +299,8 @@ public class DataCollector implements Runnable {
 				deflater.setDictionary(DEFLATE_DICTIONARY.getBytes());
 				synchronized (powerLogFileWriteLock) {
 					powerLogFileNameRotationCounter += 1;
-					String powerLogAbsolutPath = context.getFileStreamPath(getCurrentPowerLogFileName()).getAbsolutePath();
+					String powerLogAbsolutPath = context.getFileStreamPath(getCurrentPowerLogFileName())
+							.getAbsolutePath();
 
 					deflateStream = new DeflaterOutputStream(new FileOutputStream(powerLogAbsolutPath));
 					powerLogStream = new OutputStreamWriter(deflateStream);
@@ -314,43 +315,40 @@ public class DataCollector implements Runnable {
 		if (0 != (which & CONTEXT_LOG)) {
 			try {
 				// upload current...
-				String contextLogAbsolutPath = context.getFileStreamPath(
-						getCurrentContextLogFileName()).getAbsolutePath();
+				String contextLogAbsolutPath = context.getFileStreamPath(getCurrentContextLogFileName())
+						.getAbsolutePath();
 				// open new file, rotatet one...
 				synchronized (contextLogFileWriteLock) {
 					contextLogFileNameRotationCounter += 1;
-					contextLogAbsolutPath = context.getFileStreamPath(
-							getCurrentContextLogFileName()).getAbsolutePath();
+					contextLogAbsolutPath = context.getFileStreamPath(getCurrentContextLogFileName()).getAbsolutePath();
 
-					deflateStream = new DeflaterOutputStream(
-							new FileOutputStream(contextLogAbsolutPath));
+					deflateStream = new DeflaterOutputStream(new FileOutputStream(contextLogAbsolutPath));
 					contextLogStream = new OutputStreamWriter(deflateStream);
 				}
 
 			} catch (IOException e) {
 				contextLogStream = null;
-				Log.e(TAG,
-						"Failed to open context log file.  No log will be kept.");
+				Log.e(TAG, "Failed to open context log file.  No log will be kept.");
 			}
 		}
 	}
 
 	private void initPowerComponents() {
 		int numComponents = powerComponents.size();
-		
+
 		for (int i = 0; i < numComponents; i++) {
 			powerComponents.get(i).init(beginTime, ITERATION_INTERVAL);
 			powerComponents.get(i).start();
 		}
 	}
 
-	private void initContextReaders() {		
+	private void initContextReaders() {
 		int numComponents = contextReaders.size();
-		
+
 		for (int i = 0; i < numComponents; i++) {
 			if (contextReaders.get(i) instanceof AbstractPeriodicReader) {
-				((AbstractPeriodicReader)contextReaders.get(i)).init(beginTime, ITERATION_INTERVAL);
-				((AbstractPeriodicReader)contextReaders.get(i)).start();
+				((AbstractPeriodicReader) contextReaders.get(i)).init(beginTime, ITERATION_INTERVAL);
+				((AbstractPeriodicReader) contextReaders.get(i)).start();
 			}
 		}
 	}
@@ -386,14 +384,11 @@ public class DataCollector implements Runnable {
 
 		double avgPower = -1;
 		if (count != 0) {
-			avgPower = weightedAvgPower
-					/ (1.0 - Math.pow(1.0 - POLY_WEIGHT, count));
+			avgPower = weightedAvgPower / (1.0 - Math.pow(1.0 - POLY_WEIGHT, count));
 		}
 		avgPower *= 1000;
 
-		context.updateNotification(
-				(int) Math.min(8, 1 + 8 * avgPower / phoneConstants.maxPower()),
-				avgPower);
+		context.updateNotification((int) Math.min(8, 1 + 8 * avgPower / phoneConstants.maxPower()), avgPower);
 
 	}
 
@@ -407,8 +402,7 @@ public class DataCollector implements Runnable {
 	private void getCurrentValues(long iter) {
 		totalPower = 0;
 		dataTemp = new IterationData[numComponents];
-		
-		
+
 		// TODO!!
 
 		for (int i = 0; i < numComponents; i++) {
@@ -436,8 +430,7 @@ public class DataCollector implements Runnable {
 				if (i == oledId) {
 					OLED.OledData oledData = (OLED.OledData) powerData;
 					if (oledData.pixPower >= 0) {
-						oledScoreHistory.add(uid, iter,
-								(int) (1000 * oledData.pixPower));
+						oledScoreHistory.add(uid, iter, (int) (1000 * oledData.pixPower));
 					}
 				}
 
@@ -458,7 +451,7 @@ public class DataCollector implements Runnable {
 			Time time = new Time(Time.getCurrentTimezone());
 			time.setToNow();
 			long curUnixTime = time.toMillis(false);
-			
+
 			out.write("responder-id " + CryptoUtils.getEncryptedUserUID(context) + "\n");
 			out.write("utime " + curUnixTime + "\n");
 			out.write("iter-interval " + ITERATION_INTERVAL + "\n");
@@ -467,17 +460,17 @@ public class DataCollector implements Runnable {
 			out.write("log-version: " + Constants.CONTEXT_LOG_VERSION + "\n");
 			out.write("amobisense-version: " + Constants.VERISON + "\n");
 			out.write("write-only-on-change: " + CONTEXT_LOG_WRITE_STRATEGY + "\n");
-			
-			out.write("age " + prefs.getString("personalinfo_age", "0") +  "\n");
-			out.write("gender " + prefs.getString("personalinfo_gender", "-") +  "\n");
-			out.write("education " + prefs.getString("personalinfo_education", "-") +  "\n");
-			out.write("job-position " + prefs.getString("personalinfo_job", "-") +  "\n\n");
-			
+
+			out.write("age " + prefs.getString("personalinfo_age", "0") + "\n");
+			out.write("gender " + prefs.getString("personalinfo_gender", "-") + "\n");
+			out.write("education " + prefs.getString("personalinfo_education", "-") + "\n");
+			out.write("job-position " + prefs.getString("personalinfo_job", "-") + "\n\n");
+
 		} catch (IOException e) {
 			Log.w(TAG, "Failed to write header to context log file");
 		}
 	}
-	
+
 	public String getDeviceName() {
 		String manufacturer = Build.MANUFACTURER;
 		String model = Build.MODEL;
@@ -521,10 +514,8 @@ public class DataCollector implements Runnable {
 		 * subreaderu) zapsat hodnotu..
 		 */
 
-		
-
 		synchronized (contextLogFileWriteLock) {
-			//Log.i(TAG, "Writing context info");
+			// Log.i(TAG, "Writing context info");
 
 			if (contextLogStream != null)
 				try {
@@ -534,12 +525,13 @@ public class DataCollector implements Runnable {
 					}
 
 					contextLogStream.write("begin " + iter + "\n");
-					
+
 					for (AbstractReader ar : contextReaders) {
-						//Log.w(TAG, ar.getReaderName() + ": Going to Write to log..." );
-						ar.writeLog(contextLogStream, iter,  CONTEXT_LOG_WRITE_STRATEGY);
+						// Log.w(TAG, ar.getReaderName() +
+						// ": Going to Write to log..." );
+						ar.writeLog(contextLogStream, iter, CONTEXT_LOG_WRITE_STRATEGY);
 					}
-					
+
 					contextLogStream.write("end " + iter + "\n");
 
 				} catch (IOException e) {
@@ -547,15 +539,14 @@ public class DataCollector implements Runnable {
 				}
 		}
 
-		if (((iter + 1) % CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC) == 0
-				&& prefs.getBoolean("sendPermission", true)) {
-			mayBeUploadLogFile(contextLogFileWriteLock,
-					getCurrentContextLogFileName(), contextLogStream,
-					CONTEXT_LOG, true);
+		if (((iter + 1) % CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC) == 0 && prefs.getBoolean("sendPermission", true)) {
+			mayBeUploadLogFile(contextLogFileWriteLock, getCurrentContextLogFileName(), contextLogStream, CONTEXT_LOG,
+					true);
 		}
 	}
 
-	private void mayBeUploadLogFile(Object lock, String fileName, OutputStreamWriter stream, int whichLog, boolean inflate) {
+	private void mayBeUploadLogFile(Object lock, String fileName, OutputStreamWriter stream, int whichLog,
+			boolean inflate) {
 		synchronized (lock) {
 
 			switch (whichLog) {
@@ -579,14 +570,16 @@ public class DataCollector implements Runnable {
 
 					uploadFileNameBase = "context-log";
 					contextLogAlreadyUploadedNr = contextLogFileNameRotationCounter;
-					//Log.i(TAG, "Going to upload context files, counter = " + contextLogFileNameRotationCounter);
+					// Log.i(TAG, "Going to upload context files, counter = " +
+					// contextLogFileNameRotationCounter);
 					firstContextLogIteration = true;
 					break;
 				case POWER_LOG:
 
 					uploadFileNameBase = "power-log";
 					powerLogAlreadyUploadedNr = powerLogFileNameRotationCounter;
-					//Log.i(TAG, "Going to upload power files, counter = " + powerLogFileNameRotationCounter);
+					// Log.i(TAG, "Going to upload power files, counter = " +
+					// powerLogFileNameRotationCounter);
 					firstPowerLogIteration = true;
 					break;
 				}
@@ -605,17 +598,14 @@ public class DataCollector implements Runnable {
 
 				// upload asyncronously old files
 
-				logUploader.enqueueForUpload(
-						context.getFileStreamPath(tmpLogFileName)
-								.getAbsolutePath(), uploadFileNameBase,
-						DELETE_WHEN_UPLOADED, inflate);
+				logUploader.enqueueForUpload(context.getFileStreamPath(tmpLogFileName).getAbsolutePath(),
+						uploadFileNameBase, DELETE_WHEN_UPLOADED, inflate);
 
 			}
 		}
 	}
 
-	private void writePowerLog(long iter, IterationData[] dataTemp,
-			long totalPower) {
+	private void writePowerLog(long iter, IterationData[] dataTemp, long totalPower) {
 
 		BatteryStats bst = BatteryStats.getInstance();
 		SystemInfo sysInfo = SystemInfo.getInstance();
@@ -641,13 +631,10 @@ public class DataCollector implements Runnable {
 							 */
 							String appId = uidAppIds.get(uid);
 							String newAppId = sysInfo.getAppId(uid, pm);
-							if (!firstPowerLogIteration
-									&& powerLogStream != null
-									&& (appId == null || !appId
-											.equals(newAppId))) {
+							if (!firstPowerLogIteration && powerLogStream != null
+									&& (appId == null || !appId.equals(newAppId))) {
 								try {
-									powerLogStream.write("associate " + uid
-											+ " " + newAppId + "\n");
+									powerLogStream.write("associate " + uid + " " + newAppId + "\n");
 								} catch (IOException e) {
 									Log.w(TAG, "Failed to write to log file");
 								}
@@ -675,24 +662,20 @@ public class DataCollector implements Runnable {
 			}
 		}
 		if (iter % (30 * 60) == 0) {
-			if (Settings.System.getInt(context.getContentResolver(),
-					"screen_brightness_mode", 0) != 0) {
+			if (Settings.System.getInt(context.getContentResolver(), "screen_brightness_mode", 0) != 0) {
 				writeToPowerLog("setting_brightness automatic\n");
 			} else {
-				int brightness = Settings.System.getInt(
-						context.getContentResolver(),
+				int brightness = Settings.System.getInt(context.getContentResolver(),
 						Settings.System.SCREEN_BRIGHTNESS, -1);
 				if (brightness != -1) {
 					writeToPowerLog("setting_brightness " + brightness + "\n");
 				}
 			}
-			int timeout = Settings.System.getInt(context.getContentResolver(),
-					Settings.System.SCREEN_OFF_TIMEOUT, -1);
+			int timeout = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, -1);
 			if (timeout != -1) {
 				writeToPowerLog("setting_screen_timeout " + timeout + "\n");
 			}
-			String httpProxy = Settings.Secure.getString(
-					context.getContentResolver(), Settings.Secure.HTTP_PROXY);
+			String httpProxy = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.HTTP_PROXY);
 			if (httpProxy != null) {
 				writeToPowerLog("setting_httpproxy " + httpProxy + "\n");
 			}
@@ -712,62 +695,47 @@ public class DataCollector implements Runnable {
 				try {
 					if (firstPowerLogIteration) {
 						firstPowerLogIteration = false;
-						powerLogStream.write("time "
-								+ System.currentTimeMillis() + "\n");
+						powerLogStream.write("time " + System.currentTimeMillis() + "\n");
 						Calendar cal = new GregorianCalendar();
 						powerLogStream.write("localtime_offset "
-								+ (cal.get(Calendar.ZONE_OFFSET) + cal
-										.get(Calendar.DST_OFFSET)) + "\n");
-						powerLogStream.write("model "
-								+ phoneConstants.modelName() + "\n");
+								+ (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) + "\n");
+						powerLogStream.write("model " + phoneConstants.modelName() + "\n");
 						if (NotificationService.available()) {
 							powerLogStream.write("notifications-active\n");
 						}
 						if (bst.hasFullCapacity()) {
-							powerLogStream.write("batt_full_capacity "
-									+ bst.getFullCapacity() + "\n");
+							powerLogStream.write("batt_full_capacity " + bst.getFullCapacity() + "\n");
 						}
 						synchronized (uidAppIds) {
 							for (int uid : uidAppIds.keySet()) {
 								if (uid < SystemInfo.AID_APP) {
 									continue;
 								}
-								powerLogStream.write("associate " + uid + " "
-										+ uidAppIds.get(uid) + "\n");
+								powerLogStream.write("associate " + uid + " " + uidAppIds.get(uid) + "\n");
 							}
 						}
 					}
 					powerLogStream.write("begin " + iter + "\n");
-					powerLogStream.write("total-power "
-							+ (long) Math.round(totalPower) + '\n');
+					powerLogStream.write("total-power " + (long) Math.round(totalPower) + '\n');
 					if (hasMem) {
-						powerLogStream.write("meminfo " + memInfo[0] + " "
-								+ memInfo[1] + " " + memInfo[2] + " "
+						powerLogStream.write("meminfo " + memInfo[0] + " " + memInfo[1] + " " + memInfo[2] + " "
 								+ memInfo[3] + "\n");
 					}
 					for (int i = 0; i < numComponents; i++) {
 						IterationData data = dataTemp[i];
 						if (data != null) {
-							String name = powerComponents.get(i)
-									.getComponentName();
-							SparseArray<PowerData> uidData = data
-									.getUidPowerData();
+							String name = powerComponents.get(i).getComponentName();
+							SparseArray<PowerData> uidData = data.getUidPowerData();
 							for (int j = 0; j < uidData.size(); j++) {
 								int uid = uidData.keyAt(j);
 								PowerData powerData = uidData.valueAt(j);
 								if (uid == SystemInfo.AID_ALL) {
-									powerLogStream.write(name
-											+ " "
-											+ (long) Math.round(powerData
-													.getCachedPower()) + "\n");
+									powerLogStream.write(name + " " + (long) Math.round(powerData.getCachedPower())
+											+ "\n");
 									powerData.writeLogDataInfo(powerLogStream);
 								} else {
-									powerLogStream.write(name
-											+ "-"
-											+ uid
-											+ " "
-											+ (long) Math.round(powerData
-													.getCachedPower()) + "\n");
+									powerLogStream.write(name + "-" + uid + " "
+											+ (long) Math.round(powerData.getCachedPower()) + "\n");
 								}
 							}
 							data.recycle();
@@ -777,11 +745,8 @@ public class DataCollector implements Runnable {
 					Log.w(TAG, "Failed to write to log file");
 				}
 
-			if ((iter+1) % POWER_LOG_UPLOAD_TRY_NRITERATION_SEC == 0
-					&& prefs.getBoolean("sendPermission", true)) {
-				mayBeUploadLogFile(powerLogFileWriteLock,
-						getCurrentPowerLogFileName(), powerLogStream,
-						POWER_LOG, true);
+			if ((iter + 1) % POWER_LOG_UPLOAD_TRY_NRITERATION_SEC == 0 && prefs.getBoolean("sendPermission", true)) {
+				mayBeUploadLogFile(powerLogFileWriteLock, getCurrentPowerLogFileName(), powerLogStream, POWER_LOG, true);
 			}
 
 		}
@@ -824,7 +789,7 @@ public class DataCollector implements Runnable {
 		try {
 			logUploader.join();
 		} catch (InterruptedException e) {
-		
+
 		}
 
 		Log.i("UPLOADER THREAD", "Uploader thread joined");
@@ -880,8 +845,7 @@ public class DataCollector implements Runnable {
 		int components = powerComponents.size();
 		int[] ret = new int[components];
 		for (int i = 0; i < components; i++) {
-			ret[i] = (int) constants.getMaxPower(powerComponents.get(i)
-					.getComponentName());
+			ret[i] = (int) constants.getMaxPower(powerComponents.get(i).getComponentName());
 		}
 		return ret;
 	}
@@ -897,8 +861,7 @@ public class DataCollector implements Runnable {
 		return ret;
 	}
 
-	public int[] getComponentHistory(int count, int componentId, int uid,
-			long iteration) {
+	public int[] getComponentHistory(int count, int componentId, int uid, long iteration) {
 		if (iteration == -1)
 			synchronized (iterationLock) {
 				iteration = lastWrittenIteration;
@@ -923,8 +886,7 @@ public class DataCollector implements Runnable {
 		int components = powerComponents.size();
 		long[] ret = new long[components];
 		for (int i = 0; i < components; i++) {
-			ret[i] = powerHistories.get(i).getTotal(uid, windowType)
-					* ITERATION_INTERVAL / 1000;
+			ret[i] = powerHistories.get(i).getTotal(uid, windowType) * ITERATION_INTERVAL / 1000;
 		}
 		return ret;
 	}
@@ -963,17 +925,12 @@ public class DataCollector implements Runnable {
 				int currentPower = 0;
 				for (int i = 0; i < components; i++) {
 					if ((ignoreMask & 1 << i) == 0) {
-						currentPower += powerHistories.get(i).get(uid,
-								iteration, 1)[0];
+						currentPower += powerHistories.get(i).get(uid, iteration, 1)[0];
 					}
 				}
-				info.init(
-						uid,
-						currentPower,
-						sumArray(getTotals(uid, windowType), ignoreMask)
-								* ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE,
-						getRuntime(uid, windowType) * ITERATION_INTERVAL
-								/ ITERATION_INTERVAL_SCALE);
+				info.init(uid, currentPower, sumArray(getTotals(uid, windowType), ignoreMask) * ITERATION_INTERVAL
+						/ ITERATION_INTERVAL_SCALE, getRuntime(uid, windowType) * ITERATION_INTERVAL
+						/ ITERATION_INTERVAL_SCALE);
 				result[pos++] = info;
 			}
 			return result;
@@ -995,13 +952,10 @@ public class DataCollector implements Runnable {
 			long entries = oledScoreHistory.getCount(uid, Counter.WINDOW_TOTAL);
 			if (entries <= 0)
 				return -2;
-			double result = oledScoreHistory
-					.getTotal(uid, Counter.WINDOW_TOTAL)
-					/ ITERATION_INTERVAL_SCALE;
+			double result = oledScoreHistory.getTotal(uid, Counter.WINDOW_TOTAL) / ITERATION_INTERVAL_SCALE;
 			result /= entries;
 			PhoneConstants phoneConstants = PhoneSelector.getConstants(context);
-			result *= 255 / (phoneConstants.getMaxPower("OLED") - phoneConstants
-					.oledBasePower());
+			result *= 255 / (phoneConstants.getMaxPower("OLED") - phoneConstants.oledBasePower());
 			return (long) Math.round(result * 100);
 		}
 		return -1;

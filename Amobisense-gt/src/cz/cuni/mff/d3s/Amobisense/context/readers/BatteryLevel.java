@@ -57,7 +57,7 @@ public class BatteryLevel extends AbstractBroadcastEventReader {
 		performScan(c, c.registerReceiver(null, new IntentFilter( Intent.ACTION_BATTERY_CHANGED)));
 
 		// start history holder
-		rememberHistory();
+		rememberHistory(60);
 	}
 
 	public void clearResources() {

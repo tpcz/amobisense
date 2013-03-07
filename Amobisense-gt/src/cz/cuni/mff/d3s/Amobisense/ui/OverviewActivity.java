@@ -53,12 +53,13 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 				return ((WifiContext)WifiContext.getInstance()).getMainLongHistoryValues();
 			 }
 		};
-	    
+	     
 		GraphConfigurationItem graphConfiguration;
 		graphConfiguration = config.new GraphConfigurationItem("Nr Seen WiFi's", nrWiFiSeenCollector);
 		graphConfiguration.setAxeLabels("time [s]", "Num WiFi's");
 		graphConfiguration.setYAxeLimits(0, 50);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
+		graphConfiguration.setOnClickActivity(SeenWifiInfoActivityMP.class);
 		
 		config.add(graphConfiguration);
 		
@@ -74,6 +75,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "Cum. Eue. Act [m^2/s]");
 		graphConfiguration.setYAxeLimits(0, 35);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
+		graphConfiguration.setOnClickActivity(AccelerometerDetailInfoActivityMP.class);
 		
 		config.add(graphConfiguration);
 
@@ -90,6 +92,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "0: NO, 1: M, 2: WF");
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setYAxeLimits(0, 3);
+		graphConfiguration.setOnClickActivity(InternetConnectivityDetailInfoMP.class);
 		
 		config.add(graphConfiguration);
 	
@@ -118,6 +121,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setYAxeLimits(0, 60);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		config.add(graphConfiguration);
+		graphConfiguration.setOnClickActivity(CPUUsageDetailInfoActivityMP.class);
 		
 		
 		// # battery level in last 60 seconds.
@@ -128,16 +132,11 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 	    
 		graphConfiguration = config.new GraphConfigurationItem("Battery level", collector);
-		graphConfiguration.setAxeLabels("time [s]", "Level [%]");
+		graphConfiguration.setAxeLabels("time [min]", "Level [%]");
 		graphConfiguration.setYAxeLimits(0, 110);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		
-		//config.add(graphConfiguration);
-		
-		
-		
-		
-		
-		
+		config.add(graphConfiguration);
+			
 	} 
 }

@@ -3,6 +3,7 @@ package cz.cuni.mff.d3s.Amobisense.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -70,6 +71,8 @@ public class MultiPartInfoActivityConfiguration {
 		public int YAxeMin = 0; 
 		public int YAxeMax = 100;
 		
+		public Class<Activity> onClickClazz = null;
+		
 
 		
 		public int minGraphHeight = 200;
@@ -117,6 +120,10 @@ public class MultiPartInfoActivityConfiguration {
 		
 		void setName(String name) {
 			this.name = name;			
+		}
+		
+		void setOnClickActivity(Class clazz) {
+			this.onClickClazz = clazz;
 		}
 	}
 	

@@ -15,7 +15,7 @@ public class BatteryLevelDetailInfoActivityMP extends MultiPartInfoActivity<NoCl
 		IStringDataCollector summaryTextCollector = new IStringDataCollector() {
 			@Override
 			public String getString() {
-				return "Battery level is now: " + BatteryLevel.getInstance().getCurrentMainData().toLong();
+				return "Battery level now is: " + BatteryLevel.getInstance().getCurrentMainData().toLong() + "%";
 			}
 		};
 		
@@ -41,7 +41,7 @@ public class BatteryLevelDetailInfoActivityMP extends MultiPartInfoActivity<NoCl
 	    
 		GraphConfigurationItem graphConfiguration;
 		graphConfiguration = config.new GraphConfigurationItem("Battery level", collector);
-		graphConfiguration.setAxeLabels("time [s]", "Level [%]");
+		graphConfiguration.setAxeLabels("time [min]", "Level [%]");
 		graphConfiguration.setYAxeLimits(0, 110);
 		
 		config.add(graphConfiguration);

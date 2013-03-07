@@ -29,6 +29,8 @@ public abstract class AbstractReader implements IDataReader{
 	public static final boolean DONT_SHOW_IN_LOG = false;
 	public static final boolean SHOW_IN_LOG = true;
 	
+	protected int floatPrecision = 0;
+	
 	
 	
 	protected Handler handler = new Handler();	
@@ -249,7 +251,13 @@ public abstract class AbstractReader implements IDataReader{
 			case DOUBLE:
 			case FLOAT:
 				//Log.w(TAG, "Writitng " + getReaderName() + data.toDouble());
-				logStream.append(key + " " + data.toDouble() + "\n");
+				
+				if (floatPrecision < 1) {
+					logStream.append(key + " " + data.toDouble() + "\n");
+				} else {
+					logStream.append(key + " " + String.format("%." + floatPrecision+ "f", data.toDouble()) + "\n");
+				}
+				
 				break;
 			case STRING:
 			case MIXED_LNUM_STRING:
