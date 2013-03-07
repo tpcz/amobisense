@@ -34,7 +34,7 @@ public class Accelerometer extends AbstractPeriodicReader implements SensorEvent
 		instance = this;
 		
 		sensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
-		floatPrecision = 2;
+		loggingFloatPrecision = 4;
 		
 		if (sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)){
 			sensorSupported = true;

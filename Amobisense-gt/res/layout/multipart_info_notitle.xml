@@ -10,6 +10,7 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:orientation="vertical" 
-    android:paddingRight="?android:attr/scrollbarSize">
+    android:paddingRight="?android:attr/scrollbarSize"
+    android:paddingTop="10dip">
   	/>
 </RelativeLayout>

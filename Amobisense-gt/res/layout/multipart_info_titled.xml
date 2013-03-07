@@ -20,7 +20,7 @@
   	      android:ellipsize="marquee"
   	      android:fadingEdge="horizontal"
   	      android:singleLine="true"
-  	      android:text="Wifi Detail Info.."
+  	      android:text="TITLE"
   	      android:textAppearance="?android:attr/textAppearanceLarge" />
       
   		<TextView android:id="@+id/summary"

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AMobiSense</string>
-    <string name="running_on_startup">Amobisense will now run after your phone starts up.</string>
-    <string name="not_running_on_startup">Amobisense will no longer run on when your phone starts up.</string>
+    <string name="running_on_startup">AMobiSense will now run after your phone starts up.</string>
+    <string name="not_running_on_startup">AMobiSense will no longer run on when your phone starts up.</string>
     <string name="stop_sending_text">This application sends data on power utilization, running applications and context to the our team. We gather nothing allowing us to associate the data with you or your phone; a cryptographically secure hash function is used to protect your identity.  Pressing \'Stop\' will prevent these data from being sent.</string>
     <string name="start_sending_text">This application sends data on power utilization, running applications and context to the our team. We gather nothing allowing us to associate the data with you or your phone; a cryptographically secure hash function is used to protect your identity.  Pressing \'Start\' will start sending the data from now on.</string>
-    <string name="unknown_phone">Your phone type is not recognized by Amobisense. You may continue to use it, however we may not be able to get all of the data for your phone and the power calculations may not be accurate.</string>
+    <string name="unknown_phone">Your phone type is not recognized by AMobiSense :-(, but don\'t worry, you may continue to use it, but some power calculations may be inaccurate.</string>
     <string name="term">
-    <p>In this version of AMobiSense, context sensing platform based on PowerTutor (<a href="http://powertutor.org">http://powertutor.org</a>). 
-        It can be used by context sensing applications, self-trackers or other interested people. 
+    <p><b>Welcome to AMobiSense</b>, context sensing platform based on <a href="http://powertutor.org">PowerTutor</a> 
+       It can be used by context sensitive applications or by self-trackers to inspect and/or record device power use and context. 
     </p>
-    <p>    
-    PowerTutor is the Power Profiler service is run on startup\n</p>\n
+    <p>
+    AMobiSense gathers various data and (ONLY IF YOU ALLOW THIS) send this data back to us. 
+    We hope, that this data will help us answer questions important for mobile software optimizations, e.g.\n
+    - Is it possible to predict loss of network connection?\n
+    - Can remote execution help to increase battery life?\n
+    Pleas,consider to allow sending this data to our team.
+    </p> 
     <p>We gather\n
 	- CPU use\n
 	- Amount of WiFi/3G traffic (not its content)\n
@@ -23,18 +28,19 @@
 	- Phone mode, e.g., airplane mode or call status\n
 	- WiFis around you\n
 	- Accelerometer data\n
+	- CID, LAC and info about surrounding cells\n
 </p>
-    <p>\nWe do <b>NOT</b> gather your personal data used in applications
+<p>\nWe do <b>NOT</b> gather your personal data used in applications
 or phone call logs. None of these data will be associate with you or your phone.
 We use a cryptographically secure hash function to protect your identity.\n
 </p>\n
 
-<p>AMobiSense will send to our team traces, if you allow to do it.\n</p> \n
-
-<p>AMobiSense will send back traces only when WiFi connection is available and prefer situations, when phone will be plugged to power supply. \n </p> \n
+<p>AMobiSense will send back traces only if you allow this and only if WiFi connection is available. More over,
+ it prefers situations, when phone will be plugged to power supply. \n </p> \n
       
-<p>By default, trace upload is enabled. If you would like to disable it (or to change upload destination server) you can do so in the menu of the main screen.\n</p> 
-<p>Pleas, consider to help us by by allowing trace uploads. </p>
+<p>By default, trace upload is enabled. If you would like to disable it (or to change upload destination server) you could do this in the menu of the main screen. 
+Pleas, consider to help us by by allowing trace uploads. </p>
+
 </string>
     <string name ="help_head"> <big><b>AMobiSense</b></big> - A real-time system resource, application and device context monitor and more.</string>
     
@@ -98,7 +104,7 @@ applications, self-trackers or other interested people. The main parts are:
 
 
 <string name="url_1">For detailed information, please go to: </string>
-<string name="url_2"> <a href="http://d3s.mff.cuni.cz/~pop/amobisense/">http://d3s.mff.cuni.cz/~pop/amobisense/</a> and <a href="http://powertutor.org">http://powertutor.org</a> .\n</string>
+<string name="url_2"> <a href="https://github.com/tpcz/amobisense/wiki">https://github.com/tpcz/amobisense/wiki</a> and <a href="http://powertutor.org">http://powertutor.org</a> .\n</string>
 
 <string name="prefs_run_on_startup">Run on startup</string>
 <string name="prefs_run_on_startup_summary">Have the profiling service start when your phone starts</string>
