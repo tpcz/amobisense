@@ -45,6 +45,7 @@ import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractPeriodicReader;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractReader;
 import cz.cuni.mff.d3s.Amobisense.context.readers.IDataReader;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import cz.cuni.mff.d3s.Amobisense.utils.CryptoUtils;
 import edu.umich.PowerTutor.dataReaders.OLED;
 import edu.umich.PowerTutor.dataReaders.PowerComponent;
@@ -826,7 +827,7 @@ public class DataCollector implements Runnable {
 				try {
 					powerLogStream.write(m);
 				} catch (IOException e) {
-					Log.w(TAG, "Failed to write message to power log");
+					Log.w(TAG, "Failed to write message to power log " + e.getMessage());
 				}
 		}
 	}

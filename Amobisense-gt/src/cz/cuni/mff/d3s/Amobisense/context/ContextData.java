@@ -133,6 +133,15 @@ public class ContextData implements Comparable<ContextData> {
 		return "";
 	}
 	
+	/** this function is here only because of frequent log writes... 
+	 * 
+	 * SHOULD NOT BE USED IN OTHER CODE!
+	 * 
+	 * */
+	public StringBuilder __getStringBuilderRefUnchcked () {
+		return svalue; 
+	}
+	
 	public Boolean toBool() {
 		switch  (dataType) {
 		case NOT_SET:

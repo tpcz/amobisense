@@ -19,7 +19,7 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.ui;
 
-import edu.umich.PowerTutor.service.MainBackgroundService;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

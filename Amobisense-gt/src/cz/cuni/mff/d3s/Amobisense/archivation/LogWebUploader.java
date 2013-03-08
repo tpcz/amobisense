@@ -72,7 +72,7 @@ public class LogWebUploader extends LogUploader {
 		}
 		
 		private class UploaderThread extends Thread {
-	     	 Message statusMsg  = new Message();
+	     	// Message statusMsg  = new Message();
 	     	  
 	     	
 	     	 private String getUploadFileName (String baseName, String origFileName) {
@@ -108,7 +108,7 @@ public class LogWebUploader extends LogUploader {
 		           	String uploadedFileName = getUploadFileName (params.archiveNameBase, params.origFileName);
 		        	 	
 		            if (httpUploader.addFileToArchive(logIn, uploadedFileName)) {
-			           	  statusMsg  = new Message();
+			           	  //statusMsg  = new Message();
 			           	  logIn.close();
 			           	  
 			           	  if (params.removeWhenFinish) {
@@ -120,7 +120,7 @@ public class LogWebUploader extends LogUploader {
 			         		  } else {
 			         			  //statusMsg.arg1 = UMLogger.MESSAGE_FAIL;
 			                 	  //UMLogger.makeToastHandler.sendMessage(statusMsg);
-			                 	  statusMsg  = new Message();
+			                 	  //statusMsg  = new Message();
 			                 	  Log.e("UPLOADER", "File IO Error, can not removed! (doe not exist...)"  + params.origFileName);
 			         		  } 
 			         		  return true;
@@ -135,13 +135,13 @@ public class LogWebUploader extends LogUploader {
 			           	 }
 		            }             
 	     		} catch(java.io.EOFException e) {
-	              		statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+	              		//statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
 	            	    //UMLogger.makeToastHandler.sendMessage(statusMsg);
 	            	    //statusMsg  = new Message();
 	            	    Log.e("UPLOADER", "File EOF Error"  + e.getMessage());
 	            	    return false;
 	     		} catch(IOException e) {
-	              		statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+	              		//statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
 	            	    //UMLogger.makeToastHandler.sendMessage(statusMsg);
 	            	    //statusMsg  = new Message();
 	            	    Log.e("UPLOADER", "File IO Error"  + e.getMessage());

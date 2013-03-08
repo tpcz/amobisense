@@ -23,13 +23,13 @@ public static edu.umich.PowerTutor.service.ICounterService asInterface(android.o
 if ((obj==null)) {
 return null;
 }
-android.os.IInterface iin = (android.os.IInterface)obj.queryLocalInterface(DESCRIPTOR);
+android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
 if (((iin!=null)&&(iin instanceof edu.umich.PowerTutor.service.ICounterService))) {
 return ((edu.umich.PowerTutor.service.ICounterService)iin);
 }
 return new edu.umich.PowerTutor.service.ICounterService.Stub.Proxy(obj);
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return this;
 }
@@ -150,7 +150,7 @@ Proxy(android.os.IBinder remote)
 {
 mRemote = remote;
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return mRemote;
 }
@@ -160,7 +160,7 @@ return DESCRIPTOR;
 }
 // Returns the name of the components that are being logged.
 
-public java.lang.String[] getComponents() throws android.os.RemoteException
+@Override public java.lang.String[] getComponents() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -179,7 +179,7 @@ return _result;
 }
 // Returns the maximum power usage for each of the components being logged.
 
-public int[] getComponentsMaxPower() throws android.os.RemoteException
+@Override public int[] getComponentsMaxPower() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -199,7 +199,7 @@ return _result;
 // Returns a bit mask with a 1 in the ith bit if component i doesn't have
 // uid specific information.
 
-public int getNoUidMask() throws android.os.RemoteException
+@Override public int getNoUidMask() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -221,7 +221,7 @@ return _result;
 // specific user id or you can provide SystemInfo.AID_ALL to request
 // global power state information.
 
-public int[] getComponentHistory(int count, int componentId, int uid) throws android.os.RemoteException
+@Override public int[] getComponentHistory(int count, int componentId, int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -254,7 +254,7 @@ return _result;
 //
 // The returned result is given in mJ.
 
-public long[] getTotals(int uid, int windowType) throws android.os.RemoteException
+@Override public long[] getTotals(int uid, int windowType) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -278,7 +278,7 @@ return _result;
 // like dividing each entry by the window size. (unless PowerTutor hasn't
 // been running that long).
 
-public long[] getMeans(int uid, int windowType) throws android.os.RemoteException
+@Override public long[] getMeans(int uid, int windowType) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -299,7 +299,7 @@ return _result;
 }
 // Gets the total time that this uid has been running in seconds.
 
-public long getRuntime(int uid, int windowType) throws android.os.RemoteException
+@Override public long getRuntime(int uid, int windowType) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -330,7 +330,7 @@ return _result;
 //   UidInfo[] uidInfos = (UidInfo[])new ObjectInputStream(
 //       new ByteArrayInputStream(rawUidInfo)).readObject();
 
-public byte[] getUidInfo(int windowType, int ignoreMask) throws android.os.RemoteException
+@Override public byte[] getUidInfo(int windowType, int ignoreMask) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -353,7 +353,7 @@ return _result;
 // Current extras included:
 //   OLEDSCORE
 
-public long getUidExtra(java.lang.String name, int uid) throws android.os.RemoteException
+@Override public long getUidExtra(java.lang.String name, int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();

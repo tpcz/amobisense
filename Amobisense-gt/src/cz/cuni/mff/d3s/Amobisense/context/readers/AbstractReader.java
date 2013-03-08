@@ -237,35 +237,60 @@ public abstract class AbstractReader implements IDataReader{
 	
 	// can be set in subclasses
 	String[] intValuesMapping = null;
+	StringBuilder writerStringbuilder = new StringBuilder();
 	private void writeContextDataValue(OutputStreamWriter logStream, String key,  ContextData data) {
 		try {
+			writerStringbuilder.setLength(0);
 			switch (data.dataType) {
 			case LONG:
 			case INT:
+				
+				writerStringbuilder.append(key); 
+				writerStringbuilder.append(" "); 
 				if (intValuesMapping == null){
-					logStream.append(key + " " + data.toLong() + "\n");
+					writerStringbuilder.append(data.toLong());
 				}else {
-					logStream.append(key + " " + intValuesMapping[(int)data.toLong()] + "\n");
+					writerStringbuilder.append(intValuesMapping[(int)data.toLong()]);
 				}
+				
+				writerStringbuilder.append("\n");
+				logStream.append(writerStringbuilder);
 				break;
 			case DOUBLE:
 			case FLOAT:
 				//Log.w(TAG, "Writitng " + getReaderName() + data.toDouble());
 				
 				if (loggingFloatPrecision < 1) {
-					logStream.append(key + " " + data.toDouble() + "\n");
+					writerStringbuilder.append(key); 
+					writerStringbuilder.append(" "); 
+					writerStringbuilder.append(data.toDouble()); 
+					writerStringbuilder.append("\n");
+					logStream.append(writerStringbuilder);
+					
+					
 				} else {
-					logStream.append(key + " " + String.format("%." + loggingFloatPrecision+ "f", data.toDouble()) + "\n");
+					//TODO fix 
+					//logStream.append(String.format("%s %." + loggingFloatPrecision+ "f\n", key, data.toDouble()));
+					logStream.append(String.format("%s %.4f\n", key, data.toDouble()));
 				}
 				
 				break;
 			case STRING:
 			case MIXED_LNUM_STRING:
+				writerStringbuilder.append(key); 
+				writerStringbuilder.append(" "); 
 				if (intValuesMapping == null){
-					logStream.append(key + " " + data.toLong() + " " + data.toString() + "\n");
+					writerStringbuilder.append(data.toLong()); 
+					//logStream.append(key + " " + data.toLong() + " " + data.toString() + "\n");
 				}else {
-					logStream.append(key + " " + intValuesMapping[(int)data.toLong()] + " " + data.toString() + "\n");
+					writerStringbuilder.append(intValuesMapping[(int)data.toLong()]); 
+					//logStream.append(key + " " + intValuesMapping[(int)data.toLong()] + " " + data.toString() + "\n");
 				}
+				
+				writerStringbuilder.append(" ");
+				writerStringbuilder.append(data.__getStringBuilderRefUnchcked()); 
+				writerStringbuilder.append("\n");
+				logStream.append(writerStringbuilder);
 				
 				break;	
 			default:

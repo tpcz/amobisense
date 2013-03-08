@@ -24,7 +24,7 @@
          android:layout_below="@+id/s0"
          android:layout_height="wrap_content"
          android:minHeight="30pt"
-         android:textSize="8pt" />
+         android:textSize="10pt" />
      	
       <TextView
           android:id="@+id/welcometext"
@@ -33,9 +33,9 @@
           android:layout_height="346dp"
           android:layout_marginBottom="10dp"
           android:gravity="top"
-          android:text="Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, whether profiler is running... Checking, "
+          android:text="Loading..."
           android:textColor="#FFFFFF"
-          android:textSize="9pt" />  
+          android:textSize="9pt" />
      
 </RelativeLayout>
 

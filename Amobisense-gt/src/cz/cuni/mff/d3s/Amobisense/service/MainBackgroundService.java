@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Please send inquiries to powertutor@umich.edu
 */
 
-package edu.umich.PowerTutor.service;
+package cz.cuni.mff.d3s.Amobisense.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,6 +41,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import cz.cuni.mff.d3s.Amobisense.R;
 import cz.cuni.mff.d3s.Amobisense.ui.MainActivity;
+import edu.umich.PowerTutor.service.DataCollector;
+import edu.umich.PowerTutor.service.ICounterService;
+import edu.umich.PowerTutor.service.UidInfo;
+import edu.umich.PowerTutor.service.ICounterService.Stub;
 import edu.umich.PowerTutor.util.BatteryStats;
 import edu.umich.PowerTutor.util.SystemInfo;
 

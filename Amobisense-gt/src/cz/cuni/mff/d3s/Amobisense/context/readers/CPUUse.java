@@ -42,7 +42,7 @@ public class CPUUse extends AbstractPeriodicReader{
 	public void performScan(long iter) {
 		synchronized (this) {
 			currdata.get(readerID).setValue(cpuInstance.getUsrPerc() + cpuInstance.getSysPerc());
-			currdata.get(CPUUSR).setValue(cpuInstance.getUsrPerc() + cpuInstance.getUsrPerc());
+			currdata.get(CPUUSR).setValue(cpuInstance.getUsrPerc());
 		}
 	}
 }

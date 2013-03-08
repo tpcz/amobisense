@@ -51,10 +51,10 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.dataReaders.CPU;
 import edu.umich.PowerTutor.service.DataCollector;
 import edu.umich.PowerTutor.service.ICounterService;
-import edu.umich.PowerTutor.service.MainBackgroundService;
 import edu.umich.PowerTutor.util.BatteryStats;
 import edu.umich.PowerTutor.util.SystemInfo;
 

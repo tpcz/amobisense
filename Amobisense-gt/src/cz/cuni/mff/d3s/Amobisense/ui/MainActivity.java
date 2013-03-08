@@ -55,10 +55,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import cz.cuni.mff.d3s.Amobisense.R;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.phone.PhoneSelector;
 import edu.umich.PowerTutor.service.DataCollector;
 import edu.umich.PowerTutor.service.ICounterService;
-import edu.umich.PowerTutor.service.MainBackgroundService;
 import edu.umich.PowerTutor.ui.Help;
 import edu.umich.PowerTutor.ui.PowerTabs;
 import edu.umich.PowerTutor.ui.PowerTop;
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 	public static final String SERVER_IP = "spidermonkey.eecs.umich.edu";
 	public static final int SERVER_PORT = 5204;
 
-	private SharedPreferences prefs;
+	private SharedPreferences prefs; 
 	private Intent serviceIntent;
 	private ICounterService counterService;
 	private CounterServiceConnection conn;
@@ -127,6 +127,7 @@ public class MainActivity extends Activity {
 		
 		if (counterService != null) {
 			serviceStartButton.setText("Stop AMobiSense");
+			//serviceStartButton.setBackgroundResource(R.drawable.start_button_off);
 			//appViewerButton.setEnabled(true);
 			//sysInformationButton.setEnabled(true);
 			//sysEnergyViewerButton.setEnabled(true);
@@ -134,6 +135,7 @@ public class MainActivity extends Activity {
 			
 		} else {
 			serviceStartButton.setText("Start AMobiSense!");
+			//serviceStartButton.setBackgroundResource(R.drawable.start_button_on);
 			//appViewerButton.setEnabled(false);
 			//sysEnergyViewerButton.setEnabled(false);
 			//sysInformationButton.setEnabled(false);
@@ -172,14 +174,16 @@ public class MainActivity extends Activity {
 				
 				"Start me to see:<br><b>- Power Viewer</b> showing applicaton power use, device subsystems power use" +
 				" history and device susbsystems energy share<br>" +
-				"<b>- Context Viewer</b> showing various information, as eq. WiFis around, Accelerometer activty, Cell-id, LAC and others. " +
+				"<b>- Context Viewer</b> showing various information, as eq. WiFis around , Accelerometer activty, Cell-id, LAC and others. " +
 				"<br>" +
 				"<br>" + 
+			
 				"You can have a look in <a href='amobisense.help://'> help & about</a> section for further details, and you can specify " +
 				"your <a href='amobisense.prefs.personal://'>personal information</a> to help us understand better the data or " +
 				"configure <a href='amobisense.prefs.params://'> parameters</a> (e.g. deny sending traces to our team). " +
 				"Menu in this activity allows you to store current traces to SD card. " +
 				"For more information see <a href='https://github.com/tpcz/amobisense/wiki'>Amobisense web</a>" +
+			 
 				""));
 		
 	   welcomeText.setMovementMethod(LinkMovementMethod.getInstance());
@@ -528,15 +532,16 @@ public class MainActivity extends Activity {
 		public void onServiceConnected(ComponentName className, IBinder boundService) {
 			counterService = ICounterService.Stub.asInterface((IBinder) boundService);
 			serviceStartButton.setText("Stop AMobiSense!");
+			//serviceStartButton.setBackgroundResource(R.drawable.start_button_off);
 			serviceStartButton.setEnabled(true);
 			setRunningText();
-			startService(serviceIntent);
-			
+			startService(serviceIntent); 
+			 
 			//appViewerButton.setEnabled(true);
 			//sysInformationButton.setEnabled(true);
 			//sysEnergyViewerButton.setEnabled(true);
 		}
-
+ 
 		public void onServiceDisconnected(ComponentName className) {
 			counterService = null;
 			getApplicationContext().unbindService(conn);
@@ -544,15 +549,19 @@ public class MainActivity extends Activity {
 
 			Toast.makeText(MainActivity.this, "Stopped", Toast.LENGTH_SHORT).show();
 			serviceStartButton.setText("Start AMobiSense!");
+			
+			serviceStartButton.setCompoundDrawablePadding(0);
+			//serviceStartButton.setBackgroundResource(R.drawable.start_button_on);
+			
 			serviceStartButton.setEnabled(true);
 			setStoppedText();
-			
+	
 			//appViewerButton.setEnabled(false);
 			//sysEnergyViewerButton.setEnabled(false);
 			//sysInformationButton.setEnabled(false);
 		}
 	}
-
+ 
 	@SuppressWarnings("unused")
 	private Button.OnClickListener helpButtonListener = new Button.OnClickListener() {
 		public void onClick(View v) {

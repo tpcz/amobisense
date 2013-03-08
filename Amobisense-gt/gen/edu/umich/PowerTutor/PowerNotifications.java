@@ -23,13 +23,13 @@ public static edu.umich.PowerTutor.PowerNotifications asInterface(android.os.IBi
 if ((obj==null)) {
 return null;
 }
-android.os.IInterface iin = (android.os.IInterface)obj.queryLocalInterface(DESCRIPTOR);
+android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
 if (((iin!=null)&&(iin instanceof edu.umich.PowerTutor.PowerNotifications))) {
 return ((edu.umich.PowerTutor.PowerNotifications)iin);
 }
 return new edu.umich.PowerTutor.PowerNotifications.Stub.Proxy(obj);
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return this;
 }
@@ -386,7 +386,7 @@ Proxy(android.os.IBinder remote)
 {
 mRemote = remote;
 }
-public android.os.IBinder asBinder()
+@Override public android.os.IBinder asBinder()
 {
 return mRemote;
 }
@@ -398,7 +398,7 @@ return DESCRIPTOR;
 // potential to be supported but aren't needed at the moment so aren't
 // actually hooked.
 
-public void noteStartWakelock(int uid, java.lang.String name, int type) throws android.os.RemoteException
+@Override public void noteStartWakelock(int uid, java.lang.String name, int type) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -415,7 +415,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStopWakelock(int uid, java.lang.String name, int type) throws android.os.RemoteException
+@Override public void noteStopWakelock(int uid, java.lang.String name, int type) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -432,7 +432,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStartSensor(int uid, int sensor) throws android.os.RemoteException
+@Override public void noteStartSensor(int uid, int sensor) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -448,7 +448,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStopSensor(int uid, int sensor) throws android.os.RemoteException
+@Override public void noteStopSensor(int uid, int sensor) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -464,7 +464,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStartGps(int uid) throws android.os.RemoteException
+@Override public void noteStartGps(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -479,7 +479,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStopGps(int uid) throws android.os.RemoteException
+@Override public void noteStopGps(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -494,7 +494,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteScreenBrightness(int brightness) throws android.os.RemoteException
+@Override public void noteScreenBrightness(int brightness) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -509,7 +509,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStartMedia(int uid, int id) throws android.os.RemoteException
+@Override public void noteStartMedia(int uid, int id) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -525,7 +525,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteStopMedia(int uid, int id) throws android.os.RemoteException
+@Override public void noteStopMedia(int uid, int id) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -541,7 +541,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteVideoSize(int uid, int id, int width, int height) throws android.os.RemoteException
+@Override public void noteVideoSize(int uid, int id, int width, int height) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -559,7 +559,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteSystemMediaCall(int uid) throws android.os.RemoteException
+@Override public void noteSystemMediaCall(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -574,7 +574,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteScreenOn() throws android.os.RemoteException
+@Override public void noteScreenOn() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -588,7 +588,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteScreenOff() throws android.os.RemoteException
+@Override public void noteScreenOff() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -602,7 +602,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteInputEvent() throws android.os.RemoteException
+@Override public void noteInputEvent() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -616,7 +616,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteUserActivity(int uid, int event) throws android.os.RemoteException
+@Override public void noteUserActivity(int uid, int event) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -632,7 +632,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void notePhoneOn() throws android.os.RemoteException
+@Override public void notePhoneOn() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -646,7 +646,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void notePhoneOff() throws android.os.RemoteException
+@Override public void notePhoneOff() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -660,7 +660,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void notePhoneDataConnectionState(int dataType, boolean hasData) throws android.os.RemoteException
+@Override public void notePhoneDataConnectionState(int dataType, boolean hasData) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -676,7 +676,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiOn(int uid) throws android.os.RemoteException
+@Override public void noteWifiOn(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -691,7 +691,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiOff(int uid) throws android.os.RemoteException
+@Override public void noteWifiOff(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -706,7 +706,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiRunning() throws android.os.RemoteException
+@Override public void noteWifiRunning() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -720,7 +720,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiStopped() throws android.os.RemoteException
+@Override public void noteWifiStopped() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -734,7 +734,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteBluetoothOn() throws android.os.RemoteException
+@Override public void noteBluetoothOn() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -748,7 +748,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteBluetoothOff() throws android.os.RemoteException
+@Override public void noteBluetoothOff() throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -762,7 +762,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteFullWifiLockAcquired(int uid) throws android.os.RemoteException
+@Override public void noteFullWifiLockAcquired(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -777,7 +777,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteFullWifiLockReleased(int uid) throws android.os.RemoteException
+@Override public void noteFullWifiLockReleased(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -792,7 +792,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteScanWifiLockAcquired(int uid) throws android.os.RemoteException
+@Override public void noteScanWifiLockAcquired(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -807,7 +807,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteScanWifiLockReleased(int uid) throws android.os.RemoteException
+@Override public void noteScanWifiLockReleased(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -822,7 +822,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiMulticastEnabled(int uid) throws android.os.RemoteException
+@Override public void noteWifiMulticastEnabled(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -837,7 +837,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteWifiMulticastDisabled(int uid) throws android.os.RemoteException
+@Override public void noteWifiMulticastDisabled(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -852,7 +852,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void setOnBattery(boolean onBattery, int level) throws android.os.RemoteException
+@Override public void setOnBattery(boolean onBattery, int level) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -868,7 +868,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void recordCurrentLevel(int level) throws android.os.RemoteException
+@Override public void recordCurrentLevel(int level) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -888,7 +888,7 @@ _data.recycle();
      * long getAwakeTimeBattery();
      * long getAwakeTimePlugged();
      *//* Added functions to the normal IBatteryStats interface. */
-public void noteVideoOn(int uid) throws android.os.RemoteException
+@Override public void noteVideoOn(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -903,7 +903,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteVideoOff(int uid) throws android.os.RemoteException
+@Override public void noteVideoOff(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -918,7 +918,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteAudioOn(int uid) throws android.os.RemoteException
+@Override public void noteAudioOn(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
@@ -933,7 +933,7 @@ _reply.recycle();
 _data.recycle();
 }
 }
-public void noteAudioOff(int uid) throws android.os.RemoteException
+@Override public void noteAudioOff(int uid) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
