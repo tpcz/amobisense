@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package edu.umich.PowerTutor.service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -29,10 +31,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
+import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -46,6 +51,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractPeriodicReader;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractReader;
 import cz.cuni.mff.d3s.Amobisense.context.readers.IDataReader;
 import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
+import cz.cuni.mff.d3s.Amobisense.ui.MainActivity;
 import cz.cuni.mff.d3s.Amobisense.utils.CryptoUtils;
 import edu.umich.PowerTutor.dataReaders.OLED;
 import edu.umich.PowerTutor.dataReaders.PowerComponent;
@@ -116,8 +122,8 @@ public class DataCollector implements Runnable {
 	// Miscellaneous data.
 	private HistoryBuffer oledScoreHistory;
 
-	private Object powerLogFileWriteLock = new Object();
-	private Object contextLogFileWriteLock = new Object();
+	public Object powerLogFileWriteLock = new Object();
+	public Object contextLogFileWriteLock = new Object();
 	private LogWebUploader logUploader;
 	private OutputStreamWriter powerLogStream;
 	private OutputStreamWriter contextLogStream;
@@ -300,8 +306,7 @@ public class DataCollector implements Runnable {
 				deflater.setDictionary(DEFLATE_DICTIONARY.getBytes());
 				synchronized (powerLogFileWriteLock) {
 					powerLogFileNameRotationCounter += 1;
-					String powerLogAbsolutPath = context.getFileStreamPath(getCurrentPowerLogFileName())
-							.getAbsolutePath();
+					String powerLogAbsolutPath = context.getFileStreamPath(getCurrentPowerLogFileName()).getAbsolutePath();
 
 					deflateStream = new DeflaterOutputStream(new FileOutputStream(powerLogAbsolutPath));
 					powerLogStream = new OutputStreamWriter(deflateStream);
@@ -316,8 +321,7 @@ public class DataCollector implements Runnable {
 		if (0 != (which & CONTEXT_LOG)) {
 			try {
 				// upload current...
-				String contextLogAbsolutPath = context.getFileStreamPath(getCurrentContextLogFileName())
-						.getAbsolutePath();
+				String contextLogAbsolutPath = context.getFileStreamPath(getCurrentContextLogFileName()).getAbsolutePath();
 				// open new file, rotatet one...
 				synchronized (contextLogFileWriteLock) {
 					contextLogFileNameRotationCounter += 1;
@@ -541,13 +545,128 @@ public class DataCollector implements Runnable {
 		}
 
 		if (((iter + 1) % CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC) == 0 && prefs.getBoolean("sendPermission", true)) {
-			mayBeUploadLogFile(contextLogFileWriteLock, getCurrentContextLogFileName(), contextLogStream, CONTEXT_LOG,
-					true);
+			mayBeUploadLogFile(contextLogFileWriteLock, getCurrentContextLogFileName(), contextLogStream, CONTEXT_LOG, true);
 		}
 	}
+	
+	public void savePowerLogFile() {
+		mayBeUploadLogFileInt(powerLogFileWriteLock, getCurrentPowerLogFileName(), powerLogStream, POWER_LOG, true, true);
+	}
+	
+	public void saveContextLogFile() {
+		mayBeUploadLogFileInt(contextLogFileWriteLock, getCurrentContextLogFileName(), contextLogStream, CONTEXT_LOG, true, true);
+	}
 
-	private void mayBeUploadLogFile(Object lock, String fileName, OutputStreamWriter stream, int whichLog,
-			boolean inflate) {
+	private void mayBeUploadLogFile(Object lock, String fileName, OutputStreamWriter stream, int whichLog, boolean inflate) {
+		mayBeUploadLogFileInt(lock, fileName, stream, whichLog, inflate, false);
+	}
+	
+	
+	
+	private void mayBeUploadLogFileInt(Object lock, String fileName, OutputStreamWriter stream, int whichLog, boolean inflate, boolean saveToSD) {
+		synchronized (lock) {
+
+			switch (whichLog) {
+			case CONTEXT_LOG:
+				if (contextLogAlreadyUploadedNr == contextLogFileNameRotationCounter) {
+					return;
+				}
+				break;
+			case POWER_LOG:
+				if (powerLogAlreadyUploadedNr == powerLogFileNameRotationCounter) {
+					return;
+				}
+				break;
+			}
+
+			if (logUploader.shouldUpload() || saveToSD) {
+
+				String uploadFileNameBase = "";
+				uploadFileNameBase = "context-log";
+				String SDname="log";
+				switch (whichLog) {
+				case CONTEXT_LOG:
+					uploadFileNameBase = "context-log";
+					SDname = "context-log-" + System.currentTimeMillis() + ".log";
+					contextLogAlreadyUploadedNr = contextLogFileNameRotationCounter;
+					// Log.i(TAG, "Going to upload context files, counter = " +
+					// contextLogFileNameRotationCounter);
+					firstContextLogIteration = true;
+					break;
+				case POWER_LOG:
+					uploadFileNameBase = "power-log";
+					SDname = "power-log-" + System.currentTimeMillis() + ".log";
+					uploadFileNameBase = "power-log";
+					
+					powerLogAlreadyUploadedNr = powerLogFileNameRotationCounter;
+					// Log.i(TAG, "Going to upload power files, counter = " +
+					// powerLogFileNameRotationCounter);
+					firstPowerLogIteration = true;
+					break;
+				}
+
+				OutputStreamWriter tmpOutStreamWriter = stream;
+				String tmpLogFileName = fileName;
+
+				try {
+					tmpOutStreamWriter.close();
+				} catch (IOException e) {
+					Log.w(TAG, "Failed to flush and close log stream");
+				}
+
+				// open new file
+				rotateLogs(false, whichLog);
+
+				
+				if (saveToSD) {
+					saveToSD(SDname, tmpLogFileName);
+				}
+				// upload asyncronously old files
+				logUploader.enqueueForUpload(context.getFileStreamPath(tmpLogFileName).getAbsolutePath(), uploadFileNameBase, DELETE_WHEN_UPLOADED, inflate);
+			}
+		}
+	}
+	
+	private void saveToSD(String name, String origFileName) {
+		
+		File writeFile = new File(Environment.getExternalStorageDirectory(), name);
+
+		Message statusMsg = new Message();
+			try {
+				InflaterInputStream logIn = new InflaterInputStream(context.openFileInput(origFileName));  
+				BufferedOutputStream logOut = new BufferedOutputStream(new FileOutputStream(writeFile));
+
+				int counter = 0;
+				byte[] buffer = new byte[2048];
+				try {
+					for (int ln = logIn.read(buffer); ln != -1; ln = logIn.read(buffer)) {
+						counter ++;
+						logOut.write(buffer, 0, ln);
+					}
+				}
+				catch (java.io.EOFException e) {
+						// nothing serious, this only mean that file was not yet closed
+				}
+
+				logIn.close();
+				logOut.close();
+				statusMsg.arg1 = MainActivity.MESSAGE_SUCCESS;
+				statusMsg.obj = counter + " Saved as " + name;
+				MainActivity.makeToastHandler.sendMessage(statusMsg);
+				return;
+			} catch (java.io.EOFException e) {
+				statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+				statusMsg.obj = "unexpected end of stream";
+				MainActivity.makeToastHandler.sendMessage(statusMsg);
+				return;
+			} catch (IOException e) {
+				statusMsg.obj = "IO: Is your SD card ready? (Dont you conect it as disk storage to PC?)";
+			}
+		statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+		MainActivity.makeToastHandler.sendMessage(statusMsg);
+	}
+	
+	private void saveFileToStream(Object lock, String fileName, OutputStreamWriter stream, int whichLog, boolean inflate) {
 		synchronized (lock) {
 
 			switch (whichLog) {
@@ -590,7 +709,7 @@ public class DataCollector implements Runnable {
 
 				try {
 					tmpOutStreamWriter.close();
-				} catch (IOException e) {
+				} catch (IOException e) { 
 					Log.w(TAG, "Failed to flush and close log stream");
 				}
 
@@ -599,8 +718,7 @@ public class DataCollector implements Runnable {
 
 				// upload asyncronously old files
 
-				logUploader.enqueueForUpload(context.getFileStreamPath(tmpLogFileName).getAbsolutePath(),
-						uploadFileNameBase, DELETE_WHEN_UPLOADED, inflate);
+				logUploader.enqueueForUpload(context.getFileStreamPath(tmpLogFileName).getAbsolutePath(), uploadFileNameBase, DELETE_WHEN_UPLOADED, inflate);
 
 			}
 		}
@@ -811,6 +929,7 @@ public class DataCollector implements Runnable {
 		}
 
 		closeLogFiles();
+		this.instance = null;
 	}
 
 	public void writePersonalInfo(OutputStreamWriter out) {

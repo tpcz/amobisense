@@ -21,9 +21,10 @@ package cz.cuni.mff.d3s.Amobisense.ui;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.zip.InflaterInputStream;
 
 import android.app.Activity;
@@ -309,86 +310,40 @@ public class MainActivity extends Activity {
 	}
 
 	private void savePowerLog() {
-		new Thread() {
+		if (DataCollector.getInstance() != null) {
+			DataCollector.getInstance().savePowerLogFile();
+		} else {
 			Message statusMsg = new Message();
-
-			public void start() {
-				File writeFile = new File(Environment.getExternalStorageDirectory(), "PowerTrace"
-						+ System.currentTimeMillis() + ".log");
-				try {
-					InflaterInputStream logIn = new InflaterInputStream(openFileInput("PowerTrace.log"));
-					BufferedOutputStream logOut = new BufferedOutputStream(new FileOutputStream(writeFile));
-
-					byte[] buffer = new byte[20480];
-					for (int ln = logIn.read(buffer); ln != -1; ln = logIn.read(buffer)) {
-						logOut.write(buffer, 0, ln);
-					}
-
-					logIn.close();
-					logOut.close();
-					statusMsg.arg1 = MainActivity.MESSAGE_SUCCESS;
-					MainActivity.makeToastHandler.sendMessage(statusMsg);
-					return;
-				} catch (java.io.EOFException e) {
-					statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
-					MainActivity.makeToastHandler.sendMessage(statusMsg);
-					return;
-				} catch (IOException e) {
-				}
-				statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
-				MainActivity.makeToastHandler.sendMessage(statusMsg);
-			}
-		}.start();
+			statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
+			statusMsg.obj = "not running..";
+			MainActivity.makeToastHandler.sendMessage(statusMsg);
+		}
 	}
 
 	private void saveContextLog() {
-
-		new Thread() {
-
+		if (DataCollector.getInstance() != null) {
+			DataCollector.getInstance().saveContextLogFile();
+		} else {
 			Message statusMsg = new Message();
-
-			public void run() {
-				File writeFile = new File(Environment.getExternalStorageDirectory(), "DeviceContextLog"
-						+ System.currentTimeMillis() + ".log");
-
-				try {
-
-					InputStream logIn = openFileInput(DataCollector.getInstance().getCurrentContextLogFileName());
-					BufferedOutputStream logOut = new BufferedOutputStream(new FileOutputStream(writeFile));
-
-					byte[] buffer = new byte[20480];
-
-					for (int ln = logIn.read(buffer); ln != -1; ln = logIn.read(buffer)) {
-						logOut.write(buffer, 0, ln);
-
-					}
-
-					logIn.close();
-					logOut.close();
-					statusMsg.arg1 = MainActivity.MESSAGE_SUCCESS;
-					MainActivity.makeToastHandler.sendMessage(statusMsg);
-					return;
-				} catch (java.io.EOFException e) {
-					statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
-					MainActivity.makeToastHandler.sendMessage(statusMsg);
-					return;
-				} catch (IOException e) {
-				}
-				statusMsg.arg1 = MainActivity.MESSAGE_FAIL;
-				MainActivity.makeToastHandler.sendMessage(statusMsg);
-			}
-		}.start();
-
+			statusMsg.arg1 = MainActivity.MESSAGE_FAIL; 
+			statusMsg.obj = "not running..";
+			MainActivity.makeToastHandler.sendMessage(statusMsg);
+		}
 	}
 
 	public static Handler makeToastHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
+			
 			if (instance != null) {
+				String tmess = "";
+				if (msg.obj != null) {
+					tmess =  msg.obj.toString();
+				}
 				if (msg.arg1 == MESSAGE_FAIL) {
-					Toast.makeText(instance, "Some Errror Ocurs, see log", Toast.LENGTH_SHORT).show();
+					Toast.makeText(instance, "FAILED :-( " + tmess, Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(instance, "OK Completed..", Toast.LENGTH_SHORT).show();
+					Toast.makeText(instance, "OK " + tmess, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
