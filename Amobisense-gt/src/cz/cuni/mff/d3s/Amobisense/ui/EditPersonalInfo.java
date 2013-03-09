@@ -20,7 +20,7 @@ package cz.cuni.mff.d3s.Amobisense.ui;
 
 import java.util.regex.Pattern;
 
-import android.app.AlertDialog; 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;

@@ -12,6 +12,7 @@ import android.net.wifi.WifiManager;
 import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.ui.BatteryLevelDetailInfoActivityMP;
 import cz.cuni.mff.d3s.Amobisense.ui.MiscView;
+import cz.cuni.mff.d3s.Amobisense.utils.CryptoUtils;
 import edu.umich.PowerTutor.phone.PhoneConstants;
 
 /**
@@ -122,7 +123,11 @@ public class InternetConnection extends AbstractBroadcastEventReader {
 		if (netState == CONNECTION_TYPE_WIFI) {
 			if (wm != null && wm.getConnectionInfo() != null) {
 				WifiInfo wi = wm.getConnectionInfo();
-				this.currdata.get(readerID).setValue(wi.getSSID() + " " + wi.getBSSID(), getNetState());
+				if (prefs.getBoolean("anonymizeWIFI", true)) {
+					this.currdata.get(readerID).setValue(CryptoUtils.anonymizeValue(wi.getSSID(), 8) + " " + CryptoUtils.anonymizeValue(wi.getBSSID(), 8), getNetState());
+				}else {
+					this.currdata.get(readerID).setValue(wi.getSSID() + " " + wi.getBSSID(), getNetState());
+				}
 				return;
 			}
 		}

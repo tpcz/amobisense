@@ -19,15 +19,13 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.ui;
 
-import cz.cuni.mff.d3s.Amobisense.R;
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import cz.cuni.mff.d3s.Amobisense.R;
 
 /**This function implements the UI for help view*/
 public class Help extends Activity {

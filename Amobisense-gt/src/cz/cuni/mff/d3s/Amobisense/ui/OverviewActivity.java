@@ -135,6 +135,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [min]", "Level [%]");
 		graphConfiguration.setYAxeLimits(0, 110);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
+		graphConfiguration.setOnClickActivity(BatteryLevelDetailInfoActivityMP.class);
 		
 		config.add(graphConfiguration);
 			

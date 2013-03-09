@@ -19,14 +19,13 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.ui;
 
-import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 
 public class StartupReceiver extends BroadcastReceiver {
   @Override

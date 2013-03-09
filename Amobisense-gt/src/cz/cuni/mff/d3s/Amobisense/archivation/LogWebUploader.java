@@ -15,11 +15,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Message;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import cz.cuni.mff.d3s.Amobisense.ui.MainActivity;
 import cz.cuni.mff.d3s.Amobisense.utils.CryptoUtils;
 import edu.umich.PowerTutor.service.LogUploader;
 

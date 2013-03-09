@@ -19,14 +19,6 @@ Please send inquiries to powertutor@umich.edu
 
 package cz.cuni.mff.d3s.Amobisense.ui;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.zip.InflaterInputStream;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,7 +29,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -194,6 +185,8 @@ public class MainActivity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor editor = prefs.edit();
 		editor.putString("upload_url", "http://perun.ms.mff.cuni.cz:8000/upload");
+		editor.putBoolean("anonymizeGSM", true);
+		editor.putBoolean("anonymizeWIFI", true);
 		editor.putLong("run_nr", 1);
 		editor.commit();
 	}

@@ -44,7 +44,6 @@ import cz.cuni.mff.d3s.Amobisense.ui.MainActivity;
 import edu.umich.PowerTutor.service.DataCollector;
 import edu.umich.PowerTutor.service.ICounterService;
 import edu.umich.PowerTutor.service.UidInfo;
-import edu.umich.PowerTutor.service.ICounterService.Stub;
 import edu.umich.PowerTutor.util.BatteryStats;
 import edu.umich.PowerTutor.util.SystemInfo;
 

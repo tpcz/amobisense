@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.ui.BatteryLevelDetailInfoActivityMP;
 import cz.cuni.mff.d3s.Amobisense.ui.MiscView;
+import cz.cuni.mff.d3s.Amobisense.utils.CryptoUtils;
 import edu.umich.PowerTutor.phone.PhoneConstants;
 
 /**
@@ -80,6 +81,15 @@ public class WifiContext extends AbstractBroadcastEventReader {
 	private static final long VISIBLE = 1L;
 	private static final long NOT_VISIBLE = 0L;
 
+	
+	public String getWifiLogId(String BSSID, String SSID) {
+		if (prefs.getBoolean("anonymizeWIFI", true)){
+			return CryptoUtils.anonymizeValue(BSSID, 8) + "-"  + CryptoUtils.anonymizeValue(SSID, 8);
+		}else {
+			return BSSID + "-" + SSID;
+		}
+	}
+	
 	/** stores history for individual APs */
 	private void storeSignalAndConnectionHistory(List<ScanResult> results) {
 
@@ -89,19 +99,20 @@ public class WifiContext extends AbstractBroadcastEventReader {
 
 		synchronized (currdata) {
 			for (ScanResult sr : results) {
-				String vnc = "WIFI-" + sr.BSSID + "-" + sr.SSID + "-VISIBILITY";
-				String snc = "WIFI-" + sr.BSSID + "-" + sr.SSID + "-SIGNAL";
-
+				String id = getWifiLogId(sr.BSSID, sr.SSID);
+				
+				String vnc = "WIFI-" + id + "-VISIBILITY";
+				String snc = "WIFI-" + id + "-SIGNAL";
 				if (!currdata.containsKey(vnc)) {
 					addResultDataItem(vnc);
 					addResultDataItem(snc);
-					allSeen.add(sr.BSSID + "-" + sr.SSID);
+					allSeen.add(id);
 				}
 
 				currdata.get(snc).setValue(sr.level);
 				currdata.get(vnc).setValue(VISIBLE);
 
-				justSeen.add(sr.BSSID + "-" + sr.SSID);
+				justSeen.add(id);
 			}
 
 			for (String key : allSeen) {

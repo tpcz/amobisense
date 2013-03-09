@@ -19,18 +19,17 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.dataReaders;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.TreeSet;
+
+import android.content.Context;
+import android.media.AudioManager;
 import edu.umich.PowerTutor.PowerNotifications;
 import edu.umich.PowerTutor.service.IterationData;
 import edu.umich.PowerTutor.service.PowerData;
 import edu.umich.PowerTutor.util.NotificationService;
 import edu.umich.PowerTutor.util.Recycler;
-
-import android.content.Context;
-import android.media.AudioManager;
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.TreeSet;
 
 /**This class aims to log the audio device status once per log interval*/
 public class Audio extends PowerComponent {

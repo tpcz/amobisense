@@ -41,8 +41,10 @@ public class WiFiDetailInfoActivityMP extends MultiPartInfoActivity<ScanResult> 
 		//netIdSignal = i.getStringExtra("net-id-signal");
 		//netIdVisibility = i.getStringExtra("net-id-visibility");
 		
-		final String vnc = "WIFI-" + BSSID + "-" + SSID + "-VISIBILITY";
-		final String snc = "WIFI-" + BSSID + "-" + SSID + "-SIGNAL";
+		
+		String id = WifiContext.getInstance().getWifiLogId(BSSID, SSID);
+		final String vnc = "WIFI-" + id + "-VISIBILITY";
+		final String snc = "WIFI-" + id + "-SIGNAL";
 		
 		GraphConfigurationItem graph;
 		

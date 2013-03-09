@@ -21,7 +21,6 @@ package cz.cuni.mff.d3s.Amobisense.context.readers;
 
 import android.content.Context;
 import edu.umich.PowerTutor.phone.PhoneConstants;
-import edu.umich.PowerTutor.service.DataCollector;
 
 /**
  * Abstract class for context state holders based on events 

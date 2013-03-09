@@ -19,11 +19,9 @@ Please send inquiries to powertutor@umich.edu
 
 package cz.cuni.mff.d3s.Amobisense.ui;
 
-import cz.cuni.mff.d3s.Amobisense.R;
-
-
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import cz.cuni.mff.d3s.Amobisense.R;
 
 public class EditPreferences extends PreferenceActivity {
   public void onCreate(Bundle savedInstanceState) {

@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 
-import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -51,6 +49,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.service.DataCollector;
 import edu.umich.PowerTutor.service.ICounterService;
 import edu.umich.PowerTutor.service.UidInfo;

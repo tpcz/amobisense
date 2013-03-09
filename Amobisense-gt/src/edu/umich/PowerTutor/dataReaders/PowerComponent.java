@@ -19,9 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package edu.umich.PowerTutor.dataReaders;
 
-import edu.umich.PowerTutor.service.IterationData;
 import android.os.SystemClock;
 import android.util.Log;
+import edu.umich.PowerTutor.service.IterationData;
 
 /**
  * Base class for reader of periodically scanned 

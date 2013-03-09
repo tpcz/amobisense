@@ -19,17 +19,19 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.phone;
 
-import edu.umich.PowerTutor.dataReaders.*;
+import android.content.Context;
 import edu.umich.PowerTutor.dataReaders.Audio.AudioData;
 import edu.umich.PowerTutor.dataReaders.CPU.CpuData;
+import edu.umich.PowerTutor.dataReaders.GPS;
 import edu.umich.PowerTutor.dataReaders.GPS.GpsData;
 import edu.umich.PowerTutor.dataReaders.LCD.LcdData;
 import edu.umich.PowerTutor.dataReaders.OLED.OledData;
+import edu.umich.PowerTutor.dataReaders.Sensors;
 import edu.umich.PowerTutor.dataReaders.Sensors.SensorData;
+import edu.umich.PowerTutor.dataReaders.Threeg;
 import edu.umich.PowerTutor.dataReaders.Threeg.ThreegData;
+import edu.umich.PowerTutor.dataReaders.Wifi;
 import edu.umich.PowerTutor.dataReaders.Wifi.WifiData;
-
-import android.content.Context;
 
 public class DreamPowerCalculator implements PhonePowerCalculator {
   protected PhoneConstants coeffs;

@@ -19,13 +19,11 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.util;
 
-import edu.umich.PowerTutor.util.SystemInfo;
-
-import android.app.ActivityManager;
-
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
+
+import android.app.ActivityManager;
 
 /* This detector looks for transitions where one app leaves the foreground and
  * another enters the foreground to detect apps that are legitimately in the

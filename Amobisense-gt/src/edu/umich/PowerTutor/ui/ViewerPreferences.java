@@ -19,11 +19,9 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.ui;
 
-import cz.cuni.mff.d3s.Amobisense.R;
-
-
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import cz.cuni.mff.d3s.Amobisense.R;
 
 public class ViewerPreferences extends PreferenceActivity {
   public void onCreate(Bundle savedInstanceState) {

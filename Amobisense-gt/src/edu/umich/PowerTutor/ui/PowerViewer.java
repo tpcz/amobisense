@@ -26,8 +26,6 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -47,8 +45,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import edu.umich.PowerTutor.service.ICounterService;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.service.DataCollector;
+import edu.umich.PowerTutor.service.ICounterService;
 import edu.umich.PowerTutor.util.SystemInfo;
 
 public class PowerViewer extends Activity {

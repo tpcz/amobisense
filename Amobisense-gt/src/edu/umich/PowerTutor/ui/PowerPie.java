@@ -25,8 +25,6 @@ import org.achartengine.model.CategorySeries;
 import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
-import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -47,8 +45,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import edu.umich.PowerTutor.service.ICounterService;
+import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.service.DataCollector;
+import edu.umich.PowerTutor.service.ICounterService;
 import edu.umich.PowerTutor.util.Counter;
 import edu.umich.PowerTutor.util.SystemInfo;
 

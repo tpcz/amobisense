@@ -19,10 +19,9 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.service;
 
+import android.util.SparseArray;
 import edu.umich.PowerTutor.util.Recycler;
 import edu.umich.PowerTutor.util.SystemInfo;
-
-import android.util.SparseArray;
 
 /* Class that encloses physical hardware power data as well as estimated power
  * data for each uid that contributes a non-negligable amount of power for this

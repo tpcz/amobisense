@@ -22,7 +22,6 @@ package edu.umich.PowerTutor.phone;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-
 import edu.umich.PowerTutor.dataReaders.Sensors;
 
 public class DreamConstants implements PhoneConstants {

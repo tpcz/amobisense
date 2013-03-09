@@ -109,6 +109,13 @@ applications, self-trackers or other interested people. The main parts are:
 <string name="prefs_run_on_startup">Run on startup</string>
 <string name="prefs_run_on_startup_summary">Have the profiling service start when your phone starts</string>
 
+
+<string name="prefs_anonymize_gsm">Anonymize GSM </string>
+<string name="prefs_anonymize_gsm_summary">Shows real values of CID and LAC in app, but to logs write only cryto </string>
+
+<string name="prefs_anonymize_wifi">Anonymize WiFi</string>
+<string name="prefs_anonymize_wifi_summary">Shows real values of  SSID and BSSID in app, but to logs write only cryto hashes.</string>
+
 <string name="prefs_send_logs">Send logs</string>
 <string name="prefs_send_logs_summary">Send back power traces to the our team</string>
 

@@ -7,7 +7,15 @@
 	  
 	  <CheckBoxPreference android:key="sendPermission"
 				    android:title="@string/prefs_send_logs"
-				    android:summary="@string/prefs_send_logs_summary" />  
+				    android:summary="@string/prefs_send_logs_summary" />
+	  
+	  <CheckBoxPreference android:key="anonymizeGSM"
+				    android:title="@string/prefs_anonymize_gsm"
+				    android:summary="@string/prefs_anonymize_gsm_summary" />
+	  
+	  <CheckBoxPreference android:key="anonymizeWIFI"
+				    android:title="@string/prefs_anonymize_wifi"
+				    android:summary="@string/prefs_anonymize_wifi_summary" />
 				    
 	  <EditTextPreference android:key="upload_url" 
 	                android:title="@string/preferences_upload_url"

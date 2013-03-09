@@ -19,10 +19,10 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.util;
 
-import android.util.SparseArray;
-
 import java.util.LinkedList;
 import java.util.ListIterator;
+
+import android.util.SparseArray;
 
 public class HistoryBuffer {
   private static class UidData {

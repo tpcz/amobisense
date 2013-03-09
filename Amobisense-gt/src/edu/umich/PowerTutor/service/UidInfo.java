@@ -19,9 +19,9 @@ Please send inquiries to powertutor@umich.edu
 
 package edu.umich.PowerTutor.service;
 
-import edu.umich.PowerTutor.util.Recycler;
-
 import java.io.Serializable;
+
+import edu.umich.PowerTutor.util.Recycler;
 
 public class UidInfo implements Serializable, Comparable<UidInfo> {
 	/**

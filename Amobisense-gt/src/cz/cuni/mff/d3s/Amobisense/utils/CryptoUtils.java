@@ -46,4 +46,12 @@ public class CryptoUtils {
 	public static String getEncryptedUserUID(Context context) {
 		return CryptoUtils.SHA256(Secure.getString(context.getContentResolver(), Secure.ANDROID_ID));
 	}
+	
+	public static String anonymizeValue(String input, int outputLength) {
+		return CryptoUtils.SHA256(input).substring(0, outputLength);
+	}
+	
+	public static String anonymizeValue(int input, int outputLength) {
+		return CryptoUtils.SHA256("" + input).substring(0, outputLength);
+	}
 }
