@@ -5,6 +5,7 @@ import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphCon
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IDataAvailableGetter;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphLongDataCollector;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IStringDataCollector;
+import cz.cuni.mff.d3s.Amobisense.utils.NoClass;
 
 
 public class BatteryLevelDetailInfoActivityMP extends MultiPartInfoActivity<NoClass> {

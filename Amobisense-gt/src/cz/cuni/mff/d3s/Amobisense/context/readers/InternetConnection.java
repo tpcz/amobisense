@@ -1,5 +1,6 @@
 package cz.cuni.mff.d3s.Amobisense.context.readers;
 
+import java.io.Reader;
 import java.util.HashMap;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import cz.cuni.mff.d3s.Amobisense.context.ContextData;
 import cz.cuni.mff.d3s.Amobisense.context.HistoryHolder;
 import cz.cuni.mff.d3s.Amobisense.ui.BatteryLevelDetailInfoActivityMP;
 import cz.cuni.mff.d3s.Amobisense.ui.MiscView;
@@ -46,6 +48,8 @@ public class InternetConnection extends AbstractBroadcastEventReader {
 	public static final int CONNECTION_TYPE_NOT_CONNECTED = 0;
 	public static final int CONNECTION_TYPE_MOBILE = 1;
 	public static final int CONNECTION_TYPE_WIFI = 2;
+	
+	private ContextData unanonymizedData = new ContextData(); 
 	
 
 	public static InternetConnection instance = null;
@@ -123,6 +127,7 @@ public class InternetConnection extends AbstractBroadcastEventReader {
 		if (netState == CONNECTION_TYPE_WIFI) {
 			if (wm != null && wm.getConnectionInfo() != null) {
 				WifiInfo wi = wm.getConnectionInfo();
+				this.unanonymizedData.setValue(wi.getSSID() + " " + wi.getBSSID(), getNetState());
 				if (prefs.getBoolean("anonymizeWIFI", true)) {
 					this.currdata.get(readerID).setValue(CryptoUtils.anonymizeValue(wi.getSSID(), 8) + " " + CryptoUtils.anonymizeValue(wi.getBSSID(), 8), getNetState());
 				}else {
@@ -132,6 +137,10 @@ public class InternetConnection extends AbstractBroadcastEventReader {
 			}
 		}
 		this.currdata.get(readerID).setValue("?", getNetState());
+	}
+	
+	public String getUnanonymizedData () {
+		return this.unanonymizedData.toString();
 	}
 
 	@Override

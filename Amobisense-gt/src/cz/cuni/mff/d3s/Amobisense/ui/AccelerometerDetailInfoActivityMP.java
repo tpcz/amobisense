@@ -5,6 +5,7 @@ import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphCon
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IDataAvailableGetter;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphDoubleDataCollector;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IStringDataCollector;
+import cz.cuni.mff.d3s.Amobisense.utils.NoClass;
 
 
 public class AccelerometerDetailInfoActivityMP extends MultiPartInfoActivity<NoClass> {

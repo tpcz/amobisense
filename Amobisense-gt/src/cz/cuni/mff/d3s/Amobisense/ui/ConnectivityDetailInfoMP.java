@@ -5,9 +5,10 @@ import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphCon
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IDataAvailableGetter;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphLongDataCollector;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IStringDataCollector;
+import cz.cuni.mff.d3s.Amobisense.utils.NoClass;
 
 
-public class InternetConnectivityDetailInfoMP extends MultiPartInfoActivity<NoClass> {
+public class ConnectivityDetailInfoMP extends MultiPartInfoActivity<NoClass> {
 
 	@Override
 	protected void setupConfiguration() {
@@ -20,7 +21,7 @@ public class InternetConnectivityDetailInfoMP extends MultiPartInfoActivity<NoCl
 			      switch ((int) InternetConnection.getInstance().getCurrentMainData().toLong()) {
 			      	case InternetConnection.CONNECTION_TYPE_NOT_CONNECTED: info = "NO";
 			      	break;
-			      	case InternetConnection.CONNECTION_TYPE_WIFI: info = "WiFi, " + InternetConnection.getInstance().getCurrentMainData().toString();
+			      	case InternetConnection.CONNECTION_TYPE_WIFI: info = "WiFi, " + InternetConnection.getInstance().getUnanonymizedData().toString();
 			      	break;
 			      	case InternetConnection.CONNECTION_TYPE_MOBILE: info = "Mobile";
 			      	break;

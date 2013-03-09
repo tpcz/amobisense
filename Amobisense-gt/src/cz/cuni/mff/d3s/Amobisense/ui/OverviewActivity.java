@@ -92,7 +92,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "0: NO, 1: M, 2: WF");
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setYAxeLimits(0, 3);
-		graphConfiguration.setOnClickActivity(InternetConnectivityDetailInfoMP.class);
+		graphConfiguration.setOnClickActivity(ConnectivityDetailInfoMP.class);
 		
 		config.add(graphConfiguration);
 	

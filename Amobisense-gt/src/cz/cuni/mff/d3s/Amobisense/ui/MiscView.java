@@ -428,7 +428,7 @@ public class MiscView extends Activity {
 	      switch ((int) InternetConnection.getInstance().getCurrentMainData().toLong()) {
 	      	case InternetConnection.CONNECTION_TYPE_NOT_CONNECTED: info = "NO";
 	      	break;
-	      	case InternetConnection.CONNECTION_TYPE_WIFI: info = "YES, WiFi \n" + InternetConnection.getInstance().getCurrentMainData().toString();
+	      	case InternetConnection.CONNECTION_TYPE_WIFI: info = "YES, WiFi \n" + InternetConnection.getInstance().getUnanonymizedData().toString();
 	      	break;
 	      	case InternetConnection.CONNECTION_TYPE_MOBILE: info = "YES Mobile";
 	      	break;
@@ -436,7 +436,7 @@ public class MiscView extends Activity {
 	      
 	      textView.setText(info);
 	      textView.setGravity(Gravity.CENTER);
-	      onClickActivityClazz  = InternetConnectivityDetailInfoMP.class;
+	      onClickActivityClazz  = ConnectivityDetailInfoMP.class;
 	      title.setText("Connection");
 	      summary.setText("Are you now online?");
 	    }

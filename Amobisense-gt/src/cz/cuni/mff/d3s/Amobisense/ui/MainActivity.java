@@ -137,12 +137,12 @@ public class MainActivity extends Activity {
 	
 	private void setRunningText() {
 		welcomeText.setText(Html.fromHtml(
-				"<b>Power Use Information</b><br>" +
+				"<b>Device Power Use Info</b><br>" +
 				"- <a href='amobisense.powertop://'>Per Applicaton</a> <br> " +
 				"- <a href='amobisense.powertabs://'>Per Hardware</a><br> " +
 				"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
 				
-				"<b>Context Information</b><br>" +
+				"<b>Device Context Info</b><br>" +
 				"- <a href='amobisense.context.overview://'>Context overview graphs</a><br>" +
 				"- <a href='amobisense.context.misc://'>Detail information</a>" +
 				//", e.g.," +

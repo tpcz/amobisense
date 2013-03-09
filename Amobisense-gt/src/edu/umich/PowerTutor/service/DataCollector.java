@@ -94,7 +94,7 @@ public class DataCollector implements Runnable {
 	// public static final int CONTEXT_LOG_WRITE_NRITERATION = 10 /
 	// (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE); // 10
 	// second
-
+ 
 	public static final int CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC = 60 * 15 / (ITERATION_INTERVAL / ITERATION_INTERVAL_SCALE);
 
 	public static final int POWER_LOG_UPLOAD_TRY_NRITERATION_SEC = CONTEXT_LOG_UPLOAD_TRY_NRITERATION_SEC;
