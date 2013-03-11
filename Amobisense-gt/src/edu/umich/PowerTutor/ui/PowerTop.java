@@ -269,12 +269,11 @@ public class PowerTop extends Activity implements Runnable {
     }
     setContentView(mainView);
     if(keyId == KEY_CURRENT_POWER) {
-      setTitle(KEY_NAMES[keyId]);
+      setTitle(KEY_NAMES[keyId] + " (toogle buttons if needed)")  ;
     } else {
-      setTitle(KEY_NAMES[keyId] + " over " +
-               Counter.WINDOW_DESCS[prefs.getInt("topWindowType",
-                                                 Counter.WINDOW_TOTAL)]);
+      setTitle(KEY_NAMES[keyId] + " over " +   Counter.WINDOW_DESCS[prefs.getInt("topWindowType", Counter.WINDOW_TOTAL)] + " (toogle buttons if needed)");
     }
+    
   }
 
   public void run() {

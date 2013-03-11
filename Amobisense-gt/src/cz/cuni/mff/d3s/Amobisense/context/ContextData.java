@@ -63,6 +63,15 @@ public class ContextData implements Comparable<ContextData> {
 		dataType = ContextType.LONG;
 	}
 	
+	public void incrementByOne () {
+		if (this.dataType != ContextType.LONG) {
+			Log.e(TAG, "Cannot increment non long value");
+			return;
+		}
+		
+		lvalue++;
+	}
+	
 	public void setValue (double value) {
 		lvalue = 0;
 		svalue.setLength(0);

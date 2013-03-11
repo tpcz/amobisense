@@ -137,14 +137,14 @@ public class MainActivity extends Activity {
 	
 	private void setRunningText() {
 		welcomeText.setText(Html.fromHtml(
-				"<b>Device Power Use Info</b><br>" +
-				"- <a href='amobisense.powertop://'>Per Applicaton</a> <br> " +
-				"- <a href='amobisense.powertabs://'>Per Hardware</a><br> " +
-				"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
+				"<b>Device Power Use</b><br>" +
+				"- <a href='amobisense.powertop://'>Per applicaton</a> <br> " +
+				"- <a href='amobisense.powertabs://'>Per hardware</a><br> " +
+				//"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
 				
-				"<b>Device Context Info</b><br>" +
-				"- <a href='amobisense.context.overview://'>Context overview graphs</a><br>" +
-				"- <a href='amobisense.context.misc://'>Detail information</a>" +
+				"<b>Device Context</b><br>" +
+				"- <a href='amobisense.contexttabs://?page=details'>Current context</a><br>" +
+				"- <a href='amobisense.contexttabs://?page=graphs'>Context history</a>" +
 				//", e.g.," +
 				//"<a href='amobisense.context.wifi://'>wifi's,</a> " +
 				//"<a href='amobisense.context.connection://'>net connection</a>, " +
@@ -456,7 +456,7 @@ public class MainActivity extends Activity {
 	@SuppressWarnings("unused")
 	private Button.OnClickListener sysInformationButtonListener = new Button.OnClickListener() {
 		public void onClick(View v) {
-			Intent intent = new Intent(v.getContext(), ContextInfoTabs.class);
+			Intent intent = new Intent(v.getContext(), ContextTabs.class);
 			startActivityForResult(intent, 0);
 		}
 	};

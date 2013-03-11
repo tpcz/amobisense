@@ -294,8 +294,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 
 		chartLayout.setMinimumHeight(200);
 
-		ScrollView scrollView = new ScrollView(this);
-		scrollView.addView(chartLayout);
+		
 
 		RelativeLayout rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -304,6 +303,9 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		p.addRule(RelativeLayout.BELOW, lastLayoutId);
 
 		chartLayout.setId(++lastLayoutId);
+		ScrollView scrollView = new ScrollView(this);
+		scrollView.addView(chartLayout);
+		
 		rlayout.addView(scrollView, p);
 
 		// text part

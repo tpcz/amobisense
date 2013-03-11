@@ -3,6 +3,7 @@ package cz.cuni.mff.d3s.Amobisense.ui;
 import android.net.wifi.ScanResult;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
+import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphConfigurationItem;
@@ -137,6 +138,20 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(BatteryLevelDetailInfoActivityMP.class);
 		
+		config.add(graphConfiguration);
+		
+		
+		
+		IGraphDoubleDataCollector relativeCellFrequency = new IGraphDoubleDataCollector () {
+			 public double[] getYValues(int historyLength){
+				return GSMCells.getInstance().getDoubleHistoryValues(GSMCells.CURR_CELL_FREQ);
+			 }
+		};
+		
+		graphConfiguration = config.new GraphConfigurationItem("Relative freq. of current cell", relativeCellFrequency);
+		graphConfiguration.setAxeLabels("time [s]", "[# sec on it/total time]");
+		graphConfiguration.setYAxeLimits(0, 2);
+		graphConfiguration.setOnClickActivity(GSMCellsMP.class);
 		config.add(graphConfiguration);
 			
 	} 

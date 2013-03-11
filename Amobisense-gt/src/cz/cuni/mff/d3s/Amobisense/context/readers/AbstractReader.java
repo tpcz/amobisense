@@ -126,7 +126,6 @@ public abstract class AbstractReader implements IDataReader{
 				continue;
 			}
 			synchronized (currdata) {
-				
 				synchronized (history) {
 					if (!history.containsKey(key)) {
 						history.put(key, new HistoryHolder(historySize, currdata.get(key).dataType, key));
@@ -143,7 +142,6 @@ public abstract class AbstractReader implements IDataReader{
 					else if (getCurrentData().get(key).dataType == ContextType.STRING) {
 						history.get(key).addPoint(getCurrentData().get(key).toString());
 					}
-
 				}
 			}
 		}

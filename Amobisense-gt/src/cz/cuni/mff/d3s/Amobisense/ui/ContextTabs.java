@@ -21,27 +21,20 @@ package cz.cuni.mff.d3s.Amobisense.ui;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TabHost;
 import cz.cuni.mff.d3s.Amobisense.R;
 
-public class ContextInfoTabs extends TabActivity {
+public class ContextTabs extends TabActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.power_tabs);
 
-//    Resources res = getResources();
     TabHost tabHost = getTabHost();
     TabHost.TabSpec spec;
 
     Intent intent;
-
-// Do the same for the other tabs
-//    intent = new Intent(this, PowerPie.class);
-//    intent.putExtras(getIntent());
-//    spec = tabHost.newTabSpec("Pie").setIndicator("Pie View")
-//                  .setContent(intent);
-//    tabHost.addTab(spec);
 
     intent = new Intent(this, MiscView.class);
     intent.putExtras(getIntent());
@@ -49,14 +42,18 @@ public class ContextInfoTabs extends TabActivity {
     tabHost.addTab(spec);
     
     
-    // TODO: We could put in some icons on each of these two tabs.  Not sure if
-    // we care enough or if it would look much better.
     intent = new Intent(this, OverviewActivity.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Charts").setIndicator("Overview").setContent(intent);
+    spec = tabHost.newTabSpec("Charts").setIndicator("History Graphs").setContent(intent);
     tabHost.addTab(spec);
 
-    // Show the PowerViewer activity by default.
+    Uri uri = getIntent().getData();
     tabHost.setCurrentTab(0);
+    
+    if (uri.getQuery().contains("details")) {
+    	tabHost.setCurrentTab(0);
+    } else if (uri.getQuery().contains("graphs")) {
+    	tabHost.setCurrentTab(1);
+    }
   }
 }
