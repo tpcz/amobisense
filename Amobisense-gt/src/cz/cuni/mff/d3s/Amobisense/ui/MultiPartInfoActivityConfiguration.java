@@ -14,6 +14,7 @@ public class MultiPartInfoActivityConfiguration {
 	public String TAG;
 	public String title;
 	
+	
 	public IStringDataCollector summaryTextCollector;
 	
 	public  IDataAvailableGetter dataAvailabilityChecker;
@@ -153,8 +154,8 @@ public class MultiPartInfoActivityConfiguration {
 		ArrayAdapterWithOnClick<ItemType> adapter;
 		IListDataCollector<ItemType> collector;
 		
-		int listWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
-		int listHeight = 200; 
+		public int listWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
+		public int listHeight = 200; 
 		boolean sortBytitleEnabled = true;
 		
 		public ListConfigurationItem(IListDataCollector<ItemType> collector, ArrayAdapterWithOnClick<ItemType> adapter) {

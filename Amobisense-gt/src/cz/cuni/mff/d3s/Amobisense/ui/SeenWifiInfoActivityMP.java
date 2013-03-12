@@ -28,7 +28,7 @@ public class SeenWifiInfoActivityMP extends MultiPartInfoActivity<ScanResult> {
 		IStringDataCollector summaryTextCollector = new IStringDataCollector() {
 			@Override
 			public String getString() {
-				return "Right now seeing: " + WifiContext.getInstance().getCurrentMainData().toLong() + " WiFi's";
+				return "Right now seeing: " + WifiContext.getInstance().getCurrentMainData().toLong() + " WiFi's. Click for details";
 			}
 		};
 		
@@ -39,9 +39,7 @@ public class SeenWifiInfoActivityMP extends MultiPartInfoActivity<ScanResult> {
 			}
 		};
 	
-		
-		
-		
+
 		String title = "Visible WiFi's"; 
 		String TAG = "SeenWiFiInfo";
 		
@@ -96,7 +94,7 @@ public class SeenWifiInfoActivityMP extends MultiPartInfoActivity<ScanResult> {
 	    };
 	    
 	    ListConfigurationItem<ScanResult> visibleWiFiList = config.new ListConfigurationItem<ScanResult>(collector, adapter);
-	    visibleWiFiList.setDimensions(ViewGroup.LayoutParams.WRAP_CONTENT, 200);
+	    visibleWiFiList.setDimensions(ViewGroup.LayoutParams.WRAP_CONTENT, getWindowManager().getDefaultDisplay().getHeight() - 400);
 	    
 	    config.add(visibleWiFiList);
 	    
@@ -111,7 +109,9 @@ public class SeenWifiInfoActivityMP extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration = config.new GraphConfigurationItem("WiFi Availability", nrWiFiSeenCollector);
 		graphConfiguration.setAxeLabels("time [s]", "Num WiFi's");
 		graphConfiguration.setYAxeLimits(0, 50);
+		graphConfiguration.setMinDimensions(250, 0);
 		
 		config.add(graphConfiguration);
+		
 	} 
 }

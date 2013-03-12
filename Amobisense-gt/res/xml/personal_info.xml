@@ -38,4 +38,12 @@
                 android:summary="@string/personalinfo_education_summary"
                 android:dialogTitle="@string/personalinfo_education" 
     /> 
+    
+    <EditTextPreference
+                android:key="personalinfo_note"
+                android:title="@string/personalinfo_note"
+                android:persistent="true"
+                android:summary="@string/personalinfo_note_summary"
+                android:dialogTitle="@string/personalinfo_note"
+    />
 </PreferenceScreen>

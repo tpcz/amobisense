@@ -42,7 +42,7 @@ public class EditPersonalInfo extends PreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Boolean rtnval = true;
             String pattern = "[0-9]{1,3}";
-            if (!Pattern.matches(pattern, newValue.toString())) {
+            if (!Pattern.matches(pattern, newValue.toString())) { 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(EditPersonalInfo.this);
                 builder.setTitle("Invalid Input (Age)");
                 builder.setMessage("Invalid Input (Age)");

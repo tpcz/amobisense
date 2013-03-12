@@ -14,12 +14,14 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +63,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 	private Handler handler;
 	private LinearLayout chartLayout;
 	boolean showTitleAndtext = true;
+	RelativeLayout rlayout;
 
 	abstract protected void setupConfiguration();
 
@@ -76,6 +79,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		findViewById(R.id.detail_layout).invalidate();
 		setupActivityView();
 		graphCounter = 1;
+		
+		
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +91,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 			setContentView(R.layout.multipart_info_notitle);
 		}
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+		rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
 	}
 
 	@Override
@@ -171,16 +176,25 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 
 		config.adapter.setOnClickListenerOnItem(listView);
 
-		LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(config.listWidth, config.listHeight);
+		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(config.listWidth, config.listHeight);
 		p.setMargins(0, 1, 0, 0);
-
-		chartLayout.addView(listView, p);
-
+		p.height = config.listHeight;
+		p.width = config.listWidth;
+		p.addRule(RelativeLayout.BELOW, lastLayoutId);
+		
+		
+		
+		rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
+		rlayout.addView(listView, p);
+		
+		listView.setId(++lastLayoutId);
+		
 		ListHandle listHandle = new ListHandle(listView, config.collector, config.adapter);
 
 		if (handler != null) {
 			handler.post(listHandle);
 		}
+		
 	}
 
 	private void addGraph(final GraphConfigurationItem  graphConfiguration) {
@@ -281,38 +295,40 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		chartLayout.setOrientation(LinearLayout.VERTICAL);
 
 		for (UIObjectConfigurationItem item : config.uiObjects) {
-
 			if (item instanceof GraphConfigurationItem) {
 				addGraph((GraphConfigurationItem) item);
 			} else if (item instanceof ListConfigurationItem) {
-
 				addList((ListConfigurationItem) item);
 			} else {
 				Log.w(TAG, "Tryin to add non configuration object to activity");
 			}
 		}
 
-		chartLayout.setMinimumHeight(200);
-
 		
-
-		RelativeLayout rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
-		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-
-		p.addRule(RelativeLayout.BELOW, lastLayoutId);
-
-		chartLayout.setId(++lastLayoutId);
-		ScrollView scrollView = new ScrollView(this);
-		scrollView.addView(chartLayout);
+		rotateChartViewContainer();
 		
-		rlayout.addView(scrollView, p);
-
 		// text part
 
 		if (handler != null) {
 			handler.post(textCollector);
 		}
+	}
+	
+	private void rotateChartViewContainer() {
+		chartLayout.setMinimumHeight(200);
+		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		p.addRule(RelativeLayout.BELOW, lastLayoutId);
+
+		chartLayout.setId(++lastLayoutId);
+		ScrollView scrollView = new ScrollView(this);
+		
+		scrollView.addView(chartLayout);
+		scrollView.setId(++lastLayoutId);
+		
+		
+		rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
+		rlayout.addView(scrollView, p);
 	}
 
 	public class ListHandle implements Runnable {
