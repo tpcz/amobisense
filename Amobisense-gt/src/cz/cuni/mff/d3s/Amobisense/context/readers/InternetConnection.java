@@ -1,6 +1,5 @@
 package cz.cuni.mff.d3s.Amobisense.context.readers;
 
-import java.io.Reader;
 import java.util.HashMap;
 
 import android.content.Context;

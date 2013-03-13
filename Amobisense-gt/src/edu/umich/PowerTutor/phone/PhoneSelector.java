@@ -22,7 +22,6 @@ package edu.umich.PowerTutor.phone;
 import java.util.List;
 
 import android.content.Context;
-import android.location.Address;
 import android.os.Build;
 import android.util.Log;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractReader;

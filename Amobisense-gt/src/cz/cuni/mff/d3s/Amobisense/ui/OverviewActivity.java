@@ -1,8 +1,6 @@
 package cz.cuni.mff.d3s.Amobisense.ui;
 
 import android.net.wifi.ScanResult;
-import android.util.DisplayMetrics;
-import android.widget.ListView.FixedViewInfo;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
@@ -13,7 +11,6 @@ import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphCon
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IDataAvailableGetter;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphDoubleDataCollector;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphLongDataCollector;
-import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.UIObjectConfigurationItem;
 import edu.umich.PowerTutor.dataReaders.CPU;
 import edu.umich.PowerTutor.util.BatteryStats;
 

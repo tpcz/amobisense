@@ -20,7 +20,6 @@ Please send inquiries to powertutor@umich.edu
 package cz.cuni.mff.d3s.Amobisense.ui;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Dialog;

@@ -46,6 +46,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import cz.cuni.mff.d3s.Amobisense.Constants;
 import cz.cuni.mff.d3s.Amobisense.R;
 import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
 import edu.umich.PowerTutor.phone.PhoneSelector;
@@ -133,6 +134,14 @@ public class MainActivity extends Activity {
 			//sysInformationButton.setEnabled(false);
 			setStoppedText();
 		}
+		
+		String vn;
+		try {
+			vn = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (Exception e) {
+			vn = Constants.VERSION;
+		}
+		Constants.VERSION = vn;
 	}
 	
 	private void setRunningText() {
@@ -232,6 +241,8 @@ public class MainActivity extends Activity {
        // setLinkToActivity("power share", PowerTabs.class);
        // setLinkToActivity("applicaton power use", PowerTop.class);
        // setLinkToActivity("context information", ContextInfoTabs.class);
+		
+		
 	}
 
 	

@@ -463,7 +463,7 @@ public class DataCollector implements Runnable {
 			out.write("local-time-offset " + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) + "\n");
 			out.write("device: " + getDeviceName() + "\n");
 			out.write("log-version: " + Constants.CONTEXT_LOG_VERSION + "\n");
-			out.write("amobisense-version: " + Constants.VERISON + "\n");
+			out.write("amobisense-version: " + Constants.VERSION + "\n");
 			out.write("write-only-on-change: " + CONTEXT_LOG_WRITE_STRATEGY + "\n");
 
 			out.write("age " + prefs.getString("personalinfo_age", "0") + "\n");
@@ -1082,7 +1082,7 @@ public class DataCollector implements Runnable {
 		return -1;
 	}
 
-	public void registerContextHistory(HistoryHolder historyHolder) {
+	public void registerContextHistxory(HistoryHolder historyHolder) {
 		contextHistories.add(historyHolder);
 	}
 }
