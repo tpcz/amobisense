@@ -43,6 +43,7 @@ public class Accelerometer extends AbstractPeriodicReader implements SensorEvent
 			addResultDataItem(GRAVITY_X);
 			addResultDataItem(GRAVITY_Y);
 			addResultDataItem(GRAVITY_Z);
+			//this.scanRunner.start();
 		}
 	}
 

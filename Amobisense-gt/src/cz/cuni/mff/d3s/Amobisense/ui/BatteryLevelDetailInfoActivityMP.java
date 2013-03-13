@@ -46,5 +46,6 @@ public class BatteryLevelDetailInfoActivityMP extends MultiPartInfoActivity<NoCl
 		graphConfiguration.setYAxeLimits(0, 110);
 		
 		config.add(graphConfiguration);
+		fixGraphSizes(50);
 	} 
 }

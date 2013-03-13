@@ -55,8 +55,10 @@ public class ConnectivityDetailInfoMP extends MultiPartInfoActivity<NoClass> {
 		GraphConfigurationItem graphConfiguration;
 		graphConfiguration = config.new GraphConfigurationItem(title, collector);
 		graphConfiguration.setAxeLabels("time [s]", "(0: NO, 1: mobile, 2: Wifi)");
-		graphConfiguration.setYAxeLimits(0, 3);
+		graphConfiguration.setYAxeLimits(-1, 3);
 		
 		config.add(graphConfiguration);
+		
+		fixGraphSizes(300);
 	} 
 }

@@ -22,6 +22,7 @@ package edu.umich.PowerTutor.phone;
 import java.util.List;
 
 import android.content.Context;
+import android.location.Address;
 import android.os.Build;
 import android.util.Log;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractReader;
@@ -31,6 +32,9 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryTemperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.CPUUse;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Light;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Temperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import edu.umich.PowerTutor.dataReaders.Audio;
 import edu.umich.PowerTutor.dataReaders.Audio.AudioData;
@@ -209,6 +213,12 @@ public class PhoneSelector {
 			});
 		}
 	}
+	
+	private static void addReader(List<AbstractReader> contextReaders, AbstractReader rdr) {
+		if (rdr.isSupported()) {
+			contextReaders.add(rdr);
+		}
+	}
 
 	/** Add all context readers (waiting typically waiting for broadcasts)... */
 	public static void generateContextReaders(Context context, List<AbstractReader> contextReaders,
@@ -222,7 +232,7 @@ public class PhoneSelector {
 		contextReaders.add(new CPUUse(context, constants));
 	
 		if (wifiInterface != null && wifiInterface.length() != 0) {
-			contextReaders.add(new WifiContext(context, constants));
+			contextReaders.add(new WifiContext(context, constants)); 
 		}
 
 		Accelerometer amcr = new Accelerometer(context, constants);
@@ -236,5 +246,9 @@ public class PhoneSelector {
 		if (gsmc.isSupported()) {
 			contextReaders.add(gsmc);
 		}
+		
+		addReader(contextReaders, new Proximity(context, constants));
+		addReader(contextReaders, new Light(context, constants));
+		addReader(contextReaders, new Temperature(context, constants));
 	}
 }

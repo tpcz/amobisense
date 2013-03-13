@@ -148,10 +148,6 @@ public class InternetConnection extends AbstractBroadcastEventReader {
 		performScan(c, i);
 	}
 
-	@Override
-	public String getReaderType() {
-		return AbstractBroadcastEventReader.TYPE_PERIODIC;
-	}
 
 	@Override
 	public HashMap<String, HistoryHolder> getHistory() {

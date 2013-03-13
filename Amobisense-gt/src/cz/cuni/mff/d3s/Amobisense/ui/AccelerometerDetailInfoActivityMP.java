@@ -92,5 +92,7 @@ public class AccelerometerDetailInfoActivityMP extends MultiPartInfoActivity<NoC
 		
 		
 		config.add(graphConfiguration);
+		
+		fixGraphSizes(50);
 	} 
 }

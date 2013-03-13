@@ -56,5 +56,6 @@ public class CPUUsageDetailInfoActivityMP extends MultiPartInfoActivity<NoClass>
 		graph.setAxeLabels("time [s]", "Load [%]");
 		graph.setYAxeLimits(0, 100);
 		config.add(graph);
+		fixGraphSizes(50);
 	} 
 }

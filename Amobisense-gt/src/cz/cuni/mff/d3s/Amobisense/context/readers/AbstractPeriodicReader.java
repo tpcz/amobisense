@@ -79,7 +79,6 @@ public abstract class AbstractPeriodicReader extends AbstractReader implements I
 		this.iterationInterval = iterationInterval;
 	}
 	
-	@Override
 	public String getReaderType() {
 		return AbstractBroadcastEventReader.TYPE_PERIODIC;
 	}

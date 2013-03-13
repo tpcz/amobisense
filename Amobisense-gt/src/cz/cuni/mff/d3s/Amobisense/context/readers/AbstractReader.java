@@ -126,7 +126,7 @@ public abstract class AbstractReader implements IDataReader{
 				continue;
 			}
 			synchronized (currdata) {
-				synchronized (history) {
+				synchronized (history) { 
 					if (!history.containsKey(key)) {
 						history.put(key, new HistoryHolder(historySize, currdata.get(key).dataType, key));
 					}

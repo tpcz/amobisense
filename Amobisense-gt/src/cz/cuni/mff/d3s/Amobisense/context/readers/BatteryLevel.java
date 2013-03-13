@@ -76,10 +76,6 @@ public class BatteryLevel extends AbstractBroadcastEventReader {
 		performScan(c, i);
 	}
 
-	@Override
-	public String getReaderType() {
-		return AbstractBroadcastEventReader.TYPE_BROADCAST;
-	}
 
 	@Override
 	public HashMap<String, HistoryHolder> getHistory() {

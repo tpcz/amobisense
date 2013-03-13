@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cz.cuni.mff.d3s.Amobisense" 
-    android:versionCode="211" android:versionName="2.11">
-  <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="17"/>
+    android:versionCode="213" android:versionName="2.13">
+  <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17"/>
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -143,6 +143,18 @@
         <data android:scheme="amobisense.context.overview" />  
       </intent-filter>
     </activity>  
+    
+    <activity android:name="cz.cuni.mff.d3s.Amobisense.ui.SupportedActivity"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.supported" />  
+      </intent-filter>
+    </activity> 
        
     <activity android:name=".ui.WiFiDetailInfoActivityMP"
               android:theme="@android:style/Theme.NoTitleBar">
@@ -182,6 +194,18 @@
       </intent-filter>
     </activity>   
     
+    
+    <activity android:name=".ui.ProximityMP"
+              android:theme="@android:style/Theme.NoTitleBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+      <intent-filter>
+        <category android:name="android.intent.category.DEFAULT" />  
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="amobisense.context.proximity" />  
+      </intent-filter>
+    </activity>   
     
     <activity android:name="cz.cuni.mff.d3s.Amobisense.ui.MiscView" >
       <intent-filter>

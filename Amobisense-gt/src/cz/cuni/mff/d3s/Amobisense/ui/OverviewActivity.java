@@ -1,15 +1,19 @@
 package cz.cuni.mff.d3s.Amobisense.ui;
 
 import android.net.wifi.ScanResult;
+import android.util.DisplayMetrics;
+import android.widget.ListView.FixedViewInfo;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphConfigurationItem;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IDataAvailableGetter;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphDoubleDataCollector;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.IGraphLongDataCollector;
+import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.UIObjectConfigurationItem;
 import edu.umich.PowerTutor.dataReaders.CPU;
 import edu.umich.PowerTutor.util.BatteryStats;
 
@@ -43,8 +47,10 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 			}
 		};
 		
-		int graphHeight = 100;
-		int graphWith = 0; // auto value (fill)
+	
+		
+		int graphHeight = 300;
+		int graphWith = 0;
 		
 		config = new MultiPartInfoActivityConfiguration("OverviewTab", null  , null, dataAvailabilityChecker);
 		
@@ -56,8 +62,8 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 	     
 		GraphConfigurationItem graphConfiguration;
-		graphConfiguration = config.new GraphConfigurationItem("Nr Seen WiFi's", nrWiFiSeenCollector);
-		graphConfiguration.setAxeLabels("time [s]", "Num WiFi's");
+		graphConfiguration = config.new GraphConfigurationItem("# Visible WiFi's", nrWiFiSeenCollector);
+		graphConfiguration.setAxeLabels("time [s]", "#");
 		graphConfiguration.setYAxeLimits(0, 50);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(SeenWifiInfoActivityMP.class);
@@ -71,9 +77,9 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 			 }
 		};
 	    
-		String title = "Accelerometer Activity"; 
+		String title = "1s Cumulated Acceleration"; 
 		graphConfiguration = config.new GraphConfigurationItem(title, dcollector);
-		graphConfiguration.setAxeLabels("time [s]", "Cum. Eue. Act [m^2/s]");
+		graphConfiguration.setAxeLabels("time [s]", "[m^2/s^2]");
 		graphConfiguration.setYAxeLimits(0, 35);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(AccelerometerDetailInfoActivityMP.class);
@@ -89,10 +95,10 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 	    
 		
-		graphConfiguration = config.new GraphConfigurationItem("Net connection", collector);
-		graphConfiguration.setAxeLabels("time [s]", "0: NO, 1: M, 2: WF");
+		graphConfiguration = config.new GraphConfigurationItem("Connection (No/Mobile/Wifi)", collector);
+		graphConfiguration.setAxeLabels("time [s]", "NO/M/W");
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
-		graphConfiguration.setYAxeLimits(0, 3);
+		graphConfiguration.setYAxeLimits(-1, 3);
 		graphConfiguration.setOnClickActivity(ConnectivityDetailInfoMP.class);
 		
 		config.add(graphConfiguration);
@@ -105,7 +111,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 		
 		graphConfiguration = config.new GraphConfigurationItem("Load (System)", sysPercentCollector);
-		graphConfiguration.setAxeLabels("time [s]", "Load [%]");
+		graphConfiguration.setAxeLabels("time [s]", "[%]");
 		graphConfiguration.setYAxeLimits(0, 40);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		//config.add(graphConfiguration);
@@ -118,12 +124,12 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 		
 		graphConfiguration = config.new GraphConfigurationItem("Load (User)", sysUsrCollector);
-		graphConfiguration.setAxeLabels("time [s]", "Load [%]");
+		graphConfiguration.setAxeLabels("time [s]", "[%]");
 		graphConfiguration.setYAxeLimits(0, 60);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
-		config.add(graphConfiguration);
 		graphConfiguration.setOnClickActivity(CPUUsageDetailInfoActivityMP.class);
 		
+		config.add(graphConfiguration);
 		
 		// # battery level in last 60 seconds.
 		collector = new IGraphLongDataCollector () {
@@ -131,15 +137,36 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 				return BatteryLevel.getInstance().getMainLongHistoryValues();
 			 }
 		};
+		
+		
 	    
 		graphConfiguration = config.new GraphConfigurationItem("Battery level", collector);
-		graphConfiguration.setAxeLabels("time [min]", "Level [%]");
+		graphConfiguration.setAxeLabels("time [min]", "[%]");
 		graphConfiguration.setYAxeLimits(0, 110);
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(BatteryLevelDetailInfoActivityMP.class);
 		
-		config.add(graphConfiguration);
+		if (BatteryLevel.getInstance().isSupported()) {
+			//config.add(graphConfiguration);
+		}
 		
+		dcollector = new IGraphDoubleDataCollector () {
+			 public double[] getYValues(int historyLength){
+				return Proximity.getInstance().getMainDoubleHistoryValues();
+			 }
+		};
+	    
+		
+		
+		graphConfiguration = config.new GraphConfigurationItem("Device Front Proximity", dcollector);
+		graphConfiguration.setAxeLabels("time [s]", "[cm]");
+		graphConfiguration.setYAxeLimits(0, (int)Proximity.MAX_VALUE + 1);
+		graphConfiguration.setMinDimensions(200, 0);
+		graphConfiguration.setOnClickActivity(ProximityMP.class);
+		
+		if (Proximity.getInstance().isSupported()) {
+			config.add(graphConfiguration);
+		}
 		
 		
 		IGraphDoubleDataCollector relativeCellFrequency = new IGraphDoubleDataCollector () {
@@ -152,7 +179,11 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "[# sec on it/total time]");
 		graphConfiguration.setYAxeLimits(0, 2);
 		graphConfiguration.setOnClickActivity(GSMCellsMP.class);
-		config.add(graphConfiguration);
-			
+		if (GSMCells.getInstance().isSupported()) {
+			config.add(graphConfiguration);
+		}
+			 
+		fixGraphSizes(50);
+		
 	} 
 }

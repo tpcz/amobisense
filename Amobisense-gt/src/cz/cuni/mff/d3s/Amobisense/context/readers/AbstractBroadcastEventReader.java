@@ -63,6 +63,9 @@ public abstract class AbstractBroadcastEventReader extends AbstractEventReader i
 		this.c.unregisterReceiver(this.receiver);
 	}
 	
+	public String getReaderType() {
+		return AbstractBroadcastEventReader.TYPE_BROADCAST;
+	}
 	
 	public AbstractBroadcastEventReader(Context c, PhoneConstants phoneValues, String mainDataId) {
 		super(c, phoneValues, mainDataId);

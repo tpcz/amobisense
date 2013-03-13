@@ -20,11 +20,13 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -170,7 +172,7 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 
 		listView.setAdapter(config.adapter);
 		listView.setFastScrollEnabled(true);
-		listView.setScrollbarFadingEnabled(false);
+		//listView.setScrollbarFadingEnabled(false);
 
 		// final ArrayAdapter adapter = listConfiguration.adapter;
 
@@ -211,6 +213,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		renderer.setYTitle(graphConfiguration.name);
 		renderer.setXTitle(graphConfiguration.XAxeLabel);
 		renderer.setYTitle(graphConfiguration.YAxeLabel);
+		renderer.setAxisTitleTextSize(18);
+		renderer.setChartTitleTextSize(25);
 		renderer.setShowLegend(false);
 		renderer.setChartTitle(graphConfiguration.name);
 
@@ -222,7 +226,10 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		renderer.addSeriesRenderer(srenderer);
 		int[] margins = renderer.getMargins();
 		margins[1] += 1;
-
+		margins[3] = 0;
+		//margins[1] = 0;
+		//margins[2] = 0;
+		
 		renderer.setMargins(margins);
 
 		View chartView = new GraphicalView(this, new CubicLineChart(mseries, renderer, 0.5f));
@@ -252,7 +259,9 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 				}
 			});
 		}
-
+		//LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(new MarginLayoutParams(, 0));
+		
+		
 		chartLayout.addView(chartView);
 
 		GraphHandle newGraphHandle = new GraphHandle(series, chartView, graphConfiguration.collector);
@@ -303,6 +312,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 				Log.w(TAG, "Tryin to add non configuration object to activity");
 			}
 		}
+		
+		rlayout.setPadding(0, 0, 0, 0);
 
 		
 		rotateChartViewContainer();
@@ -319,6 +330,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 		p.addRule(RelativeLayout.BELOW, lastLayoutId);
+		p.setMargins(0, 0, 0, 0);
+		p.width = ViewGroup.LayoutParams.FILL_PARENT;
 
 		chartLayout.setId(++lastLayoutId);
 		ScrollView scrollView = new ScrollView(this);
@@ -329,6 +342,32 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 		
 		rlayout = (RelativeLayout) findViewById(R.id.detail_layout);
 		rlayout.addView(scrollView, p);
+	}
+	
+	protected void fixGraphSizes(int extraSpace) {
+		// correct graph widths;
+		DisplayMetrics metric = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metric);
+		
+		int numGraphs = 0;
+
+		for (UIObjectConfigurationItem c : config.uiObjects) {
+			if (c instanceof GraphConfigurationItem) {
+				numGraphs ++;
+			}
+		}
+
+		int[] margins =  new XYMultipleSeriesRenderer().getMargins();
+		int GraphMargins = margins[0] + margins[2]; 
+		
+		int gh = (metric.heightPixels - (numGraphs * GraphMargins) - extraSpace) / numGraphs;
+		
+		
+		for (UIObjectConfigurationItem c : config.uiObjects) {
+			if (c instanceof GraphConfigurationItem) {
+				((GraphConfigurationItem) c).setMinDimensions(gh, 0);
+			}
+		}
 	}
 
 	public class ListHandle implements Runnable {
@@ -399,6 +438,10 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 
 					int[] values = ((IGraphIntDataCollector) this.collector).getYValues(Integer.parseInt(prefs
 							.getString("viewNumValues_s", "60")));
+					if (values == null) {
+						Log.e("MultipartInfo:", "Values Are Null!");
+						return;
+					}
 					for (int i = 0; i < values.length; i++) {
 						series.add(i, values[i]);
 					}
@@ -407,18 +450,26 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 					long[] values = ((IGraphLongDataCollector) this.collector).getYValues(Integer.parseInt(prefs
 							.getString("viewNumValues_s", "60")));
 
+					if (values == null) {
+						Log.e("MultipartInfo:", "Values Are Null!");
+						return;
+					}
 					for (int i = 0; i < values.length; i++) {
 						series.add(i, values[i]);
 					}
 					series.add(values.length, 0);
 				} else if (collector instanceof IGraphDoubleDataCollector) {
-					double[] values = ((IGraphDoubleDataCollector) this.collector).getYValues(Integer.parseInt(prefs
-							.getString("viewNumValues_s", "60")));
+					double[] values = ((IGraphDoubleDataCollector) this.collector).getYValues(Integer.parseInt(prefs.getString("viewNumValues_s", "60")));
 
+					if (values == null) {
+						Log.e("MultipartInfo:", "Values Are Null!");
+						return;
+					}
+					
 					for (int i = 0; i < values.length; i++) {
 						series.add(i, values[i]); 
 					}
-					series.add(values.length, 0);
+					series.add(values.length, 0); 
 				}
 			}
 
@@ -433,5 +484,8 @@ public abstract class MultiPartInfoActivity<ListItemType> extends Activity {
 
 			chartView.invalidate();
 		}
+		
+		
+
 	};
 }

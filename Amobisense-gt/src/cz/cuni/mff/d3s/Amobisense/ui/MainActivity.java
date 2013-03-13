@@ -143,8 +143,9 @@ public class MainActivity extends Activity {
 				//"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
 				
 				"<b>Device Context</b><br>" +
-				"- <a href='amobisense.contexttabs://?page=details'>Current context</a><br>" +
-				"- <a href='amobisense.contexttabs://?page=graphs'>Context history</a>" +
+				"- <a href='amobisense.contexttabs://?tab=supported'>Device Supported Sensors</a><br>" +
+				"- <a href='amobisense.contexttabs://?tab=details'>Current context</a><br>" +
+				"- <a href='amobisense.contexttabs://?tab=graphs'>Context history</a>" +
 				//", e.g.," +
 				//"<a href='amobisense.context.wifi://'>wifi's,</a> " +
 				//"<a href='amobisense.context.connection://'>net connection</a>, " +

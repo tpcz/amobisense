@@ -160,11 +160,6 @@ public class WifiContext extends AbstractBroadcastEventReader {
 
 
 	@Override
-	public String getReaderType() {
-		return AbstractBroadcastEventReader.TYPE_BROADCAST;
-	}
-
-	@Override
 	public HashMap<String, HistoryHolder> getHistory() {
 		return this.history;
 	}

@@ -14,8 +14,6 @@ public interface IDataReader {
 	/** get name of the reader */
 	String getReaderName();
 	
-	/** periodic vs. broadcast based */
-	String getReaderType();
 	
 	/** gets current value from the reader */
 	HashMap<String, ContextData> getCurrentData();

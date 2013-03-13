@@ -35,25 +35,35 @@ public class ContextTabs extends TabActivity {
     TabHost.TabSpec spec;
 
     Intent intent;
+    
+    intent = new Intent(this, SupportedActivity.class);
+    intent.putExtras(getIntent());
+    spec = tabHost.newTabSpec("Supported").setIndicator("Supported").setContent(intent);
+    tabHost.addTab(spec);
 
     intent = new Intent(this, MiscView.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Stat").setIndicator("Detail View").setContent(intent);
+    spec = tabHost.newTabSpec("Stat").setIndicator("Current").setContent(intent);
     tabHost.addTab(spec);
     
     
     intent = new Intent(this, OverviewActivity.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Charts").setIndicator("History Graphs").setContent(intent);
+    
+    spec = tabHost.newTabSpec("Charts").setIndicator("History").setContent(intent);
     tabHost.addTab(spec);
+    
+  
 
     Uri uri = getIntent().getData();
     tabHost.setCurrentTab(0);
     
-    if (uri.getQuery().contains("details")) {
+    if (uri.getQuery().contains("supported")) {
     	tabHost.setCurrentTab(0);
-    } else if (uri.getQuery().contains("graphs")) {
+    }else if (uri.getQuery().contains("details")) {
     	tabHost.setCurrentTab(1);
+    } else if (uri.getQuery().contains("graphs")) {
+    	tabHost.setCurrentTab(2);
     }
   }
 }

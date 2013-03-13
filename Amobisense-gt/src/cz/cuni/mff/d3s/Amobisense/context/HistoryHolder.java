@@ -156,7 +156,10 @@ public class HistoryHolder {
 			break;
 		case STRING:
 			__addPoint ("" + value);
+		case NOT_SET:
+			Log.w(TAG, "Adding point to not sed data!");
 		}
+	
 	}
 	
 	public void addPoint(long value, String svalue) {
