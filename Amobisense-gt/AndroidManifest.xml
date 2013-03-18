@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cz.cuni.mff.d3s.Amobisense" 
-    android:versionCode="215" android:versionName="2.15">
+    android:versionCode="217" android:versionName="2.17">
   <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17"/>
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -16,7 +16,7 @@
   <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
   <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   
   <application android:icon="@drawable/icon" android:label="@string/app_name">
    	  

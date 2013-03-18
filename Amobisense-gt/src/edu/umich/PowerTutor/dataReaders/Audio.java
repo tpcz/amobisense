@@ -88,10 +88,18 @@ public class Audio extends PowerComponent {
     }
 
     public boolean equals(Object obj) {
-      MediaData x = (MediaData)obj;
+      if (obj == null || ! (obj instanceof MediaData)) {
+    	  return false;
+      }
+      MediaData x = (MediaData) obj;
       return uid == x.uid && id == x.id;
     }
+    
   }
+  
+  
+  
+  
 
   private AudioManager audioManager;
   private PowerNotifications audioNotif;

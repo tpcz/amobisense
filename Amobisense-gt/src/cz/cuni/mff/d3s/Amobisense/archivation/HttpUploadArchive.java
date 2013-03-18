@@ -148,7 +148,7 @@ public class HttpUploadArchive implements IFileArchivator {
 
 		// read the SERVER RESPONSE 
 		try {
-			if (conn.getResponseCode() != 200) {
+			if (conn!= null && conn.getResponseCode() != 200) {
 				isSuccess = false;
 			}
 		} catch (Exception e) {

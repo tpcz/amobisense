@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		instance = this;
+		MainActivity.instance = this;
 		getApplicationContext().bindService(serviceIntent, conn, 0);
 		if (prefs.getBoolean("firstRun", true)) {
 			

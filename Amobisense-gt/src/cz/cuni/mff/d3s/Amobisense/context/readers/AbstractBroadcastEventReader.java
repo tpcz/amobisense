@@ -41,7 +41,7 @@ public abstract class AbstractBroadcastEventReader extends AbstractEventReader i
 			AbstractBroadcastEventReader.this.onReceive(c, i);
 		}
 	};
-	protected boolean stopHistory = false;
+	//protected boolean stopHistory = false;
 	
 	/** should be changed in subclasses! */
 	public static final String TAG = "BroadcastReader";

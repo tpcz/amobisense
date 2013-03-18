@@ -230,8 +230,9 @@ public class PhoneSelector {
 		contextReaders.add(new BatteryTemperature(context, constants));
 		contextReaders.add(new CPUUse(context, constants));
 	
-		if (wifiInterface != null && wifiInterface.length() != 0) {
-			contextReaders.add(new WifiContext(context, constants)); 
+		WifiContext wifir = new WifiContext(context, constants);
+		if (wifir.isSupported()){
+			contextReaders.add(wifir); 
 		}
 
 		Accelerometer amcr = new Accelerometer(context, constants);

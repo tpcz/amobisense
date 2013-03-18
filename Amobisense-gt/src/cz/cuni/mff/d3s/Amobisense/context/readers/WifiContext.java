@@ -61,15 +61,19 @@ public class WifiContext extends AbstractBroadcastEventReader {
 		instance = this;
 		this.c = c;
 		
-		// register receivers
+		 
+		
 		registerReceiver(new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-		registerReceiver(new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+		registerReceiver(new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION)) ;
 		
-		// perform initial scan perform scan..
-		performScan(c);
+		if ((WifiManager) c.getSystemService(Context.WIFI_SERVICE) != null) {
+			// perform initial scan perform scan..
+			performScan(c);
 		
-		// start history (this must be done here, after first scan, not in supperclass!)
-		rememberHistory();
+			// start history (this must be done here, after first scan, not in supperclass!)
+			rememberHistory();
+		}
+		
 	}
 
 	public void clearResources() {

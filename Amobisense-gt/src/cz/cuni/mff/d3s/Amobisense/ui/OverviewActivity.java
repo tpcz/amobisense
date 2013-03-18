@@ -51,10 +51,11 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		
 		config = new MultiPartInfoActivityConfiguration("OverviewTab", null  , null, dataAvailabilityChecker);
 		
-		  // # seen wifi graph
 	    IGraphLongDataCollector nrWiFiSeenCollector = new IGraphLongDataCollector () {
 			 public long[] getYValues(int historyLength){
-				return ((WifiContext)WifiContext.getInstance()).getMainLongHistoryValues();
+				 
+				return WifiContext.getInstance().getMainLongHistoryValues();
+				 
 			 }
 		};
 	     
@@ -65,7 +66,9 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(SeenWifiInfoActivityMP.class);
 		
-		config.add(graphConfiguration);
+		if (WifiContext.getInstance().isSupported()) {
+			config.add(graphConfiguration);
+		}
 		
 		// # battery level in last 60 seconds.
 		IGraphDoubleDataCollector dcollector = new IGraphDoubleDataCollector () {
@@ -81,7 +84,9 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(AccelerometerDetailInfoActivityMP.class);
 		
-		config.add(graphConfiguration);
+		if (Accelerometer.getInstance().isSupported()) {
+			config.add(graphConfiguration);
+		}
 
 		
 		// # battery level in last 60 seconds.
@@ -98,7 +103,9 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setYAxeLimits(-1, 3);
 		graphConfiguration.setOnClickActivity(ConnectivityDetailInfoMP.class);
 		
-		config.add(graphConfiguration);
+		if (InternetConnection.getInstance().isSupported()) {
+			config.add(graphConfiguration);
+		}
 	
 		
 		IGraphDoubleDataCollector sysPercentCollector = new IGraphDoubleDataCollector () {
@@ -126,7 +133,9 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setMinDimensions(graphHeight, graphWith);
 		graphConfiguration.setOnClickActivity(CPUUsageDetailInfoActivityMP.class);
 		
-		config.add(graphConfiguration);
+		if (CPU.getInstanceOrNull()!= null) {
+			config.add(graphConfiguration);
+		}
 		
 		// # battery level in last 60 seconds.
 		collector = new IGraphLongDataCollector () {
@@ -154,7 +163,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		};
 	    
 		
-		
+		// device front proximity...
 		graphConfiguration = config.new GraphConfigurationItem("Device Front Proximity", dcollector);
 		graphConfiguration.setAxeLabels("time [s]", "[cm]");
 		graphConfiguration.setYAxeLimits(0, (int)Proximity.MAX_VALUE + 1);
@@ -176,6 +185,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setAxeLabels("time [s]", "[# sec on it/total time]");
 		graphConfiguration.setYAxeLimits(0, 2);
 		graphConfiguration.setOnClickActivity(GSMCellsMP.class);
+		
 		if (GSMCells.getInstance().isSupported()) {
 			config.add(graphConfiguration);
 		}

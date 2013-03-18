@@ -168,8 +168,10 @@ public class LogWebUploader extends LogUploader {
 	        		 
 	        		
 		        	 if (!endExecution && !Thread.interrupted()) {
-		        		 Log.i("UPLOADER", "Thread running, uploading file " + p.origFileName);
-			        	 isUploading = true; 
+		        		 if (p != null) {
+			        		 Log.i("UPLOADER", "Thread running, uploading file " + p.origFileName);
+				        	 isUploading = true;
+		        		 }
 			        	 
 			        	 if ((p != null ) &&  !uploadFile(p)) {
 			        	 //if ((p != null ) && f.exists() &&  !uploadFile(p)) {
