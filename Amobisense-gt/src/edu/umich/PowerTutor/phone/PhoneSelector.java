@@ -23,6 +23,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import cz.cuni.mff.d3s.Amobisense.context.readers.AbstractReader;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
@@ -32,6 +33,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.CPUUse;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Light;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Orientation;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Temperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
@@ -245,6 +247,14 @@ public class PhoneSelector {
 		GSMCells gsmc = new GSMCells(context, constants);
 		if (gsmc.isSupported()) {
 			contextReaders.add(gsmc);
+		}
+		
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("allow_orientation_sensor", false)) {
+			Orientation ori = new Orientation(context, constants);
+		
+			if (ori.isSupported()) {
+				contextReaders.add(ori);
+			}
 		}
 		
 		addReader(contextReaders, new Proximity(context, constants));

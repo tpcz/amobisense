@@ -33,6 +33,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import android.app.Service;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -74,6 +75,8 @@ import edu.umich.PowerTutor.widget.PowerWidget;
  */
 public class DataCollector implements Runnable {
 	private static final String TAG = "DataCollector";
+	
+	public Service service = null;
 
 	/*
 	 * A dictionary used to assist in compression of the log files. Strings that
@@ -112,6 +115,9 @@ public class DataCollector implements Runnable {
 	private SharedPreferences prefs;
 
 	private Vector<PowerComponent> powerComponents;
+	
+
+
 	private Vector<AbstractReader> contextReaders;
 	// private Map<String, ContextStateWatch> contextReadersMap;
 	private Vector<PowerFunction> powerFunctions;
@@ -198,9 +204,21 @@ public class DataCollector implements Runnable {
 		contextLogFileNameRotationCounter = 0;
 		rotateLogs(true, ALL_LOGS);
 	}
+	
+	
 
 	public static DataCollector getInstance() {
 		return instance;
+	}
+	
+	public Vector<AbstractReader> getContextReaders() {
+		return contextReaders;
+		
+	}
+
+
+	public PhoneConstants getPhoneConstants() {
+		return phoneConstants;
 	}
 
 	// O(n), should not be called too many times..

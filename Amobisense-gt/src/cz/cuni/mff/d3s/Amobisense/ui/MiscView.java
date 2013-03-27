@@ -32,6 +32,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -52,6 +53,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Light;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Orientation;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Temperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
@@ -90,6 +92,7 @@ public class MiscView extends Activity {
 		allItems.add(new GSMCellItem());
 		allItems.add(new AccelerometerItem());
 		allItems.add(new ProximityItem());
+		allItems.add(new OrientationItem());
 		allItems.add(new LightItem());
 		allItems.add(new GenericInfoItem("Temperature", "C", Temperature.getInstance(), "C"));
 		allItems.add(new InternetConnectionItem());
@@ -134,6 +137,7 @@ public class MiscView extends Activity {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
 				InfoItem item = (InfoItem) adapter.getItem(position);
+				
 				if (item.onClickActivityClazz != null) {
 					Intent i = new Intent(MiscView.this, item.onClickActivityClazz);
 					if (item.onClickActivityIntentExtras != null) {
@@ -249,6 +253,7 @@ public class MiscView extends Activity {
 		protected TextView title;
 		protected TextView summary;
 		protected TextView textView;
+		protected Boolean prefDisabled  = false;
 
 		@SuppressWarnings("rawtypes")
 		protected Class onClickActivityClazz = null;
@@ -372,6 +377,43 @@ public class MiscView extends Activity {
 			summary.setText("Sum/s, x/y/z");
 
 			onClickActivityClazz = AccelerometerDetailInfoActivityMP.class;
+		}
+	}
+	
+	
+	private class OrientationItem extends InfoItem {
+
+		public boolean available() {
+			return (null !=
+
+			Orientation.getInstance() &&
+
+			Orientation.getInstance().isSupported()) || prefs.getBoolean("allow_orientation_sensor", false) == false;
+		}
+
+		public void setupView() {
+			if (textView == null)
+				return;
+			
+			String info = "Disabled in <a href='amobisense.prefs.params://'>settings</a>\n";
+			
+			if (prefs.getBoolean("allow_orientation_sensor", false)) {
+				Orientation AI = Orientation.getInstance();
+				info = String.format("%.2f [\u00B0/s]<br>%.1f/%.1f/%.1f [\u00B0]", AI.getCurrentMainData().toDouble(), AI
+						.getCurrentData().get(Orientation.AZIMUTH).toDouble(),
+						AI.getCurrentData().get(Orientation.PITCH).toDouble(),
+						AI.getCurrentData().get(Orientation.ROLL).toDouble());
+				
+				onClickActivityClazz = OrientationDetailInfoActivityMP.class;
+			}else {
+				onClickActivityClazz = EditPreferences.class;
+			}
+
+			textView.setText(Html.fromHtml(info));
+			textView.setGravity(Gravity.CENTER);
+
+			title.setText("Orientation");
+			summary.setText("\u0394/s, azimuth/roll/pitch");
 		}
 	}
 

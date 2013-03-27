@@ -21,4 +21,9 @@
 	                android:title="@string/preferences_upload_url"
 	                android:summary="@string/preferences_upload_url_summary"
 	                android:dialogTitle="Enter server to upload data" />
+	  
+	 <CheckBoxPreference android:key="allow_orientation_sensor" 
+	                android:title="@string/preferences_allow_orientation_sensor"
+	                android:summary="@string/preferences_allow_orientation_sensor_summary"
+	                android:dialogTitle="Allow orientation sensor?" />
 </PreferenceScreen>

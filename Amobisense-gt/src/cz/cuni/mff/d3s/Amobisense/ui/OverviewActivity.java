@@ -5,6 +5,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.Accelerometer;
 import cz.cuni.mff.d3s.Amobisense.context.readers.BatteryLevel;
 import cz.cuni.mff.d3s.Amobisense.context.readers.GSMCells;
 import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
+import cz.cuni.mff.d3s.Amobisense.context.readers.Orientation;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import cz.cuni.mff.d3s.Amobisense.ui.MultiPartInfoActivityConfiguration.GraphConfigurationItem;
@@ -89,7 +90,7 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		}
 
 		
-		// # battery level in last 60 seconds.
+		
 		IGraphLongDataCollector collector = new IGraphLongDataCollector () {
 			 public long[] getYValues(int historyLength){
 				return InternetConnection.getInstance().getMainLongHistoryValues();
@@ -104,6 +105,23 @@ public class OverviewActivity extends MultiPartInfoActivity<ScanResult> {
 		graphConfiguration.setOnClickActivity(ConnectivityDetailInfoMP.class);
 		
 		if (InternetConnection.getInstance().isSupported()) {
+		//	config.add(graphConfiguration);
+		}
+		
+		IGraphDoubleDataCollector dc = new IGraphDoubleDataCollector () {
+			 public double[] getYValues(int historyLength){
+				 return Orientation.getInstance().getMainDoubleHistoryValues();
+			 }
+		};
+	    
+		
+		graphConfiguration = config.new GraphConfigurationItem("Device orientation \u0394/s", dc);
+		graphConfiguration.setAxeLabels("time [s]", "\u0394/s");
+		graphConfiguration.setMinDimensions(graphHeight, graphWith);
+		graphConfiguration.setYAxeLimits(0, 100);
+		graphConfiguration.setOnClickActivity(OrientationDetailInfoActivityMP.class);
+		
+		if ( Orientation.getInstance() != null && Orientation.getInstance().isSupported()) {
 			config.add(graphConfiguration);
 		}
 	

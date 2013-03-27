@@ -69,6 +69,7 @@ public class MainBackgroundService extends Service{
   @Override
   public void onCreate() {
     dataCollector = new DataCollector(this);
+    dataCollector.service = this;
     
     /* Register to receive phone state messages. */
     phoneManager = (TelephonyManager)this.getSystemService(TELEPHONY_SERVICE);
