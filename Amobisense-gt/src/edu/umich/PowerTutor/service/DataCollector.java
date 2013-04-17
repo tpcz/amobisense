@@ -468,7 +468,16 @@ public class DataCollector implements Runnable {
 	 */
 
 	private void writeGeneralInfo(OutputStreamWriter out) {
+		String vname = "vname";
 		try {
+			vname = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+		}catch (Exception e) {
+			
+		}
+		
+		
+		try {
+			
 			// mark as a comment
 			Calendar cal = new GregorianCalendar();
 			Time time = new Time(Time.getCurrentTimezone());
@@ -481,7 +490,7 @@ public class DataCollector implements Runnable {
 			out.write("local-time-offset " + (cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET)) + "\n");
 			out.write("device: " + getDeviceName() + "\n");
 			out.write("log-version: " + Constants.CONTEXT_LOG_VERSION + "\n");
-			out.write("amobisense-version: " + Constants.VERSION + "\n");
+			out.write("amobisense-version: " + Constants.VERSION + "/" + vname + " \n");
 			out.write("write-only-on-change: " + CONTEXT_LOG_WRITE_STRATEGY + "\n");
 
 			out.write("age " + prefs.getString("personalinfo_age", "0") + "\n");
@@ -590,16 +599,17 @@ public class DataCollector implements Runnable {
 				if (contextLogAlreadyUploadedNr == contextLogFileNameRotationCounter) {
 					return;
 				}
+				fileName  =getCurrentContextLogFileName();
 				break;
 			case POWER_LOG:
 				if (powerLogAlreadyUploadedNr == powerLogFileNameRotationCounter) {
 					return;
 				}
+				fileName  =getCurrentPowerLogFileName();
 				break;
 			}
 
 			if (logUploader.shouldUpload() || saveToSD) {
-
 				String uploadFileNameBase = "";
 				uploadFileNameBase = "context-log";
 				String SDname="log";
@@ -615,7 +625,6 @@ public class DataCollector implements Runnable {
 				case POWER_LOG:
 					uploadFileNameBase = "power-log";
 					SDname = "power-log-" + System.currentTimeMillis() + ".log";
-					uploadFileNameBase = "power-log";
 					
 					powerLogAlreadyUploadedNr = powerLogFileNameRotationCounter;
 					// Log.i(TAG, "Going to upload power files, counter = " +
@@ -886,7 +895,6 @@ public class DataCollector implements Runnable {
 			if ((iter + 1) % POWER_LOG_UPLOAD_TRY_NRITERATION_SEC == 0 && prefs.getBoolean("sendPermission", true)) {
 				mayBeUploadLogFile(powerLogFileWriteLock, getCurrentPowerLogFileName(), powerLogStream, POWER_LOG, true);
 			}
-
 		}
 	}
 

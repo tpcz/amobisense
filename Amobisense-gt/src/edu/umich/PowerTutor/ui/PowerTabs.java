@@ -21,6 +21,7 @@ package edu.umich.PowerTutor.ui;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TabHost;
 import cz.cuni.mff.d3s.Amobisense.R;
@@ -38,24 +39,35 @@ public class PowerTabs extends TabActivity {
     // we care enough or if it would look much better.
     Intent intent = new Intent(this, PowerViewer.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Charts").setIndicator("Chart View")
-                  .setContent(intent);
+    spec = tabHost.newTabSpec("Charts").setIndicator("HW Chart").setContent(intent);
     tabHost.addTab(spec);
 
     // Do the same for the other tabs
     intent = new Intent(this, PowerPie.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Pie").setIndicator("Pie View")
-                  .setContent(intent);
+    spec = tabHost.newTabSpec("Pie").setIndicator("HW Pie").setContent(intent);
     tabHost.addTab(spec);
 
     intent = new Intent(this, MiscView.class);
     intent.putExtras(getIntent());
-    spec = tabHost.newTabSpec("Stat").setIndicator("Stat View")
-                  .setContent(intent);
+    spec = tabHost.newTabSpec("Stat").setIndicator("HW Stats").setContent(intent);
     tabHost.addTab(spec);
 
-    // Show the PowerViewer activity by default.
+    intent = new Intent(this, PowerTop.class);
+    intent.putExtras(getIntent());
+    spec = tabHost.newTabSpec("App").setIndicator("SW Apps").setContent(intent);
+    tabHost.addTab(spec);
+
+    
+    Uri uri = getIntent().getData();
     tabHost.setCurrentTab(0);
+    
+    if (uri != null & uri.getQuery() !=null && uri.getQuery().contains("apps")) {
+    	// apps
+    	tabHost.setCurrentTab(3);
+    } else {
+    	// graphs,overview
+    	tabHost.setCurrentTab(0);	
+    }
   }
 }

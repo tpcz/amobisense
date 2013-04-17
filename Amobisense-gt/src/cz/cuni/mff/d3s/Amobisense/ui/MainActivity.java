@@ -147,8 +147,8 @@ public class MainActivity extends Activity {
 	private void setRunningText() {
 		welcomeText.setText(Html.fromHtml(
 				"<b>Device Power Use</b><br>" +
-				"- <a href='amobisense.powertop://'>Per applicaton</a> <br> " +
-				"- <a href='amobisense.powertabs://'>Per hardware</a><br> " +
+				"- <a href='amobisense.powertabs://?tab=apps'>Per applicaton</a> <br> " +
+				"- <a href='amobisense.powertabs://?tab=hw'>Per hardware</a><br> " +
 				//"- <a href='amobisense.powerpie://pie'>HW Share</a><br>" +
 				
 				"<b>Device Context</b><br>" +
@@ -224,6 +224,7 @@ public class MainActivity extends Activity {
 		} else {
 			incrementRunNumber();
 		}
+		
 		Intent startingIntent = getIntent();
 		if (startingIntent.getBooleanExtra("isFromIcon", false)) {
 			// Intent copyIntent = (Intent)getIntent().clone();
@@ -306,7 +307,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_PREFERENCES, 0, "Edit Options");
+		menu.add(0, MENU_PREFERENCES, 0, "Application Settings");
 		// menu.add(0, MENU_UPLOAD_CURRENT_CONTEXT_LOG, 0,
 		// "Upload Context Log");
 		menu.add(0, MENU_SAVE_POWER_LOG, 0, "Save power log");

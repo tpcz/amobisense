@@ -35,6 +35,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Light;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Orientation;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
+import cz.cuni.mff.d3s.Amobisense.context.readers.ScreenOrintationAndBrightness;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Temperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import edu.umich.PowerTutor.dataReaders.Audio;
@@ -248,6 +249,12 @@ public class PhoneSelector {
 		if (gsmc.isSupported()) {
 			contextReaders.add(gsmc);
 		}
+		
+		ScreenOrintationAndBrightness scrn = new ScreenOrintationAndBrightness(context, constants);
+		if (scrn.isSupported()) {
+			contextReaders.add(scrn);
+		}
+		
 		
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("allow_orientation_sensor", false)) {
 			Orientation ori = new Orientation(context, constants);

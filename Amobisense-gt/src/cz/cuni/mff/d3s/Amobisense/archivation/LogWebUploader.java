@@ -90,8 +90,7 @@ public class LogWebUploader extends LogUploader {
 	     				
 	     				 String.format("%04d", run_nr)  + "-" + 
 	     				 String.format("%04d", fileNr)  +  "-" +
-						  SystemClock.elapsedRealtime() + 
-	     				 ".log";
+						 SystemClock.elapsedRealtime() +  ".log";
 	     	 } 
 	     	  
 	     	 private boolean uploadFile (UploadParams params) {
@@ -106,9 +105,7 @@ public class LogWebUploader extends LogUploader {
 		           	String uploadedFileName = getUploadFileName (params.archiveNameBase, params.origFileName);
 		        	 	
 		            if (httpUploader.addFileToArchive(logIn, uploadedFileName)) {
-			           	  //statusMsg  = new Message();
-			           	  logIn.close();
-			           	  
+		            	  logIn.close();
 			           	  if (params.removeWhenFinish) {
 			         		  File f = new File (params.origFileName);
 			         		  
@@ -121,11 +118,12 @@ public class LogWebUploader extends LogUploader {
 			                 	  //statusMsg  = new Message();
 			                 	  Log.e("UPLOADER", "File IO Error, can not removed! (doe not exist...)"  + params.origFileName);
 			         		  } 
-			         		  return true;
 			         	  }
-		          	  
+			           	return true;
 		            } else {
+		            	 logIn.close();
 			           	 try {
+			           		
 			           		 // deffer next attempt for 
 			           		 sleep(UPLOAD_RETRY_INTERVAL_MS);
 			           	 }catch (Exception e) {

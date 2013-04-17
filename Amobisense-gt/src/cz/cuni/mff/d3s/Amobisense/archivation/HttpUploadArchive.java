@@ -41,11 +41,10 @@ public class HttpUploadArchive implements IFileArchivator {
 	
 	public boolean addFileToArchive(InputStream fIn, String fileNameInArchive) {
 		if (!isValidUrl(uploadUrl)) {
-			
 			Log.e("http-uploader", "Url is not valid");
 			return false;
-			
 		}
+		
 		return isValidUrl(uploadUrl) ? uploadFile(fIn, uploadUrl, fileNameInArchive) : false;
 	}
 	

@@ -46,7 +46,7 @@ public class AccelerometerDetailInfoActivityMP extends MultiPartInfoActivity<NoC
 		GraphConfigurationItem graphConfiguration;
 		
 		graphConfiguration = config.new GraphConfigurationItem(title, collector);
-		graphConfiguration.setAxeLabels("time [s]", "Cum. Eue. Acc [m^3/s]");
+		graphConfiguration.setAxeLabels("time [s]", "Cum. Eue. Acc [m^2/s]");
 		graphConfiguration.setYAxeLimits(0, 40);
 		graphConfiguration.setMinDimensions(120, 0);
 		
@@ -89,7 +89,6 @@ public class AccelerometerDetailInfoActivityMP extends MultiPartInfoActivity<NoC
 		graphConfiguration.setAxeLabels("time [s]", "Accel [m^2/s]");
 		graphConfiguration.setYAxeLimits(-15, 15);
 		graphConfiguration.setMinDimensions(120, 0);
-		
 		
 		config.add(graphConfiguration);
 		

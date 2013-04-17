@@ -139,7 +139,7 @@ applications, self-trackers or other interested people. The main parts are:
 <string name="preferences_upload_url">URL to upload data</string>
 <string name="preferences_upload_url_summary">Your can change server, where to upload data</string>
 
-<string name="preferences_allow_orientation_sensor">Allow scanning orientation sensor?</string>
+<string name="preferences_allow_orientation_sensor">Allow orientation sensor?</string>
 <string name="preferences_allow_orientation_sensor_summary">This will significantly increase power consumtion!</string>
 
 

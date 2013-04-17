@@ -55,6 +55,7 @@ import cz.cuni.mff.d3s.Amobisense.context.readers.InternetConnection;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Light;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Orientation;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Proximity;
+import cz.cuni.mff.d3s.Amobisense.context.readers.ScreenOrintationAndBrightness;
 import cz.cuni.mff.d3s.Amobisense.context.readers.Temperature;
 import cz.cuni.mff.d3s.Amobisense.context.readers.WifiContext;
 import cz.cuni.mff.d3s.Amobisense.service.MainBackgroundService;
@@ -93,6 +94,8 @@ public class MiscView extends Activity {
 		allItems.add(new AccelerometerItem());
 		allItems.add(new ProximityItem());
 		allItems.add(new OrientationItem());
+		allItems.add(new ScreenInfoItem());
+
 		allItems.add(new LightItem());
 		allItems.add(new GenericInfoItem("Temperature", "C", Temperature.getInstance(), "C"));
 		allItems.add(new InternetConnectionItem());
@@ -600,4 +603,42 @@ public class MiscView extends Activity {
 			summary.setText("Are you now online?");
 		}
 	}
+	
+	private class ScreenInfoItem extends InfoItem {
+		public boolean available() {
+			return (null != ScreenOrintationAndBrightness.getInstance());
+		}
+
+		public void setupView() {
+			if (textView == null)
+				return;
+			String info = "N/A";
+			
+			switch ((int) ScreenOrintationAndBrightness.getInstance().getCurrentMainData().toLong()) {
+			case 1:
+			case 3:
+				info = "Portrait";
+				break;
+			case 2:
+			case 4:
+				info = "Landscape";
+				break;
+			default:
+				info = "?";
+				break;
+			}
+			
+			info += "\n" + 
+					" " + (ScreenOrintationAndBrightness.getInstance().getCurrentData().get(ScreenOrintationAndBrightness.BRIGHTNESS).toLong());
+
+			textView.setText(info);
+			textView.setGravity(Gravity.CENTER);
+			//onClickActivityClazz = ConnectivityDetailInfoMP.class;
+			title.setText("Screen");
+			summary.setText("Orientation / Brightness [0-255]");
+		}
+	}
+	
 }
+
+

@@ -96,17 +96,21 @@ public class MainBackgroundService extends Service{
     super.onStart(intent, startId);
 //android.os.Debug.startMethodTracing("pt.trace");
 
-    if(intent.getBooleanExtra("stop", false)) {
+    // Android OS can put intetn null? a bug?
+    if(intent != null && intent.getBooleanExtra("stop", false)) {
       stopSelf();
       return;
     } else if(estimatorThread != null) {
       return;
     }
+    
+    if(estimatorThread != null) {
+        return;
+    }
+    
     showNotification();
     estimatorThread = new Thread(dataCollector);
     estimatorThread.start();
-    
-    
   }
   
   @Override
